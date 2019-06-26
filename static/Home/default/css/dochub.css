@@ -175,6 +175,10 @@ textarea{resize: none;}
 /* 程序安装页面样式 【end】 */
 
 
+
+.row .col-xs-3{width: 33.333%;}
+
+
 /*wenku page index [start]*/
 .carousel-control .fa{top: 46%;font-size: 30px;position: relative;}
 .carousel-caption{padding-bottom: 0px;bottom: 5px;}

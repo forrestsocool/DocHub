@@ -70,7 +70,7 @@ func setDefaultConfig() {
 		beego.BConfig.EnableGzip = true //开启gzip压缩
 
 		//程序安装的时候不启用，安装完成之后必须启用
-		beego.BConfig.WebConfig.EnableXSRF = false                                                           //启用XSRF
+		beego.BConfig.WebConfig.EnableXSRF = true                                                           //启用XSRF
 		beego.BConfig.WebConfig.XSRFKey = MD5Crypt(fmt.Sprintf("%v", time.Now().UnixNano()) + RandStr(5, 3)) //生成随机key
 		beego.BConfig.WebConfig.XSRFExpire = 3600                                                            //过期时间
 

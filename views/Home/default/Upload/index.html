@@ -29,8 +29,8 @@
                         <div class="form-group form-chanel">
                             <label class="col-sm-2 control-label">文库频道 <i class="text-danger">*</i></label>
                             <div class="col-sm-10">
-                                <select name="Chanel" required="required" data-err="请选择文库频道" class="form-control">
-                                    <option value="">请选择文库频道</option>
+                                <select name="Chanel" required="required" data-err="请选择文库频道" class="form-control" disabled="disabled">
+                                    <option value="{{.UserCid}}">{{CategoryName .UserCid}}</option>
                                 </select>
                             </div>
                         </div>
@@ -38,12 +38,12 @@
                             <label class="col-sm-2 control-label">文档分类 <i class="text-danger">*</i></label>
                             <div class="col-sm-5 form-level-one">
                                 <select name="Pid" required="required" data-err="请选择一级文档分类" class="form-control">
-                                    <option value="">请先选择文库频道</option>
+                                    <option value="">请选择一级文档分类</option>
                                 </select>
                             </div>
                             <div class="col-sm-5 form-level-two">
                                 <select name="Cid" required="required" data-err="请选择二级文档分类" class="form-control">
-                                    <option value="">请先选择一级文档分类</option>
+                                    <option value="">请选择二级文档分类</option>
                                 </select>
                             </div>
                         </div>

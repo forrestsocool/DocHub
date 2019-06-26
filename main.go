@@ -42,7 +42,7 @@ func init() {
 	beego.AddFuncMap("HandlePageNum", helper.HandlePageNum)             //处理文档页码为0的显示问题
 	beego.AddFuncMap("DoesCollect", models.DoesCollect)                 //判断用户是否已收藏了该文档
 	beego.AddFuncMap("DoesSign", models.NewSign().DoesSign)             //用户今日是否已签到
-	beego.AddFuncMap("Friends", models.NewFriend().Friends)             //友情链接
+	//beego.AddFuncMap("Friends", models.NewFriend().Friends)             //友情链接
 	beego.AddFuncMap("CategoryName", models.NewCategory().GetTitleById) //根据分类id获取分类名称
 	beego.AddFuncMap("IsIllegal", models.NewDocument().IsIllegal)       //根据md5判断文档是否是非法文档
 	beego.AddFuncMap("IsRemark", models.NewDocumentRemark().IsRemark)   //根据文档是否存在备注

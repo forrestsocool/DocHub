@@ -179,8 +179,24 @@ $(function(){
 				loadNext();
 
 		});
+
+		//默认频道选择
+        // $(".wenku-form-upload .form-chanel select").onload(function(){
+        //     var _this=$(this),pid=_this.val();
+        //     if(pid){
+        //         $(".form-level-one select").html('<option value="">请选择一级文档分类</option>');
+        //         $(".form-level-one select").append(options(pid,cates));
+        //         $(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+        //     }else{
+        //         $(".form-level-one select").html('<option value="">请选择一级文档分类</option>');
+        //         $(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+        //     }
+        // });
 	
 		//频道选择
+        var pid = $(".wenku-form-upload .form-chanel select").val();
+        $(".form-level-one select").append(options(pid,cates));
+
 		$(".wenku-form-upload .form-chanel select").change(function(){
 			var _this=$(this),pid=_this.val();
 			if(pid){

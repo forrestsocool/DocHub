@@ -39,6 +39,11 @@ func (this *UploadController) Get() {
 	this.Data["PageId"] = "wenku-upload"
 	this.Data["MaxSize"] = models.NewSys().GetByField("MaxFile").MaxFile
 	this.TplName = "index.html"
+
+	ModelUser := models.NewUser()
+	info := ModelUser.UserInfo(this.IsLogin)
+	fmt.Println(info.Cid)
+	this.Data["UserCid"] = info.Cid
 }
 
 //文档执行操作
