@@ -1,0 +1,91 @@
+#项目名称
+appname = DocHub
+#程序版本
+version=1.0
+#运行端口
+httpport = 8090
+#运行模式：prod, dev 或者 test【正式部署站点的时候，设置为prod】
+runmode = test
+
+#页面底部单页显示个数限制
+pageslimit=6
+
+#必须启用session，否则无法登录后台
+sessionon = true
+#开启文件存储session
+SessionProvider=file
+#Session存放位置
+SessionProviderConfig=cache/session
+SessionName=dochub
+
+# 静态文件扩展名【注意：不要把.conf设置为扩展名，以避免泄露数据库账号密码】
+StaticExt=.txt,.html,.ico,.jpeg,.png,.gif
+
+
+
+cookieSecret=sfgowtrfgjqwetryfqef8sd
+
+#允许上传的文件大小(单位：字节)，默认50MB=52428800
+max_upload_size=52428800
+
+#成功或失败页面的跳转等待时间，默认5秒
+redirect_time=5
+
+#会员注册的金币奖励
+coinreg=10
+
+#开启GZip[建议开启]
+EnableGzip=true
+
+#文档下载连接URL有效期，单位为秒，默认60秒
+UrlExpire=60
+
+#libreoffice的可执行文件路径(注意，windows下要用\\代替原路径的\)
+#如：“C:\Program Files (x86)\LibreOffice 4\program\soffice”要换成“C:\\Program Files (x86)\\LibreOffice 4\\program\\soffice”
+#soffice=C:\\Program Files (x86)\\LibreOffice 5\\program\\soffice
+#soffice=/Applications/LibreOffice.app/Contents/MacOS/soffice
+soffice=soffice
+
+#imagick命令行
+imagick=convert
+
+#pdf2svg命令
+pdf2svg=pdf2svg
+
+#calibre转化命令[下一版本再加上这个配置项]
+calibre=ebook-convert
+
+#提取PDF文本内容:`apt install poppler-utils`
+pdftotext=pdftotext
+
+# 是否压缩svg（建议压缩）
+compressSvg=true
+
+# SVG水印文字【图片水印，后期再实现】
+watermark=DocHub.ME
+
+#举报原因，参考格式：1:垃圾广告;2:淫秽色情;3:虚假中奖;4:敏感信息;5:人身攻击;6:骚扰他人
+#TODO:这个要写在数据库配置表里面，暂时先这样吧
+ReportReason=1:垃圾广告;2:淫秽色情;3:虚假中奖;4:敏感信息;5:人身攻击;6:骚扰他人
+
+#本地浏览文件
+
+#启动XSRF
+enablexsrf = true
+xsrfkey = gsrtewrt45324joidsffrtqwe
+xsrfexpire = 3600
+
+
+
+
+########以下不要改动######
+
+#引入数据库配置文件
+include "database.conf"
+
+#引入邮箱配置
+include "email.conf"
+
+
+#引入OSS配置
+include "oss.conf"
