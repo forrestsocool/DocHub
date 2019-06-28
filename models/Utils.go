@@ -85,6 +85,7 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 
 	now := int(time.Now().Unix())
 
+
 	var info = &DocumentInfo{
 		Uid:         uid,
 		ChanelId:    form.Chanel,
@@ -99,6 +100,8 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 		ScorePeople: 0,
 		Status:      DocStatusConverting,
 		Price:       form.Price,
+		TimeStart:   form.TimeStart,
+		TimeEnd:     form.TimeEnd,
 	}
 
 	var store = &DocumentStore{}

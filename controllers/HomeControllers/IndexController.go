@@ -2,12 +2,10 @@ package HomeControllers
 
 import (
 	"fmt"
-
-	"strings"
-
 	"github.com/TruthHun/DocHub/helper"
 	"github.com/TruthHun/DocHub/models"
 	"github.com/astaxie/beego/orm"
+	"strings"
 )
 
 type IndexController struct {

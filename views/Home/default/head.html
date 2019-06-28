@@ -18,11 +18,18 @@
     <link rel="stylesheet" type="text/css" href="{{.TplStatic}}/css/flat-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{.TplStatic}}/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="/static/Common/css/jquery.toast.min.css"/>
-    <link rel="stylesheet" type="text/css" href="{{.TplStatic}}/css/dochub.css?version={{$.Version}}"/>
+{{/*    <link rel="stylesheet" type="text/css" href="{{.TplStatic}}/css/laydate.css" />*/}}
+{{/*    <script type="text/javascript" src="/static/Home/default/js/laydate.js"></script>*/}}
+
+    <script src="{{.TplStatic}}/js/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+
+
+<link rel="stylesheet" type="text/css" href="{{.TplStatic}}/css/dochub.css?version={{$.Version}}"/>
     {{/*<link rel="stylesheet" href="//at.alicdn.com/t/font_794762_dpncr3eyueh.css">*/}}
     {{if .Sys.MobileOn}}
     <link rel="stylesheet" type="text/css" href="{{.TplStatic}}/css/dochub-mobile.css?version={{$.Version}}"/>
     {{end}}
+
     <link rel="shortcut icon" href="{{.TplStatic}}/img/favicon.ico">
       <script src="/static/Common/js/html5shiv.min.js"></script>
       <script src="/static/Common/js/respond.min.js"></script>

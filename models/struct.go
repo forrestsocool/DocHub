@@ -3,9 +3,9 @@ package models
 
 //文档上传表单结构
 type FormUpload struct {
-	Title, Md5, Intro, Tags, Ext, Filename string
-	Chanel, Pid, Cid, Exist, Size, Price   int
-	TmpFile                                string // 临时文件
+	Title, Md5, Intro, Tags, Ext, Filename                     string
+	Chanel, Pid, Cid, Exist, Size, Price, TimeStart, TimeEnd   int
+	TmpFile                                                    string // 临时文件
 }
 
 //默认的SEO结构

@@ -30,6 +30,336 @@ $(function(){
         interval: 3000,
 	})
     var PageId=$("body").attr("id");
+
+
+    //搜索页面
+    if (PageId=="wenku-search"){
+        var _this = $(this),
+            showSearchTool = _this.find(".show-search-tool").eq(0),
+            hideSearchTool = _this.find(".hide-search-tool").eq(0),
+            helpBlock = _this.find(".help-block").eq(0);
+        showSearchTool.on("click", function() {
+            helpBlock.animate({top: "0px"}, 250)
+        });
+
+        hideSearchTool.on("click", function() {
+            helpBlock.animate({top: "-40px"}, 250,)
+        });
+
+                // if ("undefined" != typeof bds.comm.search_tool) {
+                //     if (bds.comm.search_tool.init) return;
+                //     bds.comm.search_tool.init = !0;
+                //     var t = $(this),
+                //         e = t.find(".search_tool").eq(0),
+                //         i = t.find(".search_tool_close").eq(0),
+                //         n = t.find(".head_nums_cont_inner").eq(0);
+                //     e.on("click",
+                //         function() {
+                //             n.animate({
+                //                     top: 0
+                //                 },
+                //                 250),
+                //                 ns_c({
+                //                     fm: "advTool",
+                //                     qid: bds.comm.qid,
+                //                     title: encodeURI("搜索工具"),
+                //                     rsv_advTool: 0
+                //                 })
+                //         }),
+                //         i.on("click",
+                //             function() {
+                //                 n.animate({
+                //                         top: -42
+                //                     },
+                //                     250,
+                //                     function() {
+                //                         "en" == bds.comm.search_tool.sl_lang || bds.comm.search_tool.st || bds.comm.search_tool.et || bds.comm.search_tool.si || bds.comm.search_tool.ft || bds.comm.search_tool.exact ? (ns_c({
+                //                             fm: "advTool",
+                //                             qid: bds.comm.qid,
+                //                             title: encodeURI("清除"),
+                //                             rsv_advTool: 2
+                //                         }), baseChangeUrl("wd=" + encodeURIComponent($("#kw").val().replace(/(filetype:[^\s]* )|(site:[^\s]*)/g, "").replace(/^\"+(.+)\"+$/, "$1")) + "&sl_lang=cn&rsv_srlang=cn&rsv_rq=cn&ct=0&si=&tfflag=0&gpc=" + encodeURIComponent("stf=")), $("input[name='gpc'],input[name='si'],input[name='ct']", "form").val("")) : ns_c({
+                //                             fm: "advTool",
+                //                             qid: bds.comm.qid,
+                //                             title: encodeURI("收起工具"),
+                //                             rsv_advTool: 1
+                //                         })
+                //                     })
+                //             });
+                //     var o = t.find(".search_tool_la").eq(0);
+                //     if (o.length > 0) {
+                //         var s = "<div class='c-tip-menu c-tip-langfilter'><ul>";
+                //         "en" == bds.comm.search_tool.sl_lang ? (s += "<li><a href='javascript:;' onClick='langChangeUrl(\"sl_lang\",\"cn\",this.innerHTML)'>所有网页</a></li>", s += "<li><span>英文网页</span></li>") : "cn" == bds.comm.search_tool.sl_lang && (s += "<li><span>所有网页</span></li>", s += "<li><a href='javascript:;' onClick='langChangeUrl(\"sl_lang\",\"en\",this.innerHTML)'>英文网页</a></li>"),
+                //             s += "</li></ul></div>",
+                //             langfilterTip = new bds.se.tip({
+                //                 target: o,
+                //                 mode: "none",
+                //                 content: $(s),
+                //                 arrow: {
+                //                     has: 0,
+                //                     offset: 0
+                //                 },
+                //                 offset: {
+                //                     x: 15,
+                //                     y: 21
+                //                 }
+                //             }),
+                //             langfilterTip.hide()
+                //     }
+                //     var a = t.find(".search_tool_tf").eq(0);
+                //     if (a.length > 0) {
+                //         var r = "<div class='c-tip-menu c-tip-timerfilter'><ul>";
+                //         r += bds.comm.search_tool.st || bds.comm.search_tool.et ? " <li><a href='javascript:;' onClick='advChangeUrl(\"gpc\",\"stf\",this.innerHTML,0)'>时间不限</a></li>": " <li><span>时间不限</span></li>",
+                //             r += bds.comm.search_tool.st >= bds.comm.search_tool.thisDay && "1" == bds.comm.search_tool.stftype ? " <li><span>一天内</span></li>": " <li><a href='javascript:;' onClick='advChangeUrl(\"gpc\",\"stf=" + bds.comm.search_tool.oneDay + "," + bds.comm.serverTime + "|stftype=1\",this.innerHTML,1)'>一天内</a></li>",
+                //             r += bds.comm.search_tool.st >= bds.comm.search_tool.thisWeek && bds.comm.search_tool.st < bds.comm.search_tool.thisDay && "1" == bds.comm.search_tool.stftype ? " <li><span>一周内</span></li>": " <li><a href='javascript:;' onClick='advChangeUrl(\"gpc\",\"stf=" + bds.comm.search_tool.oneWeek + "," + bds.comm.serverTime + "|stftype=1\",this.innerHTML,2)'>一周内</a></li>",
+                //             r += bds.comm.search_tool.st >= bds.comm.search_tool.thisMonth && bds.comm.search_tool.st < bds.comm.search_tool.thisWeek && "1" == bds.comm.search_tool.stftype ? " <li><span>一月内</span></li>": " <li><a href='javascript:;' onClick='advChangeUrl(\"gpc\",\"stf=" + bds.comm.search_tool.oneMonth + "," + bds.comm.serverTime + "|stftype=1\",this.innerHTML,3)'>一月内</a></li>",
+                //             r += bds.comm.search_tool.st >= bds.comm.search_tool.thisYear && bds.comm.search_tool.st < bds.comm.search_tool.thisMonth && "1" == bds.comm.search_tool.stftype ? " <li><span>一年内</span></li>": " <li><a href='javascript:;' onClick='advChangeUrl(\"gpc\",\"stf=" + bds.comm.search_tool.oneYear + "," + bds.comm.serverTime + "|stftype=1\",this.innerHTML,4)'>一年内</a></li>",
+                //             r += " <li class='c-tip-custom'>",
+                //             r += " <hr />自定义",
+                //             r += " <p class='c-tip-custom-st'>从<input name='st' date-min='0' date-max='" + formatDate(1e3 * bds.comm.serverTime) + "' type='txt' autocomplete='off' ",
+                //             r += bds.comm.search_tool.st && bds.comm.search_tool.et && "2" == bds.comm.search_tool.stftype ? "value='" + formatDate(1e3 * bds.comm.search_tool.st, "-") + "' data-value='" + 1e3 * bds.comm.search_tool.st + "' class='c-tip-custom-input'/></p>": "value='" + formatDate(1e3 * bds.comm.serverTime, "-") + "' data-value='' class='c-tip-custom-input c-tip-custom-input-init'/></p>",
+                //             r += "  <p class='c-tip-custom-et'>至<input name='et' date-min='0' date-max='" + formatDate(1e3 * bds.comm.serverTime) + "' type='txt' autocomplete='off' ",
+                //             r += bds.comm.search_tool.st && bds.comm.search_tool.et && "2" == bds.comm.search_tool.stftype ? "value='" + formatDate(1e3 * bds.comm.search_tool.et, "-") + "' data-value='" + 1e3 * bds.comm.search_tool.et + "' class='c-tip-custom-input'/></p>": "value='" + formatDate(1e3 * bds.comm.serverTime, "-") + "' data-value='' class='c-tip-custom-input c-tip-custom-input-init'/></p>",
+                //             r += "<div class='c-tip-timerfilter-custom-error'>自定义时间错误！</div>",
+                //             r += "<a href='javascript:;' class='c-tip-custom-submit'>确认</a>",
+                //             r += "</li></ul></div>",
+                //             timefilterTip = new bds.se.tip({
+                //                 target: a,
+                //                 mode: "none",
+                //                 content: $(r),
+                //                 arrow: {
+                //                     has: 0,
+                //                     offset: 0
+                //                 },
+                //                 offset: {
+                //                     x: 15,
+                //                     y: 21
+                //                 },
+                //                 onShow: function() {
+                //                     $(this.getTarget()).width() > 95 && $("ul", this.getDom()).width($(this.getTarget()).width() + 20),
+                //                         $(".c-tip-custom-input").on("click",
+                //                             function(t) {
+                //                                 var e = this,
+                //                                     i = null,
+                //                                     n = new Date,
+                //                                     o = $(e).parents(".c-tip-custom"),
+                //                                     s = o.find("input[name='st']"),
+                //                                     a = o.find("input[name='et']");
+                //                                 $(e).attr("data-value") && n.setTime($(e).attr("data-value")),
+                //                                     $(e).parents(".c-tip-custom").find(".c-tip-custom-input").removeClass("c-tip-custom-input-focus"),
+                //                                     $(e).addClass("c-tip-custom-input-focus"),
+                //                                 0 == $("#c-tip-custom-calenderCont").length && $(e).parents(".c-tip-custom").append("<div id='c-tip-custom-calenderCont'></div>"),
+                //                                     $("#c-tip-custom-calenderCont").html("");
+                //                                 var r = {
+                //                                     element: "c-tip-custom-calenderCont",
+                //                                     date: formatDate(n),
+                //                                     between: [$(e).attr("date-min") - 0, $(e).attr("date-max") - 0],
+                //                                     onSelectDay: function(t) {
+                //                                         if (t += "", "st" == e.name) {
+                //                                             var i = new Date(t.substr(0, 4), t.substr(4, 2) - 1, t.substr(6, 2), 0, 0, 0);
+                //                                             a.attr("date-min", t)
+                //                                         } else {
+                //                                             var i = new Date(t.substr(0, 4), t.substr(4, 2) - 1, t.substr(6, 2), 23, 59, 59);
+                //                                             s.attr("date-max", t)
+                //                                         }
+                //                                         $(e).val(formatDate(i, "-")),
+                //                                             $(e).attr("data-value", i.getTime()),
+                //                                             $("#c-tip-custom-calenderCont").hide(),
+                //                                             $(e).removeClass("c-tip-custom-input-focus").removeClass("c-tip-custom-input-init")
+                //                                     }
+                //                                 };
+                //                                 "undefined" == typeof WCal ? $.getScript("https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/new_wcal_3426010.js",
+                //                                     function() {
+                //                                         i = new WCal(r),
+                //                                         n && i.setDay(formatDate(n),
+                //                                             function(t) {
+                //                                                 t.className += " op_mon_day_selected"
+                //                                             })
+                //                                     }) : (i = new WCal(r), n && i.setDay(formatDate(n),
+                //                                     function(t) {
+                //                                         t.className += " op_mon_day_selected"
+                //                                     })),
+                //                                     $("#c-tip-custom-calenderCont").css({
+                //                                         top: $(this).position().top - 2,
+                //                                         left: $(this).position().left + $(this).width() + 15,
+                //                                         display: "block"
+                //                                     }),
+                //                                     t.stopPropagation()
+                //                             }),
+                //                         $(".c-tip-custom-input").on("focus",
+                //                             function() {
+                //                                 $(this).removeClass("c-tip-custom-input-init")
+                //                             }),
+                //                         $(".c-tip-custom-input").on("blur",
+                //                             function() {
+                //                                 function t(t) {
+                //                                     var e, i = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/,
+                //                                         n = new Date(0 / 0),
+                //                                         o = i.exec(t);
+                //                                     return o && (e = +o[2], n.setFullYear(o[1], e - 1, o[3]), e != n.getMonth() + 1 && n.setTime(0 / 0)),
+                //                                         n
+                //                                 }
+                //                                 var e = this,
+                //                                     i = t($(e).val());
+                //                                 i instanceof Date && i.getTime() ? ($(e).attr("data-value", i.getTime()), $(".c-tip-timerfilter-custom-error").hide()) : "" == $(e).val() ? ($(e).attr("data-value", "0"), $(".c-tip-timerfilter-custom-error").hide()) : ($(e).attr("data-value", ""), $(".c-tip-timerfilter-custom-error").show())
+                //                             });
+                //                     try {
+                //                         $(".c-tip-custom-submit").off("click.searchTool").on("click.searchTool",
+                //                             function(t) {
+                //                                 var e = this,
+                //                                     i = $(e).parents(".c-tip-custom"),
+                //                                     n = parseInt($(".c-tip-custom-input", i)[0].getAttribute("data-value") / 1e3),
+                //                                     o = parseInt($(".c-tip-custom-input", i)[1].getAttribute("data-value") / 1e3);
+                //                                 return $("#c-tip-custom-calenderCont").hide(),
+                //                                 "" != n && n || (n = 0),
+                //                                 "" != o && o || !n || "" == n || (o = parseInt((new Date).setHours(23, 59, 58) / 1e3)),
+                //                                 o > bds.comm.serverTime && (0 >= n ? (n = "", o = "") : o = parseInt((new Date).setHours(23, 59, 58) / 1e3)),
+                //                                     n > o || n > bds.comm.serverTime ? ($(".c-tip-timerfilter-custom-error").show(), void t.stopPropagation()) : (0 == n && 0 == o && (n = "", o = ""), $(".c-tip-timerfilter-custom-error").hide(), void advChangeUrl("gpc", "stf=" + n + "," + o + "|stftype=2", "自定义时间:" + n + "|" + o, 5))
+                //                             })
+                //                     } catch(t) {}
+                //                 }
+                //             }),
+                //             timefilterTip.hide()
+                //     }
+                //     var c = t.find(".search_tool_ft").eq(0);
+                //     if (c.length > 0) {
+                //         var d = "<div class='c-tip-menu c-tip-timerfilter c-tip-timerfilter-ft'><ul>";
+                //         d += bds.comm.search_tool.ft ? " <li><a href='javascript:;' onClick='fileChangeUrl(null,this.innerHTML,0)'>所有网页和文件(不限格式)</a></li>": " <li><span>所有网页和文件(不限格式)</span></li>",
+                //             d += "pdf" == bds.comm.search_tool.ft ? " <li><span>Adobe Acrobat PDF(.pdf)</span></li>": " <li><a href='javascript:;' onClick='fileChangeUrl(\"pdf\",this.innerHTML,1)'>Adobe Acrobat PDF(.pdf)</a></li>",
+                //             d += "doc" == bds.comm.search_tool.ft ? " <li><span>微软 Word(.doc)</span></li>": " <li><a href='javascript:;' onClick='fileChangeUrl(\"doc\",this.innerHTML,2)'>微软 Word(.doc)</a></li>",
+                //             d += "xls" == bds.comm.search_tool.ft ? " <li><span>微软 Excel(.xls)</span></li>": " <li><a href='javascript:;' onClick='fileChangeUrl(\"xls\",this.innerHTML,3)'>微软 Excel(.xls)</a></li>",
+                //             d += "ppt" == bds.comm.search_tool.ft ? " <li><span>微软 PowerPoint(.ppt)</span></li>": " <li><a href='javascript:;' onClick='fileChangeUrl(\"ppt\",this.innerHTML,4)'>微软 PowerPoint(.ppt)</a></li>",
+                //             d += "rtf" == bds.comm.search_tool.ft ? " <li><span>RTF 文件(.rtf)</span></li>": " <li><a href='javascript:;' onClick='fileChangeUrl(\"rtf\",this.innerHTML,5)'>RTF 文件(.rtf)</a></li>",
+                //             d += "</ul></div>";
+                //         var l = new bds.se.tip({
+                //             target: c,
+                //             mode: "none",
+                //             content: $(d),
+                //             arrow: {
+                //                 has: 0,
+                //                 offset: 0
+                //             },
+                //             offset: {
+                //                 x: 15,
+                //                 y: 21
+                //             }
+                //         });
+                //         l.hide()
+                //     }
+                //     var u = t.find(".search_tool_si").eq(0);
+                //     u.length > 0 && (insideSearchTip = new bds.se.tip({
+                //         target: u,
+                //         mode: "none",
+                //         content: $("<div class='c-tip-menu c-tip-timerfilter c-tip-timerfilter-si'><ul> <li><input name='si' type='txt' class='c-tip-si-input c-gap-bottom-small c-gap-right-small' autocomplete='off' value='" + bds.comm.search_tool.si + "' placeholder='例如:baidu.com' /><a href='javascript:;' class='c-tip-timerfilter-si-submit'>确认</a></li> <li><p class='c-tip-timerfilter-si-error'>无法识别，正确格式：baidu.com</p></li></ul></div>"),
+                //         arrow: {
+                //             has: 0,
+                //             offset: 0
+                //         },
+                //         offset: {
+                //             x: 15,
+                //             y: 21
+                //         },
+                //         onShow: function() {
+                //             $(".c-tip-si-input").on("focus",
+                //                 function() {
+                //                     $(this).addClass("c-tip-si-input-focus")
+                //                 }),
+                //                 $(".c-tip-si-input").on("blur",
+                //                     function() {
+                //                         $(this).removeClass("c-tip-si-input-focus")
+                //                     });
+                //             try {
+                //                 $(".c-tip-timerfilter-si-submit").off("click.searchTool").on("click.searchTool",
+                //                     function(t) {
+                //                         var e = this,
+                //                             i = $(e).parents(".c-tip-timerfilter-si"),
+                //                             n = $("input", i).val(),
+                //                             o = queryReplace("site");
+                //                         if ("" == n) ns_c({
+                //                             fm: "advTool",
+                //                             qid: bds.comm.qid,
+                //                             title: encodeURI("站内检索:" + n),
+                //                             rsv_advTool_si: encodeURI(n)
+                //                         }),
+                //                             baseChangeUrl("wd=" + encodeURIComponent(o) + "&si=&ct=0");
+                //                         else {
+                //                             if (!n.match(/^[\w\-_]+(\.[\w\-_]+)+$/)) return $(".c-tip-timerfilter-si-error").show(),
+                //                                 t.stopPropagation(),
+                //                                 t.preventDefault(),
+                //                                 !1;
+                //                             $(".c-tip-timerfilter-si-error").hide(),
+                //                                 ns_c({
+                //                                     fm: "advTool",
+                //                                     qid: bds.comm.qid,
+                //                                     title: encodeURI("站内检索:" + n),
+                //                                     rsv_advTool_si: encodeURI(n)
+                //                                 }),
+                //                                 baseChangeUrl("wd=" + encodeURIComponent(o) + "&si=" + encodeURIComponent(n) + "&ct=2097152")
+                //                         }
+                //                     })
+                //             } catch(t) {}
+                //         }
+                //     }), insideSearchTip.hide());
+                //     var m = !0;
+                //     o.on("click",
+                //         function(t) {
+                //             m ? (langfilterTip && langfilterTip.show(), m = !1, timefilterTip && timefilterTip.hide(), p = !0, l && l.hide(), f = !0, insideSearchTip && insideSearchTip.hide(), h = !0, ns_c({
+                //                 fm: "advTool",
+                //                 qid: bds.comm.qid,
+                //                 title: encodeURI("语言筛选浮层展现"),
+                //                 rsv_advTool_tip: 1
+                //             }), $(document).on("click.searchTool",
+                //                 function(t) {
+                //                     0 == $(t.target).parents(".c-tip-langfilter").length && langfilterTip && (langfilterTip.hide(), m = !0, $(document).off("click.searchTool"))
+                //                 })) : (langfilterTip && langfilterTip.hide(), m = !0, $(document).off("click.searchTool")),
+                //                 t.stopPropagation()
+                //         });
+                //     var p = !0;
+                //     a.on("click",
+                //         function(t) {
+                //             p ? (langfilterTip && langfilterTip.hide(), m = !0, timefilterTip && timefilterTip.show(), p = !1, l && l.hide(), f = !0, insideSearchTip && insideSearchTip.hide(), h = !0, ns_c({
+                //                 fm: "advTool",
+                //                 qid: bds.comm.qid,
+                //                 title: encodeURI("时间筛选浮层展现"),
+                //                 rsv_advTool_tip: 0
+                //             }), $(document).on("click.searchTool",
+                //                 function(t) {
+                //                     0 == $(t.target).parents(".c-tips-container,#c-tip-custom-calenderCont").length && timefilterTip && (timefilterTip.hide(), $("#c-tip-custom-calenderCont").hide(), timefilterTip.getDom().find(".c-tip-custom-input-focus").removeClass("c-tip-custom-input-focus"), p = !0, $(document).off("click.searchTool"))
+                //                 })) : (timefilterTip && timefilterTip.hide(), p = !0, $(document).off("click.searchTool")),
+                //                 t.stopPropagation()
+                //         });
+                //     var f = !0;
+                //     c.on("click",
+                //         function(t) {
+                //             f ? (langfilterTip && langfilterTip.hide(), m = !0, timefilterTip && timefilterTip.hide(), p = !0, l && l.show(), f = !1, insideSearchTip && insideSearchTip.hide(), h = !0, ns_c({
+                //                 fm: "advTool",
+                //                 qid: bds.comm.qid,
+                //                 title: encodeURI("网页格式浮层展现"),
+                //                 rsv_advTool_tip: 2
+                //             }), $(document).on("click.searchTool",
+                //                 function(t) {
+                //                     0 == $(t.target).parents(".c-tip-timerfilter-ft").length && l && (l.hide(), f = !0, $(document).off("click.searchTool"))
+                //                 })) : (l && l.hide(), f = !0, $(document).off("click.searchTool")),
+                //                 t.stopPropagation()
+                //         });
+                //     var h = !0;
+                //     u.on("click",
+                //         function(t) {
+                //             h ? (langfilterTip && langfilterTip.hide(), m = !0, timefilterTip && timefilterTip.hide(), p = !0, l && l.hide(), f = !0, insideSearchTip && insideSearchTip.show(), h = !1, ns_c({
+                //                 fm: "advTool",
+                //                 qid: bds.comm.qid,
+                //                 title: encodeURI("站内搜索浮层展现"),
+                //                 rsv_advTool_tip: 3
+                //             }), $(document).on("click.searchTool",
+                //                 function(t) {
+                //                     0 == $(t.target).parents(".c-tip-timerfilter-si").length && insideSearchTip && (insideSearchTip.hide(), h = !0, $(document).off("click.searchTool"))
+                //                 })) : (insideSearchTip && insideSearchTip.hide(), h = !0, $(document).off("click.searchTool")),
+                //                 t.stopPropagation()
+                //         })
+                // }
+
+
+    }
 	
 	//注册页面
 	if (PageId=="wenku-reg") {
@@ -268,6 +598,25 @@ $(function(){
 
                                 var formData = new FormData();
                                 var inputs=form.find(".form-control");
+
+                                // 新增文档生效时间和失效时间
+                                // 时间转换为unix时间戳为xxxx-xx-xx 08:00:00
+                                var doctimestart =form.find(".demo-input-start");
+                                $.each(doctimestart,function(){
+                                    var time = $(this).val();
+                                    var unixtime = Date.parse(time)/1000;
+                                    console.log(typeof (unixtime));
+                                    formData.append($(this).attr("name"), unixtime);
+                                });
+                                var doctimend =form.find(".demo-input-end");
+                                $.each(doctimend,function(){
+                                    var time = $(this).val();
+                                    var unixtime = Date.parse(time)/1000;
+                                    formData.append($(this).attr("name"), unixtime);
+                                });
+
+
+
                                 $.each(inputs,function () {
                                     formData.append($(this).attr("name"), $(this).val());
                                 });
@@ -954,6 +1303,9 @@ $(function(){
         var tObj =new Date(t);
         return tObj.toLocaleDateString().replace(/\//g, "-") + " " + tObj.toTimeString().substr(0, 8)
     }
+    var date = new Date('2013-05-12');
+    var time1 = Date.parse(date)/1000;
+    console.log(time1);
 
 });
 

@@ -45,22 +45,31 @@
                     <div class="strong">文档类型</div>
                     <ul>
                         <li><a href='{{BuildURL "/search/type/all" "wd" .Params.wd}}' {{if eq .Params.type "all"}}class="active"{{end}}>不限</a></li>
-                        <li><a href='{{BuildURL "/search/type/pdf" "wd" .Params.wd}}' {{if eq .Params.type "pdf"}}class="active"{{end}}>PDF</a></li>
-                        <li><a href='{{BuildURL "/search/type/doc" "wd" .Params.wd}}' {{if eq .Params.type "doc"}}class="active"{{end}}>DOC</a></li>
-                        <li><a href='{{BuildURL "/search/type/ppt" "wd" .Params.wd}}' {{if eq .Params.type "ppt"}}class="active"{{end}}>PPT</a></li>
-                        <li><a href='{{BuildURL "/search/type/xls" "wd" .Params.wd}}' {{if eq .Params.type "xls"}}class="active"{{end}}>XLS</a></li>
-                        <li><a href='{{BuildURL "/search/type/txt" "wd" .Params.wd}}' {{if eq .Params.type "txt"}}class="active"{{end}}>TXT</a></li>
-                        <li><a href='{{BuildURL "/search/type/other" "wd" .Params.wd}}' {{if eq .Params.type "other"}}class="active"{{end}}>其它</a></li>
+                        {{range .Chanels}}
+                            <li><a href='{{BuildURL "/search/" "type" .Alias "wd" $.Params.wd}}' {{if eq $.Params.type .Alias}}class="active"{{end}}>{{.Title}}</a></li>
+
+                            {{/*                            <li><a href="/search/type/list/{{.Alias}}">{{.Title}}</a></li>*/}}
+                        {{end}}
+
+
+
+{{/*                        <li><a href='{{BuildURL "/search/type/all" "wd" .Params.wd}}' {{if eq .Params.type "all"}}class="active"{{end}}>不限</a></li>*/}}
+{{/*                        <li><a href='{{BuildURL "/search/type/pdf" "wd" .Params.wd}}' {{if eq .Params.type "pdf"}}class="active"{{end}}>PDF</a></li>*/}}
+{{/*                        <li><a href='{{BuildURL "/search/type/doc" "wd" .Params.wd}}' {{if eq .Params.type "doc"}}class="active"{{end}}>DOC</a></li>*/}}
+{{/*                        <li><a href='{{BuildURL "/search/type/ppt" "wd" .Params.wd}}' {{if eq .Params.type "ppt"}}class="active"{{end}}>PPT</a></li>*/}}
+{{/*                        <li><a href='{{BuildURL "/search/type/xls" "wd" .Params.wd}}' {{if eq .Params.type "xls"}}class="active"{{end}}>XLS</a></li>*/}}
+{{/*                        <li><a href='{{BuildURL "/search/type/txt" "wd" .Params.wd}}' {{if eq .Params.type "txt"}}class="active"{{end}}>TXT</a></li>*/}}
+{{/*                        <li><a href='{{BuildURL "/search/type/other" "wd" .Params.wd}}' {{if eq .Params.type "other"}}class="active"{{end}}>其它</a></li>*/}}
                     </ul>
                     <div class="strong">结果排序</div>
                     <ul>
-                        <li><a href='{{BuildURL "/search/sort/default" "type" .Params.type "wd" .Params.wd}}' {{if eq .Params.sort "default"}}class="active"{{end}}>默认排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/page" "type" .Params.type "wd" .Params.wd}}' {{if eq .Params.sort "page"}}class="active"{{end}}>页数排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/score" "type" .Params.type "wd" .Params.wd}}' {{if eq .Params.sort "score"}}class="active"{{end}}>评分排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/size" "type" .Params.type "wd" .Params.wd}}' {{if eq .Params.sort "size"}}class="active"{{end}}>大小排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/down" "type" .Params.type "wd" .Params.wd}}' {{if eq .Params.sort "down"}}class="active"{{end}}>下载排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/view" "type" .Params.type "wd" .Params.wd}}' {{if eq .Params.sort "view"}}class="active"{{end}}>浏览排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/collect" "type" .Params.type "wd" .Params.wd}}' {{if eq .Params.sort "collect"}}class="active"{{end}}>收藏排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/default" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "default"}}class="active"{{end}}>默认排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/page" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "page"}}class="active"{{end}}>页数排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/score" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "score"}}class="active"{{end}}>评分排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/size" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "size"}}class="active"{{end}}>大小排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/down" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "down"}}class="active"{{end}}>下载排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/view" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "view"}}class="active"{{end}}>浏览排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/collect" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "collect"}}class="active"{{end}}>收藏排序</a></li>
                     </ul>
                 </div>
             </div>
@@ -69,9 +78,50 @@
         <div class="col-xs-7">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="help-block">
-                        <a href="https://www.baidu.com/s?ie=UTF-8&wd={{.Sys.Site}}" rel="noreferrer" target="_blank" title="{{.Sys.Site}}">{{.Sys.Site}}</a> 本次搜索耗时<span class="text-danger">{{.Result.Time}}</span>秒，在 <span class="text-primary">{{.Sys.CntDoc}}</span> 篇文档中为您找到相关结果约 <span class="text-success">{{.Result.TotalFound}}</span> 个.
+
+                    <div class="head_nums_cont_outer OP_LOG">
+                        <div class="help-block">
+                            <div class="search-tool">
+                                <span class="text-primary">发文部门: &nbsp;</span>
+                                <select class="document-dept">
+                                    <option value="all">不限</option>
+                                    <option value="volvo">军委</option>
+                                    <option value="saab">站支</option>
+                                    <option value="opel">军H</option>
+                                    <option value="audi">基地</option>
+                                </select>
+
+                                <span class="text-primary" style="margin-left: 10px">时间范围: &nbsp;</span>
+                                <input type="text" id="document-year" class="document-date-picker">
+                                <script>
+                                    //执行一个laydate实例
+                                    laydate.render({
+                                        elem: '#document-year' //指定元素
+                                        ,type: 'year'
+                                        ,range: true
+                                    });
+                                </script>
+
+{{/*                                <select class="document-dept">*/}}
+{{/*                                    <option value="volvo">军委</option>*/}}
+{{/*                                    <option value="saab">站支</option>*/}}
+{{/*                                    <option value="opel">军H</option>*/}}
+{{/*                                    <option value="audi">基地</option>*/}}
+{{/*                                </select>*/}}
+
+                                <span class="c-gap-left-samll hide-search-tool"><i class="c-icon searchTool-up c-icon-chevron-top-gray-s"></i>收起工具</span>
+                            </div>
+                            <div class="search-count">
+                                本次搜索耗时<span class="text-danger">{{.Result.Time}}</span>秒，在 <span class="text-primary">{{.Sys.CntDoc}}</span> 篇文档中为您找到相关结果约 <span class="text-success">{{.Result.TotalFound}}</span> 个.
+                                <div class="show-search-tool"><i class="c-icon searchTool-spanner c-icon-setting"></i>搜索工具</div>
+                            </div>
+                        </div>
                     </div>
+
+
+
+
+
                     <ul class="wenku-result">
 
 

@@ -6,11 +6,6 @@
                 <div class="strong">文档上传</div>
             </div>
             <div class="panel-body">
-                <div class="wenku-tips text-center help-block">
-                    每成功上传一篇未被分享过的文档，可获得 <span class="text-primary">+{{.Sys.Reward}}</span> 个金币奖励。
-                    <!-- 若有完善的标签和文档简介，将有机会额外获得 <span class="text-danger">1-20</span> 个财富值奖励。 -->
-                    {{/*待积分商城上线，财富值可用于兑换各种小礼品！*/}}
-                </div>
                 <div class="col-xs-8">
                     <form class="form-horizontal wenku-form-upload" role="form" method="post" action="/upload" data-login="/user/islogin" data-doccheck="/doc/check" enctype="multipart/form-data">
                         <div class="form-group">
@@ -50,22 +45,18 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">文档售价</label>
                             <div class="col-sm-5">
-                                <select name="Price" class="form-control">
-                                    <option value="0">免费下载</option>
-                                    <option value="1">1个金币</option>
-                                    <option value="2">2个金币</option>
-                                    <option value="5">5个金币</option>
-                                    <option value="8">8个金币</option>
-                                    <option value="10">10个金币</option>
-                                    <option value="20">20个金币</option>
-                                    <option value="-1">禁止下载</option>
-                                </select>
+                                <input  name="TimeStart" type="text" required="required" data-err="请选择文档生效日期" class="demo-input-start" placeholder="请选择文档生效日期" id="date1">
+
                             </div>
+                            <div class="col-sm-5">
+                                <input name="TimeEnd" type="text" required="required" data-err="请选择文档生效日期" class="demo-input-end" placeholder="请选择文档结束日期" id="date2">
+                            </div>
+
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">文档标签</label>
                             <div class="col-sm-10">
-                                <input type="text" name="Tags" class="form-control" placeholder="多个标签，请用逗号分隔">
+                                <input type="text" name="Tags" class="form-control " placeholder="多个标签，请用逗号分隔">
                             </div>
                         </div>
                         {{.xsrfdata}}
@@ -122,9 +113,29 @@
                 </div>
             </div>
         </div>
+
         <script type="text/javascript" id="wenku-cates">
             {{.json}}
         </script>
+
+        <script type="text/javascript">
+        // lay('#version').html('-v'+ laydate.v);
+        laydate.render({
+            elem: '#date1' //指定元素
+            ,theme: 'molv'
+            ,calendar: true
+            ,showBottom: false
+            ,position: 'fixed'
+        });
+        laydate.render({
+            elem: '#date2' //指定元素
+            ,theme: 'molv'
+            ,calendar: true
+            ,showBottom: false
+            ,position: 'fixed'
+        });
+        </script>
+
         <iframe frameborder="0" style="display: none;" id="notarget" name="notarget"></iframe>
     </div>
 </div>
