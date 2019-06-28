@@ -45,6 +45,8 @@ type ElasticSearchData struct {
 	DsId        int    `json:"DsId"`        //DocumentStoreId，对应于md5
 	Price       int    `json:"Price"`       //文档售价
 	TimeCreate  int    `json:"TimeCreate"`  //文档创建时间
+	TimeStart   int    `json:"TimeStart"`   //文档生效时间
+	TimeEnd     int    `json:"TimeEnd"`     //文档失效时间
 }
 
 //统计信息结构
@@ -86,6 +88,8 @@ type ElasticSearchResult struct {
 				Vcnt        int    `json:"Vcnt"`
 				Price       int    `json:"Price"`
 				TimeCreate  int    `json:"TimeCreate"`
+				TimeStart   int    `json:"TimeStart"`
+				TimeEnd     int    `json:"TimeEnd"`
 			} `json:"_source"`
 			Type      string `json:"_type"`
 			Highlight struct {

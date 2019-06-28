@@ -38,8 +38,6 @@ type UserInfo struct {
 	Collect    int  `orm:"default(0);column(Collect)"`        //收藏专辑数量，每个收藏专辑下面有文档
 	TimeCreate int  `orm:"column(TimeCreate);default(0)"`     //用户注册时间
 	Status     bool `orm:"column(Status);default(true)"`      //用户信息状态，false(即0)表示被禁用
-
-	Cid        int  `orm:"column(Cid)"`                       //用户能上传的文档分类
 }
 
 func NewUserInfo() *UserInfo {
