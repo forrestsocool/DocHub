@@ -2,10 +2,12 @@ package HomeControllers
 
 import (
 	"fmt"
+
+	"strings"
+
 	"github.com/TruthHun/DocHub/helper"
 	"github.com/TruthHun/DocHub/models"
 	"github.com/astaxie/beego/orm"
-	"strings"
 )
 
 type IndexController struct {
@@ -39,9 +41,7 @@ func (this *IndexController) Get() {
 	//首页分类显示
 	_, this.Data["Cates"] = modelCate.GetAll(true)
 	//获取最新的文档数据，这里News不是新闻的意思
-	//this.Data["Latest"], _, _ = models.NewDocument().SimpleList(fmt.Sprintf("d.`Id` in(%v)", strings.Trim(this.Sys.Trends, ",")), 5)
-	latest,_,_ := models.NewDocument().SimpleList(fmt.Sprintf("d.`Id` in(%v)", strings.Trim(this.Sys.Trends, ",")), 5)
-	this.Data["Latest"] = latest
+	this.Data["Latest"], _, _ = models.NewDocument().SimpleList(fmt.Sprintf("d.`Id` in(%v)", strings.Trim(this.Sys.Trends, ",")), 5)
 	this.Data["Seo"] = models.NewSeo().GetByPage("PC-Index", "文库首页", "文库首页", "文库首页", this.Sys.Site)
 	this.Data["IsHome"] = true
 	this.Data["PageId"] = "wenku-index"
