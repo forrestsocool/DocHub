@@ -24,11 +24,10 @@ const (
 //文档表
 type Document struct {
 	Id          int    `orm:"Column(Id)"`
-	Title       string `orm:"size(255);default();column(Title)"`    //文档名称【用户自定义的文档标题】
-	Filename    string `orm:"size(255);default();column(Filename)"` //文件名[文件的原文件名]
-	Keywords    string `orm:"size(255);default();column(Keywords)"` //文档标签、关键字
-	Description string `orm:"size(255);default();column(Description)"`
-	//文档摘要
+	Title       string `orm:"size(255);default();column(Title)"`       //文档名称【用户自定义的文档标题】
+	Filename    string `orm:"size(255);default();column(Filename)"`    //文件名[文件的原文件名]
+	Keywords    string `orm:"size(255);default();column(Keywords)"`    //文档标签、关键字
+	Description string `orm:"size(255);default();column(Description)"` //文档摘要
 }
 
 func NewDocument() *Document {
@@ -56,8 +55,6 @@ type DocumentInfo struct {
 	ScorePeople int  `orm:"default(0);column(ScorePeople)"`    //评分总人数
 	Price       int  `orm:"default(0);column(Price)"`          //文档下载价格，0表示免费
 	Status      int8 `orm:"default(0);column(Status)"`         //文档资源状态，1正常，0文档未转换成功，-1删除，同时把id录入文档回收站id，-2表示删除了文档文件，但是数据库记录还保留。同时后台也看不到该记录
-	TimeStart   int  `orm:"default(0);column(TimeStart)"`     //文档开始生效时间
-	TimeEnd     int  `orm:"default(2145830400);column(TimeEnd)"`       //文档失效时间
 }
 
 func NewDocumentInfo() *DocumentInfo {
@@ -125,8 +122,6 @@ type fullDocument struct {
 	ScorePeople int    `orm:"column(ScorePeople)"`        //评分总人数
 	Price       int    `orm:"column(Price)"`              //文档下载价格，0表示免费
 	Status      int8   `orm:"column(Status)"`             //文档资源状态，1正常，0文档未转换成功，-1删除，同时把id录入文档回收站i
-	TimeStart   int    `orm:"column(TimeStart)"`          //文档开始生效时间
-	TimeEnd     int    `orm:"column(TimeEnd)"`           //文档失效时间
 }
 
 //非法文档(侵权或不良信息文档)MD5记录表
