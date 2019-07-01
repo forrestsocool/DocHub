@@ -102,6 +102,7 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 		Price:       form.Price,
 		TimeStart:   form.TimeStart,
 		TimeEnd:     form.TimeEnd,
+		Department:  form.Department,
 	}
 
 	var store = &DocumentStore{}
