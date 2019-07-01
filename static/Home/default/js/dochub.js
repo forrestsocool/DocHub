@@ -284,24 +284,32 @@ $(function(){
 								//文档在文档库中不存在
 
                                 var formData = new FormData();
-                                var inputs=form.find(".form-control");
+                                var inputs =form.find(".form-control");
 
                                 // 新增文档生效时间和失效时间
                                 // 时间转换为unix时间戳为xxxx-xx-xx 08:00:00
                                 var doctimestart =form.find(".demo-input-start");
                                 $.each(doctimestart,function(){
-                                    var time = $(this).val();
-                                    var unixtime = Date.parse(time)/1000;
-                                    console.log(typeof (unixtime));
+                                    // var time = $(this).val();
+                                    var unixtime = Date.parse($(this).val())/1000;
+                                    unixtime = unixtime.toString();
                                     formData.append($(this).attr("name"), unixtime);
                                 });
                                 var doctimend =form.find(".demo-input-end");
                                 $.each(doctimend,function(){
-                                    var time = $(this).val();
-                                    var unixtime = Date.parse(time)/1000;
+                                    // var time = $(this).val();
+                                    var unixtime = Date.parse($(this).val())/1000;
+                                    unixtime = unixtime.toString();
                                     formData.append($(this).attr("name"), unixtime);
                                 });
 
+                                //新增发文部门
+                                var depart = form.find(".form-department");
+                                $.each(depart, function () {
+                                    var department = $("#department option:selected").text();
+                                    formData.append($(this).attr("name"),department);
+
+                                });
 
 
                                 $.each(inputs,function () {

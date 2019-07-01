@@ -3,7 +3,7 @@ package models
 
 //文档上传表单结构
 type FormUpload struct {
-	Title, Md5, Intro, Tags, Ext, Filename                     string
+	Title, Md5, Intro, Tags, Ext, Filename,Department          string
 	Chanel, Pid, Cid, Exist, Size, Price, TimeStart, TimeEnd   int
 	TmpFile                                                    string // 临时文件
 }

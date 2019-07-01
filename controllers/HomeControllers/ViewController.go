@@ -93,15 +93,19 @@ func (this *ViewController) Download() {
 		this.ResponseJson(false, "文档id不正确")
 	}
 
+	link, err := models.NewUser().CanDownloadFile(id)
 	if this.IsLogin == 0 {
-		this.ResponseJson(false, "请先登录")
+		this.ResponseJson(true, "下载链接获取成功", map[string]interface{}{"url": link})
+		//this.ResponseJson(false, "请先登录")
 	}
 
-	link, err := models.NewUser().CanDownloadFile(this.IsLogin, id)
+	linkS, err := models.NewUser().CanDownloadFile(id)
+	//linkS, err := models.NewUser().CanDownloadFile(this.IsLogin, id)
+	//link, err := models.NewUser().CanDownloadFile(this.IsLogin, id)
 	if err != nil {
 		this.ResponseJson(false, err.Error())
 	}
-	this.ResponseJson(true, "下载链接获取成功", map[string]interface{}{"url": link})
+	this.ResponseJson(true, "下载链接获取成功", map[string]interface{}{"url": linkS})
 }
 
 //是否可以免费下载

@@ -188,12 +188,15 @@ var (
 
 // 判断用户是否可以下载指定文档
 // err 为 nil 表示可以下载
-func (this *User) CanDownloadFile(uid, docId int) (urlStr string, err error) {
+func (this *User) CanDownloadFile(docId int) (urlStr string, err error) {
+//func (this *User) CanDownloadFile(uid, docId int) (urlStr string, err error) {
 	// 1. 判断用户和文档是否存在
 	// 2. 判断用户是否可以免费下载，如果用户不可以免费下载，则再扣费之后，允许用户免费下载
 	// 3. 文档被下载次数增加，用户(文档下载人和文档分享人)积分变更，并增加两个用户的积分记录
 	// 4. 获取文档下载URL链接
-	if uid <= 0 || docId <= 0 {
+	if docId<= 0 {
+	//uid = 2
+	//if uid <= 0 || docId <= 0 {
 		err = errParams
 		return
 	}
@@ -210,11 +213,11 @@ func (this *User) CanDownloadFile(uid, docId int) (urlStr string, err error) {
 
 	now := int(time.Now().Unix())
 
-	u := &UserInfo{Id: uid}
-	err = o.Read(u)
-	if err != nil {
-		return
-	}
+	//u := &UserInfo{Id: uid}
+	//err = o.Read(u)
+	//if err != nil {
+	//	return
+	//}
 
 	var docInfo = DocumentInfo{Id: docId}
 	if err = o.Read(&docInfo); err != nil {
@@ -244,23 +247,24 @@ func (this *User) CanDownloadFile(uid, docId int) (urlStr string, err error) {
 
 	price := docInfo.Price
 
-	if u.Id == 0 {
-		err = errNotExistUser
-		return
-	}
+	//if u.Id == 0 {
+	//	err = errNotExistUser
+	//	return
+	//}
 
-	isFree := NewFreeDown().IsFreeDown(uid, docId)
-	if isFree {
-		price = 0
-	}
+	//isFree := NewFreeDown().IsFreeDown(uid, docId)
+	//if isFree {
+	//	price = 0
+	//}
 
-	if u.Coin < price {
-		err = errLessCoin
-		return
-	}
+	//if u.Coin < price {
+	//	err = errLessCoin
+	//	return
+	//}
 
 	logDown := CoinLog{
-		Uid:        uid,
+
+		//Uid:        uid,
 		TimeCreate: now,
 	}
 	logShare := CoinLog{
@@ -270,10 +274,10 @@ func (this *User) CanDownloadFile(uid, docId int) (urlStr string, err error) {
 
 	if price > 0 {
 		// 文档下载人，扣除积分
-		u.Coin = u.Coin - price
-		if _, err = o.Update(u); err != nil {
-			return
-		}
+		//u.Coin = u.Coin - price
+		//if _, err = o.Update(u); err != nil {
+		//	return
+		//}
 		// 文档分享人，增加积分
 		sqlShareUser := fmt.Sprintf("update `%v` set `Coin`=`Coin`+? where Id = ?", GetTableUserInfo())
 		if _, err = o.Raw(sqlShareUser, price, docInfo.Uid).Exec(); err != nil {
@@ -281,7 +285,8 @@ func (this *User) CanDownloadFile(uid, docId int) (urlStr string, err error) {
 		}
 
 		// 增加免费下载记录
-		free := &FreeDown{Uid: uid, Did: docId, TimeCreate: now}
+		free := &FreeDown{Did: docId, TimeCreate: now}
+		//free := &FreeDown{Uid: uid, Did: docId, TimeCreate: now}
 		if _, err = o.Insert(free); err != nil {
 			return
 		}
