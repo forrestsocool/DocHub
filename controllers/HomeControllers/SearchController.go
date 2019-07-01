@@ -44,6 +44,15 @@ func (this *SearchController) Get() {
 		params["type"] = this.GetString("type")
 	}
 	params["type"] = helper.Default(params["type"], "all") //默认全部搜索
+
+
+	if _, ok := params["searchBar"]; !ok { //搜索类型
+		params["searchBar"] = this.GetString("searchBar")
+	}
+	params["searchBar"] = helper.Default(params["searchBar"], "off") //默认全部搜索
+
+
+
 	if _, ok := params["sort"]; !ok {                      //排序
 		params["sort"] = this.GetString("sort")
 	}
