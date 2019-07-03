@@ -2,6 +2,8 @@ package HomeControllers
 
 import (
 	"fmt"
+	"github.com/TruthHun/DocHub/helper/conv"
+	"github.com/astaxie/beego/orm"
 	"os"
 	"path/filepath"
 	"strings"
@@ -9,9 +11,7 @@ import (
 	"time"
 
 	"github.com/TruthHun/DocHub/helper"
-	"github.com/TruthHun/DocHub/helper/conv"
 	"github.com/TruthHun/DocHub/models"
-	"github.com/astaxie/beego/orm"
 )
 
 type UploadController struct {
@@ -29,21 +29,30 @@ func (this *UploadController) SegWord() {
 
 //文档上传页面
 func (this *UploadController) Get() {
-	cond := orm.NewCondition().And("status", 1)
-	data, _, _ := models.GetList(models.GetTableCategory(), 1, 2000, cond, "Sort", "Title")
-	this.Xsrf()
-	this.Data["Seo"] = models.NewSeo().GetByPage("PC-Upload", "文档上传-文档分享", "文档上传,文档分享", "文档上传-文档分享", this.Sys.Site)
-	this.Data["Cates"], _ = conv.InterfaceToJson(data)
-	this.Data["json"] = data
-	this.Data["IsUpload"] = true
-	this.Data["PageId"] = "wenku-upload"
-	this.Data["MaxSize"] = models.NewSys().GetByField("MaxFile").MaxFile
-	this.TplName = "index.html"
+	if this.IsLogin <= 0{
+		this.Redirect("/user/login", 302)
+		this.ResponseJson(false, "您没有权限上传文档")
+		return
+	} else {
+		cond := orm.NewCondition().And("status", 1)
+		data, _, _ := models.GetList(models.GetTableCategory(), 1, 2000, cond, "Sort", "Title")
+		this.Xsrf()
+		this.Data["Seo"] = models.NewSeo().GetByPage("PC-Upload", "文档上传-文档分享", "文档上传,文档分享", "文档上传-文档分享", this.Sys.Site)
+		this.Data["Cates"], _ = conv.InterfaceToJson(data)
+		this.Data["json"] = data
+		this.Data["IsUpload"] = true
+		this.Data["PageId"] = "wenku-upload"
+		this.Data["MaxSize"] = models.NewSys().GetByField("MaxFile").MaxFile
+		this.TplName = "index.html"
 
-	ModelUser := models.NewUser()
-	info := ModelUser.UserInfo(this.IsLogin)
-	fmt.Println(info.Cid)
-	this.Data["UserCid"] = info.Cid
+
+		ModelUser := models.NewUser()
+		info := ModelUser.UserInfo(this.IsLogin)
+		fmt.Println(info.Cid)
+		this.Data["UserCid"] = info.Cid
+		return
+	}
+
 }
 
 //文档执行操作

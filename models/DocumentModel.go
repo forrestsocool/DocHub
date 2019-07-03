@@ -58,6 +58,7 @@ type DocumentInfo struct {
 	Status      int8 `orm:"default(0);column(Status)"`         //文档资源状态，1正常，0文档未转换成功，-1删除，同时把id录入文档回收站id，-2表示删除了文档文件，但是数据库记录还保留。同时后台也看不到该记录
 	TimeStart   int  `orm:"default(0);column(TimeStart)"`     //文档开始生效时间
 	TimeEnd     int  `orm:"default(2145830400);column(TimeEnd)"`       //文档失效时间
+	Department  string `orm:"default(0);column(Department)"`
 }
 
 func NewDocumentInfo() *DocumentInfo {
@@ -127,6 +128,7 @@ type fullDocument struct {
 	Status      int8   `orm:"column(Status)"`             //文档资源状态，1正常，0文档未转换成功，-1删除，同时把id录入文档回收站i
 	TimeStart   int    `orm:"column(TimeStart)"`          //文档开始生效时间
 	TimeEnd     int    `orm:"column(TimeEnd)"`           //文档失效时间
+	Department  string `orm:"column(Department)"`        //发文部门
 }
 
 //非法文档(侵权或不良信息文档)MD5记录表

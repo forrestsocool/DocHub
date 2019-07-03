@@ -33,7 +33,7 @@
                                         <li><span class="text-muted">文档格式：</span> {{.Doc.Ext}} </li>
                                         <li><span class="text-muted">文档页数：</span> -- </li>
                                         <li><span class="text-muted">下载次数：</span> {{.Doc.Dcnt}} </li>
-                                        <li><span class="text-muted">下载金币：</span> {{if gt .Doc.Price -1}}{{.Doc.Price}}{{else}} <span class="text-danger">不允许下载</span> {{end}} </li>
+{{/*                                        <li><span class="text-muted">下载金币：</span> {{if gt .Doc.Price -1}}{{.Doc.Price}}{{else}} <span class="text-danger">不允许下载</span> {{end}} </li>*/}}
                                         <li><span class="text-muted">浏览次数：</span> {{.Doc.Vcnt}} </li>
                                         <li><span class="text-muted">收藏次数：</span> {{.Doc.Ccnt}} </li>
                                         <li><span class="text-muted">评论人数：</span> {{.Doc.ScorePeople}} </li>
@@ -59,8 +59,8 @@
                             {{end}}
                         </div>
                         <div class="pull-right">
-                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm wenku-collect" data-id="{{.Doc.Id}}"><i class="fa fa-heart-o"></i> 收藏</a>
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#ModalShare" class="btn btn-primary btn-sm"><i class="fa fa-share-alt"></i> 分享</a>
+{{/*                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm wenku-collect" data-id="{{.Doc.Id}}"><i class="fa fa-heart-o"></i> 收藏</a>*/}}
+{{/*                            <a href="javascript:void(0);" data-toggle="modal" data-target="#ModalShare" class="btn btn-primary btn-sm"><i class="fa fa-share-alt"></i> 分享</a>*/}}
                         </div>
                     </div>
                 </div>

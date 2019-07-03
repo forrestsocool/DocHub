@@ -131,33 +131,31 @@
         </form>
     </div>
 </div>
-<div class="panel panel-default wenku-noborder wenku-comment-list">
-    <div class="panel-heading">评论列表</div>
-    <div class="panel-body">
+{{/*<div class="panel panel-default wenku-noborder wenku-comment-list">*/}}
+{{/*    <div class="panel-heading">评论列表</div>*/}}
+{{/*    <div class="panel-body">*/}}
 
-        <ul>
-            {{range .Comments}}
-            <li class="clearfix">
-                <div class="col-xs-1 wenku-nopadding">
-                    <a href="/user/{{.Uid}}" target="_blank" class="thumbnail thumbnail-avatar" title="{{.Username}}">
-                        <img onerror="this.src='/static/Common/img/avatar.png'" src="{{DefaultImage .Avatar}}" class="img-responsive " alt="{{.Username}}">
-                    </a>
-                </div>
-                <div class="col-xs-11 wenku-no-pdr">
-                    <a href="/user/{{.Uid}}" target="_blank" title="{{.Username}}">{{.Username}}</a>
-                    <span><i class="wenku-star star-{{StarVal (Interface2Int .Score) false}}"></i> {{StarVal (Interface2Int .Score) true}}分</span>
-                    <span class="color-gray pull-right">{{TimestampFormat (Interface2Int .TimeCreate)}}</span>
-                    <div class="help-block wenku-comment-content">{{.Content}}</div>
-                </div>
-            </li>
-            {{else}}
-            <li>
-                <div class="help-block">暂时还没有评论，期待您的金玉良言</div>
-            </li>
-            {{end}}
-        </ul>
-
-
-    </div>
-</div>
+{{/*        <ul>*/}}
+{{/*            {{range .Comments}}*/}}
+{{/*            <li class="clearfix">*/}}
+{{/*                <div class="col-xs-1 wenku-nopadding">*/}}
+{{/*                    <a href="/user/{{.Uid}}" target="_blank" class="thumbnail thumbnail-avatar" title="{{.Username}}">*/}}
+{{/*                        <img onerror="this.src='/static/Common/img/avatar.png'" src="{{DefaultImage .Avatar}}" class="img-responsive " alt="{{.Username}}">*/}}
+{{/*                    </a>*/}}
+{{/*                </div>*/}}
+{{/*                <div class="col-xs-11 wenku-no-pdr">*/}}
+{{/*                    <a href="/user/{{.Uid}}" target="_blank" title="{{.Username}}">{{.Username}}</a>*/}}
+{{/*                    <span><i class="wenku-star star-{{StarVal (Interface2Int .Score) false}}"></i> {{StarVal (Interface2Int .Score) true}}分</span>*/}}
+{{/*                    <span class="color-gray pull-right">{{TimestampFormat (Interface2Int .TimeCreate)}}</span>*/}}
+{{/*                    <div class="help-block wenku-comment-content">{{.Content}}</div>*/}}
+{{/*                </div>*/}}
+{{/*            </li>*/}}
+{{/*            {{else}}*/}}
+{{/*            <li>*/}}
+{{/*                <div class="help-block">暂时还没有评论，期待您的金玉良言</div>*/}}
+{{/*            </li>*/}}
+{{/*            {{end}}*/}}
+{{/*        </ul>*/}}
+{{/*    </div>*/}}
+{{/*</div>*/}}
 {{end}}

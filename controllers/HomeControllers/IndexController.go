@@ -44,4 +44,5 @@ func (this *IndexController) Get() {
 	this.Data["IsHome"] = true
 	this.Data["PageId"] = "wenku-index"
 	this.TplName = "index.html"
+	//this.Data["IsLogin"] = this.IsLogin
 }

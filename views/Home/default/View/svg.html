@@ -24,8 +24,12 @@
                             <span title="页数"><i class="fa fa-file-text-o"></i> {{HandlePageNum .Doc.Page}} 页</span>
                             <span title="下载"><i class="fa fa-download"></i> {{.Doc.Dcnt}} 下载</span>
                             <span title="浏览"><i class="fa fa-eye"></i> {{.Doc.Vcnt}} 浏览</span>
-                            <span title="评论"><i class="fa fa-comments-o"></i> {{.Doc.ScorePeople}} 评论</span>
-                            <span title="收藏"><i class="fa fa-heart-o"></i> {{.Doc.Ccnt}} 收藏</span>
+                            <span title="发文部门"><i class="fa fa-users"></i> {{.Doc.Department}} </span>
+                            <span title="生效时间" id="effective"><i class="fa fa-clock-o"></i> </span>
+
+
+{{/*                            <span title="评论"><i class="fa fa-comments-o"></i> {{.Doc.ScorePeople}} 评论</span>*/}}
+{{/*                            <span title="收藏"><i class="fa fa-heart-o"></i> {{.Doc.Ccnt}} 收藏</span>*/}}
                             <span title="评分"><i class="wenku-star star-{{StarVal .Doc.Score false}}"></i> {{StarVal .Doc.Score true}}分</span>
                         </div>
                     </div>
@@ -89,20 +93,22 @@
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#ModalReport" class="btn btn-primary btn-sm"><i class="fa fa-warning"></i> 举报</a>
                         </div>
                         <div class="pull-right wenku-mgl-15px">
-                            {{if gt .Doc.Price -1}}
-                            <a href="javascript:void(0);" rel="nofollow" data-toggle="modal" data-target="#ModalDownload" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-cloud-download"></i> 下载<span class="hidden-xs">原文档</span>({{FormatByte .Doc.Size}})</a>
-                                    {{else}}
-                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm disabled"><i class="fa fa-cloud-download"></i> 下载<span class="hidden-xs">原文档</span>({{FormatByte .Doc.Size}})</a>
-                                    {{end}}
+{{/*                            {{if gt .Doc.Price -1}}*/}}
+{{/*                            <a href="javascript:void(0);" rel="nofollow" data-toggle="modal" data-target="#ModalDownload" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-cloud-download"></i> 下载<span class="hidden-xs">原文档</span>({{FormatByte .Doc.Size}})</a>*/}}
+{{/*                                    {{else}}*/}}
+{{/*                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm disabled"><i class="fa fa-cloud-download"></i> 下载<span class="hidden-xs">原文档</span>({{FormatByte .Doc.Size}})</a>*/}}
+{{/*                                    {{end}}*/}}
+                            <button type="button" class="btn btn-primary btn-submit-download" data-url="/down/{{.Doc.Id}}" data-id="{{.Doc.Id}}" style="padding-top: 9px; padding-bottom: 9px;font-size: 13px;">
+                                <i class="fa fa-cloud-download em14"></i>下载原文档({{FormatByte .Doc.Size}})</button>
                         </div>
-                        <div class="pull-right">
-                            {{if DoesCollect .Doc.Id .LoginUid}}
-                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm wenku-collect disabled"><i class="fa fa-heart-o"></i> <span>已收藏</span></a>
-                            {{else}}
-                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm wenku-collect"><i class="fa fa-heart-o"></i>  <span>收藏</span></a>
-                            {{end}}
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#ModalShare" class="btn btn-primary btn-sm"><i class="fa fa-share-alt"></i> 分享</a>
-                        </div>
+{{/*                        <div class="pull-right">*/}}
+{{/*                            {{if DoesCollect .Doc.Id .LoginUid}}*/}}
+{{/*                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm wenku-collect disabled"><i class="fa fa-heart-o"></i> <span>已收藏</span></a>*/}}
+{{/*                            {{else}}*/}}
+{{/*                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm wenku-collect"><i class="fa fa-heart-o"></i>  <span>收藏</span></a>*/}}
+{{/*                            {{end}}*/}}
+{{/*                            <a href="javascript:void(0);" data-toggle="modal" data-target="#ModalShare" class="btn btn-primary btn-sm"><i class="fa fa-share-alt"></i> 分享</a>*/}}
+{{/*                        </div>*/}}
                     </div>
 
 
@@ -150,6 +156,15 @@
         </div>
     </div>
 </div>
+<script>
+    var timeconvert = {{.Doc.TimeStart}};
+    var unixTimestamp = new Date(timeconvert*1000);
+    var commonTime = unixTimestamp.toLocaleString();
+    var T = commonTime.slice(0,8);
+    document.getElementById("effective").innerHTML=T;
+
+
+</script>
 
 
 <div class="container-fluid navbar-default navbar-fixed-bottom" role="navigation">
@@ -186,8 +201,10 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {{if gt .Doc.Price -1}}
-                    <div class="navbar-text"><i class="fa fa-database"></i>&nbsp;&nbsp;{{.Doc.Price}}&nbsp;&nbsp;个金币 </div>
-                    <li class="active" data-toggle="modal" data-target="#ModalDownload"><a href="javascript:void(0);"><i class="fa fa-cloud-download em14"></i> 下载文档({{FormatByte .Doc.Size}})</a></li>
+{{/*                    <div class="navbar-text"><i class="fa fa-database"></i>&nbsp;&nbsp;{{.Doc.Price}}&nbsp;&nbsp;个金币 </div>*/}}
+                    <button type="button" class="btn btn-primary btn-submit-download" data-url="/down/{{.Doc.Id}}" data-id="{{.Doc.Id}}" style="padding-top: 14px; padding-bottom: 14px;">
+                        <i class="fa fa-cloud-download em14"></i>下载文档({{FormatByte .Doc.Size}})</button>
+{{/*                    <li class="active" data-toggle="modal" data-target="#ModalDownload"><a href="javascript:void(0);"><i class="fa fa-cloud-download em14"></i> 下载文档({{FormatByte .Doc.Size}})</a></li>*/}}
                     {{else}}
                         <div class="navbar-text"><span class="text-danger">不允许下载&nbsp;</span>&nbsp;</div>
                         <li class="active active-forbidden"><a href="javascript:void(0);"><i class="fa fa-cloud-download em14"></i> 下载文档({{FormatByte .Doc.Size}})</a></li>
