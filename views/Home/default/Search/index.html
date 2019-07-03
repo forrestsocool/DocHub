@@ -30,6 +30,9 @@
             <form class="pull-right" action="/search" method="get" role="search">
                 <div class="input-group input-group-lg">
                     <input type="text" required="required" name="wd" value="{{.Params.wd}}" placeholder="请输入搜索关键字" class="form-control">
+                    <input type="text" style="display:none;" class="hidden-input-dept" name="dept" value="{{.Params.dept}}"  placeholder="请输入搜索关键字" >
+                    <input type="text" style="display:none;" class="hidden-input-span" name="span" value="{{.Params.span}}" placeholder="请输入搜索关键字" >
+
                     <span class="input-group-btn"><button type="submit" class="btn btn-default">文库搜索</button></span>
                 </div>
             </form>
@@ -84,23 +87,23 @@
                             <div class="search-tool">
                                 <span class="text-primary">发文部门: &nbsp;</span>
                                 <select class="document-dept">
-                                    <option value="all">不限</option>
-                                    <option value="volvo">军委</option>
-                                    <option value="saab">站支</option>
-                                    <option value="opel">军H</option>
-                                    <option value="audi">基地</option>
+                                    <option value="all" {{if eq .Params.dept "all"}}selected="selected"{{end}}>不限</option>
+                                    <option value="J委" {{if eq .Params.dept "J委"}}selected="selected"{{end}}>J委</option>
+                                    <option value="Z支" {{if eq .Params.dept "Z支"}}selected="selected"{{end}}>Z支</option>
+                                    <option value="JH" {{if eq .Params.dept "JH"}}selected="selected"{{end}}>JH</option>
+                                    <option value="基地" {{if eq .Params.dept "基地"}}selected="selected"{{end}}>基地</option>
                                 </select>
 
                                 <span class="text-primary" style="margin-left: 10px">时间范围: &nbsp;</span>
-                                <input type="text" id="document-year" class="document-date-picker">
-                                <script>
-                                    //执行一个laydate实例
-                                    laydate.render({
-                                        elem: '#document-year' //指定元素
-                                        ,type: 'year'
-                                        ,range: true
-                                    });
-                                </script>
+                                <input type="text" id="document-year" class="document-date-picker" value="{{.Params.span}}">
+{{/*                                <script>*/}}
+{{/*                                    //执行一个laydate实例*/}}
+{{/*                                    laydate.render({*/}}
+{{/*                                        elem: '#document-year' //指定元素*/}}
+{{/*                                        ,type: 'year'*/}}
+{{/*                                        ,range: true*/}}
+{{/*                                    });*/}}
+{{/*                                </script>*/}}
 
 {{/*                                <select class="document-dept">*/}}
 {{/*                                    <option value="volvo">军委</option>*/}}

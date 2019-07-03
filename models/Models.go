@@ -287,20 +287,24 @@ func Search(wd, sourceType, order string, p, listRows, accuracy int) (res Result
 
 //使用MySQL的like查询
 //@param            wd          搜索关键字
-//@param            sourceType  搜索的资源类型，可选择：doc、ppt、xls、pdf、txt、other、all
+//@param            caAlias     搜索的资源所在频道
+//@param            dept        发文部门
+//@param            span        文档时间跨度
 //@param            order       排序，可选值：new(最新)、down(下载)、page(页数)、score(评分)、size(大小)、collect(收藏)、view（浏览）、default(默认)
 //@param            p           页码
 //@param            listRows    每页显示记录数
-func SearchByMysql(wd, sourceType, order string, p, listRows int) (data []orm.Params, total int64) {
-	tables := []string{GetTableDocumentInfo() + " i", GetTableDocument() + " d", GetTableDocumentStore() + " ds"}
+func SearchByMysql(wd, caAlias, dept, span, order string, p, listRows int) (data []orm.Params, total int64) {
+	tables := []string{GetTableDocumentInfo() + " i", GetTableDocument() + " d", GetTableDocumentStore() + " ds", GetTableCategory() + " ca"}
 	on := []map[string]string{
 		{"i.Id": "d.Id"},
 		{"i.DsId": "ds.Id"},
+		{"i.ChanelId": "ca.Id"},
 	}
 	fields := map[string][]string{
 		"i":  {"Score", "TimeCreate", "Id", "Dcnt", "Vcnt", "Price"},
 		"d":  {"Title", "Description"},
 		"ds": {"Page", "Size", "ExtCate", "Md5"},
+		"ca": {"Alias"},
 	}
 	//排序
 	orderBy := []string{}
@@ -322,24 +326,50 @@ func SearchByMysql(wd, sourceType, order string, p, listRows int) (data []orm.Pa
 	}
 	cond := " i.Status>=0 and d.Title like ? "
 	//文档类型过滤条件
-	ExtNum := 0 //这些也暂时写死了，后面再优化....
-	switch strings.ToLower(sourceType) {
-	case "doc":
-		ExtNum = helper.EXT_NUM_WORD
-	case "ppt":
-		ExtNum = helper.EXT_NUM_PPT
-	case "xls":
-		ExtNum = helper.EXT_NUM_EXCEL
-	case "pdf":
-		ExtNum = helper.EXT_NUM_PDF
-	case "txt":
-		ExtNum = helper.EXT_NUM_TEXT
-	case "other":
-		ExtNum = helper.EXT_NUM_OTHER
+	//ExtNum := 0 //这些也暂时写死了，后面再优化....
+	//switch strings.ToLower(sourceType) {
+	//case "doc":
+	//	ExtNum = helper.EXT_NUM_WORD
+	//case "ppt":
+	//	ExtNum = helper.EXT_NUM_PPT
+	//case "xls":
+	//	ExtNum = helper.EXT_NUM_EXCEL
+	//case "pdf":
+	//	ExtNum = helper.EXT_NUM_PDF
+	//case "txt":
+	//	ExtNum = helper.EXT_NUM_TEXT
+	//case "other":
+	//	ExtNum = helper.EXT_NUM_OTHER
+	//}
+	//if ExtNum > 0 {
+	//	cond = cond + " and ds.ExtNum=" + strconv.Itoa(ExtNum)
+	//}
+
+	//cond = cond + " and ds.ExtNum=" + strconv.Itoa(ExtNum)
+
+	//文档搜索分类过滤
+	if caAlias != "all" {
+		cond = cond + " and ca.Alias like " + `"` + caAlias + `"`
 	}
-	if ExtNum > 0 {
-		cond = cond + " and ds.ExtNum=" + strconv.Itoa(ExtNum)
+
+	//文档发文部门过滤
+	if dept != "all" && dept != "" {
+		cond = cond + " and i.Department like " + `"` + dept + `"`
 	}
+
+	//发文年度过滤
+	if span != "" {
+		timeSpan := strings.Split(span, "-")
+		startTimeStr := strings.TrimSpace(timeSpan[0]) + "-01-01T00:00:00+00:00"
+		endTimeStr := strings.TrimSpace(timeSpan[1]) + "-12-31T23:59:59+00:00"
+		tm1, _ := time.Parse(time.RFC3339, startTimeStr)
+		tm2, _ := time.Parse(time.RFC3339, endTimeStr)
+		tStamp1 := tm1.Unix()
+		tStamp2 := tm2.Unix()
+
+		cond = cond + fmt.Sprintf(" and i.TimeStart > %d and i.TimeStart < %d ", tStamp1, tStamp2)
+	}
+
 	o := orm.NewOrm()
 	//数量统计
 	if sql, err := LeftJoinSqlBuild(tables, on, map[string][]string{"i": []string{"Count"}}, 1, 100000000, nil, nil, cond); err == nil {
