@@ -287,16 +287,18 @@ func Search(wd, sourceType, order string, p, listRows, accuracy int) (res Result
 
 //使用MySQL的like查询
 //@param            wd          搜索关键字
-//@param            category    搜索的资源所在频道
+//@param            caAlias     搜索的资源所在频道
+//@param            dept        发文部门
+//@param            span        文档时间跨度
 //@param            order       排序，可选值：new(最新)、down(下载)、page(页数)、score(评分)、size(大小)、collect(收藏)、view（浏览）、default(默认)
 //@param            p           页码
 //@param            listRows    每页显示记录数
-func SearchByMysql(wd, caAlias, order string, p, listRows int) (data []orm.Params, total int64) {
-	tables := []string{GetTableDocumentInfo() + " i", GetTableDocument() + " d", GetTableDocumentStore() + " ds", GetTableCategory() + " ca",}
+func SearchByMysql(wd, caAlias, dept, span, order string, p, listRows int) (data []orm.Params, total int64) {
+	tables := []string{GetTableDocumentInfo() + " i", GetTableDocument() + " d", GetTableDocumentStore() + " ds", GetTableCategory() + " ca"}
 	on := []map[string]string{
 		{"i.Id": "d.Id"},
 		{"i.DsId": "ds.Id"},
-		{"i.ChanelId" : "ca.Id"},
+		{"i.ChanelId": "ca.Id"},
 	}
 	fields := map[string][]string{
 		"i":  {"Score", "TimeCreate", "Id", "Dcnt", "Vcnt", "Price"},
@@ -346,8 +348,26 @@ func SearchByMysql(wd, caAlias, order string, p, listRows int) (data []orm.Param
 	//cond = cond + " and ds.ExtNum=" + strconv.Itoa(ExtNum)
 
 	//文档搜索分类过滤
-	if(caAlias != "all"){
+	if caAlias != "all" {
 		cond = cond + " and ca.Alias like " + `"` + caAlias + `"`
+	}
+
+	//文档发文部门过滤
+	if dept != "all" && dept != "" {
+		cond = cond + " and i.Department like " + `"` + dept + `"`
+	}
+
+	//发文年度过滤
+	if span != "" {
+		timeSpan := strings.Split(span, "-")
+		startTimeStr := strings.TrimSpace(timeSpan[0]) + "-01-01T00:00:00+00:00"
+		endTimeStr := strings.TrimSpace(timeSpan[1]) + "-12-31T23:59:59+00:00"
+		tm1, _ := time.Parse(time.RFC3339, startTimeStr)
+		tm2, _ := time.Parse(time.RFC3339, endTimeStr)
+		tStamp1 := tm1.Unix()
+		tStamp2 := tm2.Unix()
+
+		cond = cond + fmt.Sprintf(" and i.TimeStart > %d and i.TimeStart < %d ", tStamp1, tStamp2)
 	}
 
 	o := orm.NewOrm()

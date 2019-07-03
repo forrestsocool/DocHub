@@ -45,15 +45,22 @@ func (this *SearchController) Get() {
 	}
 	params["type"] = helper.Default(params["type"], "all") //默认全部搜索
 
+	if _, ok := params["dept"]; !ok { //搜索发文部门
+		params["dept"] = this.GetString("dept")
+	}
+	params["dept"] = helper.Default(params["dept"], "all") //默认全部搜索
+
+	if _, ok := params["span"]; !ok { //搜索发文时间跨度
+		params["span"] = this.GetString("span")
+	}
+	params["span"] = helper.Default(params["span"], "") //默认全部搜索
 
 	if _, ok := params["searchBar"]; !ok { //搜索类型
 		params["searchBar"] = this.GetString("searchBar")
 	}
 	params["searchBar"] = helper.Default(params["searchBar"], "off") //默认全部搜索
 
-
-
-	if _, ok := params["sort"]; !ok {                      //排序
+	if _, ok := params["sort"]; !ok { //排序
 		params["sort"] = this.GetString("sort")
 	}
 	params["sort"] = helper.Default(params["sort"], "default") //默认排序
@@ -121,7 +128,7 @@ func (this *SearchController) Get() {
 		}
 
 	} else {
-		this.Data["Data"], res.TotalFound = models.SearchByMysql(params["wd"], params["type"], params["sort"], p, listRows)
+		this.Data["Data"], res.TotalFound = models.SearchByMysql(params["wd"], params["type"], params["dept"], params["span"], params["sort"], p, listRows)
 		res.Word = []string{params["wd"]}
 		end := time.Now().UnixNano()
 		res.Time = float64(end-start) / 1000000000

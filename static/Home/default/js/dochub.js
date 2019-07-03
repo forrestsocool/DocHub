@@ -35,6 +35,7 @@ $(function(){
     //搜索页面
     if (PageId=="wenku-search"){
         var _this = $(this),
+            searchToolDept = _this.find(".document-dept").eq(0),
             showSearchTool = _this.find(".show-search-tool").eq(0),
             hideSearchTool = _this.find(".hide-search-tool").eq(0),
             helpBlock = _this.find(".help-block").eq(0);
@@ -46,6 +47,30 @@ $(function(){
             helpBlock.animate({top: "-40px"}, 250,)
         });
 
+        console.log(_this.find(".hidden-input-dept").val());
+        console.log(_this.find(".hidden-input-span").val());
+
+        //如果搜索条件不为空，显示搜索条
+        if(_this.find(".hidden-input-dept").val() !== "all" || _this.find(".hidden-input-span").val()){
+            helpBlock.animate({top: "0px"}, 0,)
+        }
+
+        searchToolDept.on("change", function () {
+            //console.log(searchToolDept.val());
+            _this.find(".hidden-input-dept").val(searchToolDept.val());
+        });
+
+        laydate.render({
+            elem: '#document-year' //指定元素
+            ,type: 'year'
+            ,range: true
+            ,done: function(value, date, endDate){
+                console.log(value); //得到日期生成的值，如：2017-08-18
+                //console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+                //console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+                _this.find(".hidden-input-span").val(value);
+            }
+        });
     }
 	
 	//注册页面
