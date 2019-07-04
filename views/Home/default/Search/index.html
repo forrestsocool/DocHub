@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="container wenku-top">
   			<span class="pull-left">
-  				<a href="/" target="_blank" title="文库首页">文库首页</a>
+  				<a href="/" target="_blank" title="首页">首页</a>
                 {{range .Chanels}}
 				<a href="/list/{{.Alias}}" target="_blank" title="{{.Title}}">{{.Title}}</a>
 				{{end}}
@@ -47,9 +47,9 @@
                 <div class="panel-body">
                     <div class="strong">文档类型</div>
                     <ul>
-                        <li><a href='{{BuildURL "/search/type/all" "wd" .Params.wd}}' {{if eq .Params.type "all"}}class="active"{{end}}>不限</a></li>
+                        <li><a href='{{BuildURL "/search/type/all" "dept" .Params.dept "span" .Params.span "wd" .Params.wd}}' {{if eq .Params.type "all"}}class="active"{{end}}>不限</a></li>
                         {{range .Chanels}}
-                            <li><a href='{{BuildURL "/search/" "type" .Alias "wd" $.Params.wd}}' {{if eq $.Params.type .Alias}}class="active"{{end}}>{{.Title}}</a></li>
+                            <li><a href='{{BuildURL "/search/" "type" .Alias "dept" $.Params.dept "span" $.Params.span "wd" $.Params.wd}}' {{if eq $.Params.type .Alias}}class="active"{{end}}>{{.Title}}</a></li>
 
                             {{/*                            <li><a href="/search/type/list/{{.Alias}}">{{.Title}}</a></li>*/}}
                         {{end}}
@@ -66,13 +66,13 @@
                     </ul>
                     <div class="strong">结果排序</div>
                     <ul>
-                        <li><a href='{{BuildURL "/search/sort/default" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "default"}}class="active"{{end}}>默认排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/page" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "page"}}class="active"{{end}}>页数排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/score" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "score"}}class="active"{{end}}>评分排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/size" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "size"}}class="active"{{end}}>大小排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/down" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "down"}}class="active"{{end}}>下载排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/view" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "view"}}class="active"{{end}}>浏览排序</a></li>
-                        <li><a href='{{BuildURL "/search/sort/collect" "cate" .Params.cate "wd" .Params.wd}}' {{if eq .Params.sort "collect"}}class="active"{{end}}>收藏排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/default" "type" .Params.type "dept" .Params.dept "span" .Params.span "wd" .Params.wd}}' {{if eq .Params.sort "default"}}class="active"{{end}}>默认排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/page" "type" .Params.type "dept" .Params.dept "span" .Params.span "wd" .Params.wd}}' {{if eq .Params.sort "page"}}class="active"{{end}}>页数排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/score" "type" .Params.type "dept" .Params.dept "span" .Params.span "wd" .Params.wd}}' {{if eq .Params.sort "score"}}class="active"{{end}}>评分排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/size" "type" .Params.type "dept" .Params.dept "span" .Params.span "wd" .Params.wd}}' {{if eq .Params.sort "size"}}class="active"{{end}}>大小排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/down" "type" .Params.type "dept" .Params.dept "span" .Params.span "wd" .Params.wd}}' {{if eq .Params.sort "down"}}class="active"{{end}}>下载排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/view" "type" .Params.type "dept" .Params.dept "span" .Params.span "wd" .Params.wd}}' {{if eq .Params.sort "view"}}class="active"{{end}}>浏览排序</a></li>
+                        <li><a href='{{BuildURL "/search/sort/collect" "type" .Params.type "dept" .Params.dept "span" .Params.span "wd" .Params.wd}}' {{if eq .Params.sort "collect"}}class="active"{{end}}>收藏排序</a></li>
                     </ul>
                 </div>
             </div>
