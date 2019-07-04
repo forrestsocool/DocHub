@@ -8,8 +8,9 @@
 					<span class="text-primary">{{.Sys.CntDoc}}</span>
 				</div>
 				<div class="col-xs-6 wenku-nopadding">
-					<div class="help-block">注册用户</div>
-					<span class="text-primary">{{.Sys.CntUser}}</span>
+					<div class="help-block">总下载数</div>
+{{/*					<span class="text-primary">{{.Sys.CntUser}}</span>*/}}
+					<span class="text-primary">{{.Doc.Dcnt}}</span>
 				</div>
 			</div>
 
@@ -33,15 +34,15 @@
 						</div>
 					</div>
 					<div class="row wenku-userinfo">
-						<div class="col-xs-4 wenku-nopadding">
-							<div class="help-block">财富</div>
-							<a href="/user/{{$.LoginUid}}/coin" target="_blank" class="text-primary">{{.Coin}}</a>
-						</div>
-						<div class="col-xs-4 wenku-nopadding">
+{{/*						<div class="col-xs-4 wenku-nopadding">*/}}
+{{/*							<div class="help-block">财富</div>*/}}
+{{/*							<a href="/user/{{$.LoginUid}}/coin" target="_blank" class="text-primary">{{.Coin}}</a>*/}}
+{{/*						</div>*/}}
+						<div class="col-xs-4 wenku-nopadding" style="margin-left: 15px; margin-right: 15px;">
 							<div class="help-block">文档</div>
 							<a href="/user/{{$.LoginUid}}/doc" target="_blank" class="text-primary">{{.Document}}</a>
 						</div>
-						<div class="col-xs-4 wenku-nopadding">
+						<div class="col-xs-4 wenku-nopadding" style="margin-left: 15px; margin-right: 15px;">
 							<div class="help-block">收藏</div>
 							<a href="/user/{{$.LoginUid}}/collect" target="_blank" class="text-primary">{{.Collect}}</a>
 						</div>

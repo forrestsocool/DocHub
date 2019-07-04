@@ -36,7 +36,7 @@
                         {{if eq $.LoginUid (.User.Id|Interface2Int)}}
                         <small class="color-gray wenku-pdl-15px">
                             [&nbsp;
-                            <a href="javascript:void(0);" class="wenku-tooltip" data-toggle="modal" data-target="#ModalUserEdit" title="会员设置"><i class="fa fa-cog"></i></a>
+                            <a href="javascript:void(0);" class="wenku-tooltip" data-toggle="modal" data-target="#ModalUserEdit" title="管理员设置"><i class="fa fa-cog"></i></a>
                             &nbsp; | &nbsp;
                             <a href="/user/logout" class="wenku-ajax-get wenku-tooltip" title="退出登录"><i class="fa fa-sign-out"></i> </a>
                             &nbsp;]
@@ -49,11 +49,11 @@
                             <div>文档</div>
                             <div class="text-primary">{{.User.Document}}</div>
                         </div>
-                        <div class="col-xs-4 col-xs-middle">
-                            {{/*财富: <a href="/user/{{.User.Id}}/coin" class="text-primary">{{.User.Coin}} </a>*/}}
-                            <div>财富</div>
-                            <div class="text-primary">{{.User.Coin}}</div>
-                        </div>
+{{/*                        <div class="col-xs-4 col-xs-middle">*/}}
+{{/*                            */}}{{/*财富: <a href="/user/{{.User.Id}}/coin" class="text-primary">{{.User.Coin}} </a>*/}}
+{{/*                            <div>财富</div>*/}}
+{{/*                            <div class="text-primary">{{.User.Coin}}</div>*/}}
+{{/*                        </div>*/}}
                         <div class="col-xs-4">
                             {{/*收藏: <a href="/user/{{.User.Id}}/collect" class="text-primary">{{.User.Collect}}</a>*/}}
                             <div>收藏夹</div>

@@ -138,6 +138,7 @@ func (this *ElasticSearchClient) Init() (err error) {
 		if err = this.existIndex(); err != nil {
 			//创建索引成功
 			if err = this.createIndex(); err == nil {
+				fmt.Printf("create mapping success")
 				//创建mapping
 				js := `{
 	"properties": {
@@ -289,6 +290,7 @@ func (this *ElasticSearchClient) Search(wd, sourceType, order string, p, listRow
 		b, _ := ioutil.ReadAll(resp.Body)
 		err = json.Unmarshal(b, &result)
 	}
+	fmt.Print("query body")
 	return
 }
 
@@ -340,6 +342,7 @@ func (this *ElasticSearchClient) BuildIndexById(id int) (err error) {
 			err = this.BuildIndex(item)
 		}
 	}
+	fmt.Print("search by id success")
 	return
 }
 
@@ -448,7 +451,9 @@ func (this *ElasticSearchClient) ping() error {
 		body, _ := ioutil.ReadAll(resp.Body)
 		err = errors.New(resp.Status + "；" + string(body))
 	}
+	fmt.Print("es server is comunicatable")
 	return err
+
 }
 
 //查询索引是否存在
@@ -481,20 +486,25 @@ func (this *ElasticSearchClient) createIndex() (err error) {
 
 //put请求
 func (this *ElasticSearchClient) put(api string) (req *httplib.BeegoHTTPRequest) {
+	fmt.Print("put request")
 	return httplib.Put(api).Header("Content-Type", "application/json").SetTimeout(this.Timeout, this.Timeout)
+
 }
 
 //post请求
 func (this *ElasticSearchClient) post(api string) (req *httplib.BeegoHTTPRequest) {
+	fmt.Print("post request")
 	return httplib.Post(api).Header("Content-Type", "application/json").SetTimeout(this.Timeout, this.Timeout)
 }
 
 //delete请求
 func (this *ElasticSearchClient) delete(api string) (req *httplib.BeegoHTTPRequest) {
+	fmt.Print("delete request")
 	return httplib.Delete(api).Header("Content-Type", "application/json").SetTimeout(this.Timeout, this.Timeout)
 }
 
 //get请求
 func (this *ElasticSearchClient) get(api string) (req *httplib.BeegoHTTPRequest) {
+	fmt.Print("get request")
 	return httplib.Get(api).Header("Content-Type", "application/json").SetTimeout(this.Timeout, this.Timeout)
 }

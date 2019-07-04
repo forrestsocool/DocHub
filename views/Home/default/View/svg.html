@@ -25,7 +25,13 @@
                             <span title="下载"><i class="fa fa-download"></i> {{.Doc.Dcnt}} 下载</span>
                             <span title="浏览"><i class="fa fa-eye"></i> {{.Doc.Vcnt}} 浏览</span>
                             <span title="发文部门"><i class="fa fa-users"></i> {{.Doc.Department}} </span>
-                            <span title="生效时间" id="effective"><i class="fa fa-clock-o"></i> </span>
+                            {{if .Doc.TimeEnd}}
+                            <span title="生效时间"><i class="fa fa-clock-o"></i> {{TimetoDate .Doc.TimeStart}}--{{TimetoDate .Doc.TimeEnd}}</span>
+                            {{else}}
+                                {{if .Doc.TimeStart}}
+                                    <span title="生效时间"><i class="fa fa-clock-o"></i> {{TimetoDate .Doc.TimeStart}}</span>
+                                {{end}}
+                            {{end}}
 
 
 {{/*                            <span title="评论"><i class="fa fa-comments-o"></i> {{.Doc.ScorePeople}} 评论</span>*/}}
@@ -156,15 +162,15 @@
         </div>
     </div>
 </div>
-<script>
-    var timeconvert = {{.Doc.TimeStart}};
-    var unixTimestamp = new Date(timeconvert*1000);
-    var commonTime = unixTimestamp.toLocaleString();
-    var T = commonTime.slice(0,8);
-    document.getElementById("effective").innerHTML=T;
+{{/*<script>*/}}
+{{/*    var timeconvert = {{.Doc.TimeStart}};*/}}
+{{/*    var unixTimestamp = new Date(timeconvert*1000);*/}}
+{{/*    var commonTime = unixTimestamp.toLocaleString();*/}}
+{{/*    var T = commonTime.slice(0,8);*/}}
+{{/*    document.getElementById("effective").innerHTML=T;*/}}
 
 
-</script>
+{{/*</script>*/}}
 
 
 <div class="container-fluid navbar-default navbar-fixed-bottom" role="navigation">

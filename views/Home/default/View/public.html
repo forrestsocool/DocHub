@@ -110,22 +110,22 @@
         </div>
         <form role="form" method="post" action="/comment/{{.Doc.Id}}" class="wenku-comment-form">
             <div class="form-group">
-                <textarea name="Comment" rows="3" class="form-control" required="required" placeholder="文明评论，文明你我他"></textarea>
+{{/*                <textarea name="Comment" rows="3" class="form-control" required="required" placeholder="文明评论，文明你我他"></textarea>*/}}
                 <input type="hidden" name="Score" id="score" value="0" />
             </div>
             <div class="form-group">
-                <div class="col-xs-3 clearfix wenku-nopadding">
-                    <div class="help-block">您好可以输入 <span class="text-danger wenku-comment-num">255</span> 个字符</div>
-                </div>
-                <div class="col-xs-5 clearfix text-right wenku-answer-tips">
-                    <div class="help-block">{{.Sys.Question}}( 答案：<span class="text-danger">{{.Sys.Answer}}</span> )</div>
-                </div>
+{{/*                <div class="col-xs-3 clearfix wenku-nopadding">*/}}
+{{/*                    <div class="help-block">您好可以输入 <span class="text-danger wenku-comment-num">255</span> 个字符</div>*/}}
+{{/*                </div>*/}}
+{{/*                <div class="col-xs-5 clearfix text-right wenku-answer-tips">*/}}
+{{/*                    <div class="help-block">{{.Sys.Question}}( 答案：<span class="text-danger">{{.Sys.Answer}}</span> )</div>*/}}
+{{/*                </div>*/}}
                 {{.xsrfdata}}
-                <div class="col-xs-2 clearfix wenku-nopadding">
-                    <input type="text" name="Answer" required="required" class="form-control" placeholder="请输入答案">
-                </div>
+{{/*                <div class="col-xs-2 clearfix wenku-nopadding">*/}}
+{{/*                    <input type="text" name="Answer" required="required" class="form-control" placeholder="请输入答案">*/}}
+{{/*                </div>*/}}
                 <div class="col-xs-2 wenku-no-pdr clearfix text-right">
-                    <input type="submit" class="btn btn-danger btn-block" value="发表评论">
+                    <input type="submit" class="btn btn-danger btn-block" value="文档打分">
                 </div>
             </div>
         </form>

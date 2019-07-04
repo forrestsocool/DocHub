@@ -41,6 +41,7 @@ type Sys struct {
 	IsCloseReg        bool   `orm:"default(false);column(IsCloseReg)"`                   //是否关闭注册
 	StoreType         string `orm:"default(cs-oss);column(StoreType);size(15)"`          //文档存储方式
 	CheckRegEmail     bool   `orm:"default(true);column(CheckRegEmail);"`                //是否需要验证注册邮箱，如果需要验证注册邮箱，提要求发送注册验证码
+	//DownloadNum      int    `orm:"default(0);column(Dcnt)"`								 //总下载数
 }
 
 func NewSys() *Sys {

@@ -97,6 +97,17 @@ func TimestampFormat(timestamp int, format ...string) string {
 	return time.Unix(int64(timestamp), 0).Format(formats)
 }
 
+//时间戳格式化到日期
+func TimetoDate(timestamp int, format ...string)string {
+	formats := "2006-01-02"
+	if len(format) > 0 {
+		formats = format[0]
+	}
+	return time.Unix(int64(timestamp),0).Format(formats)
+}
+
+
+
 //将字符串或者其他可转化数字的内容格式化成int数字类型返回
 //@param        a            interface{}         需要转化成数字的内容
 func Interface2Int(a interface{}) int {

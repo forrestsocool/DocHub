@@ -446,7 +446,8 @@ func (this *UserController) Sign() {
 		}
 		models.NewCoinLog().LogRecord(log)
 	}
-	this.ResponseJson(true, fmt.Sprintf("恭喜您，今日签到成功，领取了 %v 个金币", this.Sys.Sign))
+	//this.ResponseJson(true, fmt.Sprintf("恭喜您，今日签到成功，领取了 %v 个金币", this.Sys.Sign))
+	this.ResponseJson(true, fmt.Sprintf("恭喜您，今日签到成功。", this.Sys.Sign))
 }
 
 // 检测用户是否已登录
@@ -662,6 +663,7 @@ func (this *UserController) DocEdit() {
 			"Tags":   {"required"},
 			"Intro":  {"required"},
 			"Price":  {"required", "int"},
+			"Department": {"required","string"},
 		}
 		params, errs := helper.Valid(this.Ctx.Request.Form, ruels)
 		if len(errs) > 0 {
@@ -675,6 +677,7 @@ func (this *UserController) DocEdit() {
 		info.ChanelId = params["Chanel"].(int)
 		info.Price = params["Price"].(int)
 		info.TimeUpdate = int(time.Now().Unix())
+		info.Department =params["Department"].(string)
 		orm.NewOrm().Update(&doc, "Title", "Keywords", "Description")
 		orm.NewOrm().Update(&info, "Pid", "Cid", "ChanelId", "Price")
 		//原分类-1
