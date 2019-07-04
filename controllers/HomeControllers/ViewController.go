@@ -2,6 +2,7 @@ package HomeControllers
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/orm"
 
 	"strings"
 
@@ -10,7 +11,6 @@ import (
 	"github.com/TruthHun/DocHub/helper"
 	"github.com/TruthHun/DocHub/models"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
 )
 
 type ViewController struct {
@@ -120,51 +120,79 @@ func (this *ViewController) DownFree() {
 }
 
 //文档评论
+//func (this *ViewController) Comment() {
+//	id, _ := this.GetInt(":id")
+//	score, _ := this.GetInt("Score")
+//	answer := this.GetString("Answer")
+//	if answer != this.Sys.Answer {
+//		this.ResponseJson(false, "请输入正确的答案")
+//	}
+//	if id > 0 {
+//		if this.IsLogin > 0 {
+//			if score < 1 || score > 5 {
+//				this.ResponseJson(false, "请给文档评分")
+//			} else {
+//				comment := models.DocumentComment{
+//					Uid:        this.IsLogin,
+//					Did:        id,
+//					Content:    this.GetString("Comment"),
+//					TimeCreate: int(time.Now().Unix()),
+//					Status:     true,
+//					Score:      score * 10000,
+//				}
+//				cnt := strings.Count(comment.Content, "") - 1
+//				if cnt > 255 || cnt < 8 {
+//					this.ResponseJson(false, "评论内容限8-255个字符")
+//				} else {
+//					_, err := orm.NewOrm().Insert(&comment)
+//					if err != nil {
+//						this.ResponseJson(false, "发表评论失败：每人仅限给每个文档点评一次")
+//					} else {
+//						//文档评论人数增加
+//						sql := fmt.Sprintf("UPDATE `%v` SET `Score`=(`Score`*`ScorePeople`+%v)/(`ScorePeople`+1),`ScorePeople`=`ScorePeople`+1 WHERE Id=%v", models.GetTableDocumentInfo(), comment.Score, comment.Did)
+//						_, err := orm.NewOrm().Raw(sql).Exec()
+//						if err != nil {
+//							helper.Logger.Error(err.Error())
+//						}
+//						this.ResponseJson(true, "恭喜您，评论发表成功")
+//					}
+//				}
+//			}
+//		} else {
+//			this.ResponseJson(false, "评论失败，您当前处于未登录状态，请先登录")
+//		}
+//	} else {
+//		this.ResponseJson(false, "评论失败，参数不正确")
+//	}
+//}
+//文档评论，只针对评分处理，去掉其他条件
 func (this *ViewController) Comment() {
 	id, _ := this.GetInt(":id")
 	score, _ := this.GetInt("Score")
-	answer := this.GetString("Answer")
-	if answer != this.Sys.Answer {
-		this.ResponseJson(false, "请输入正确的答案")
-	}
-	if id > 0 {
-		if this.IsLogin > 0 {
-			if score < 1 || score > 5 {
-				this.ResponseJson(false, "请给文档评分")
-			} else {
-				comment := models.DocumentComment{
-					Uid:        this.IsLogin,
-					Did:        id,
-					Content:    this.GetString("Comment"),
-					TimeCreate: int(time.Now().Unix()),
-					Status:     true,
-					Score:      score * 10000,
-				}
-				cnt := strings.Count(comment.Content, "") - 1
-				if cnt > 255 || cnt < 8 {
-					this.ResponseJson(false, "评论内容限8-255个字符")
-				} else {
-					_, err := orm.NewOrm().Insert(&comment)
-					if err != nil {
-						this.ResponseJson(false, "发表评论失败：每人仅限给每个文档点评一次")
-					} else {
-						//文档评论人数增加
-						sql := fmt.Sprintf("UPDATE `%v` SET `Score`=(`Score`*`ScorePeople`+%v)/(`ScorePeople`+1),`ScorePeople`=`ScorePeople`+1 WHERE Id=%v", models.GetTableDocumentInfo(), comment.Score, comment.Did)
-						_, err := orm.NewOrm().Raw(sql).Exec()
-						if err != nil {
-							helper.Logger.Error(err.Error())
-						}
-						this.ResponseJson(true, "恭喜您，评论发表成功")
-					}
-				}
-			}
+	if id > 0{
+		if score < 1 || score > 5 {
+			this.ResponseJson(false, "请给文档评分")
 		} else {
-			this.ResponseJson(false, "评论失败，您当前处于未登录状态，请先登录")
+			comment :=models.DocumentComment{
+				Did:        id,
+				TimeCreate: int(time.Now().Unix()),
+				Status:     true,
+				Score:      score * 10000,
+			}
+			sql := fmt.Sprintf("UPDATE `%v` SET `Score`=(`Score`*`ScorePeople`+%v)/(`ScorePeople`+1),`ScorePeople`=`ScorePeople`+1 WHERE Id=%v", models.GetTableDocumentInfo(), comment.Score, comment.Did)
+			_, err := orm.NewOrm().Raw(sql).Exec()
+			if err != nil {
+				helper.Logger.Error(err.Error())
+			}
+			this.ResponseJson(true, "恭喜您，评分成功")
 		}
 	} else {
-		this.ResponseJson(false, "评论失败，参数不正确")
+		this.ResponseJson(false,"评分失败，参数错误")
 	}
 }
+
+
+
 
 //获取评论列表
 func (this *ViewController) GetComment() {

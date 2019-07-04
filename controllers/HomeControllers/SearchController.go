@@ -122,6 +122,7 @@ func (this *SearchController) Get() {
 					"Title":       title,
 					"Size":        item.Source.Size,
 					"ExtCate":     extCate,
+
 				})
 			}
 			this.Data["Data"] = data

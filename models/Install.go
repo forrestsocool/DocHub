@@ -38,6 +38,7 @@ func installAdmin() {
 
 //安装系统初始数据
 func installSys() {
+
 	var sys = Sys{
 		Id: 1,
 		TplEmailReg: `<style type="text/css">
@@ -55,7 +56,7 @@ func installSys() {
 			<p>您本次申请找回密码的邮箱验证码是: <strong style="font-size: 30px;color: red;">{code}</strong></p>
 			<p>如果非您本人操作，请忽略该邮件。</p>`,
 		Trends:            "1,2,3,4,5",
-		Site:              "DocHub(多哈)文库",
+		Site:              "法规政策网",
 		Reward:            5,
 		Sign:              5,
 		Question:          "DocHub文库的中文名是什么？",

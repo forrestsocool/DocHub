@@ -15,7 +15,7 @@
   			</span>
             <span class="pull-right">
 			 	<a href="/upload" target="_blank" title="上传文档">上传文档</a>
-			 	<a href="/user" target="_blank" title="会员中心">会员中心</a>
+			 	<a href="/user" target="_blank" title="管理员中心">管理员中心</a>
             </span>
     </div>
 </div>
@@ -137,7 +137,7 @@
                             <div class="wenku-desc help-block">{{GetDescByDid .Id 120}}</div>
                             <div class="help-block wenku-info">
                                 <div class="text-muted">
-                                    <i class="wenku-star star-{{StarVal (Interface2Int .Score) false}}"></i>{{StarVal (Interface2Int .Score) true}} 分 <span class="pull-right">{{.Price}} 金币 | {{.Page}} 页 | {{FormatByte (Interface2Int .Size)}}<span class="hidden-xs"> | {{TimestampFormat (Interface2Int .TimeCreate) "2006-01-02 15:04"}}</span> </span>
+                                    <i class="wenku-star star-{{StarVal (Interface2Int .Score) false}}"></i>{{StarVal (Interface2Int .Score) true}} 分 <span class="pull-right">{{.Page}} 页 | {{FormatByte (Interface2Int .Size)}}<span class="hidden-xs"> | {{TimestampFormat (Interface2Int .TimeCreate) "2006-01-02 15:04"}}</span> </span>
                                 </div>
                             </div>
                         </li>

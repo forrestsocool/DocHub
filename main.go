@@ -31,6 +31,7 @@ func init() {
 	}()
 
 	beego.AddFuncMap("TimestampFormat", helper.TimestampFormat)
+	beego.AddFuncMap("TimetoDate", helper.TimetoDate)
 	beego.AddFuncMap("Interface2Int", helper.Interface2Int)
 	beego.AddFuncMap("Interface2String", helper.Interface2String)
 	beego.AddFuncMap("Default", helper.Default)

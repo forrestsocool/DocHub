@@ -31,7 +31,7 @@ func (this *UploadController) SegWord() {
 func (this *UploadController) Get() {
 	if this.IsLogin <= 0{
 		this.Redirect("/user/login", 302)
-		this.ResponseJson(false, "您没有权限上传文档")
+		//this.ResponseJson(false, "您没有权限上传文档")
 		return
 	} else {
 		cond := orm.NewCondition().And("status", 1)

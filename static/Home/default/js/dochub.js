@@ -604,26 +604,25 @@ $(function(){
 		//提交文档评论
 		$("form.wenku-comment-form [type=submit]").click(function (e) {
 			e.preventDefault();
-			var form=$("form.wenku-comment-form"),score=$("#score").val(),comment=form.find("[name=Comment]").val(),answer=form.find("[name=Answer]").val(),action=form.attr("action");
+            var form=$("form.wenku-comment-form"),score=$("#score").val(),action=form.attr("action");
+			// var form=$("form.wenku-comment-form"),score=$("#score").val(),comment=form.find("[name=Comment]").val(),answer=form.find("[name=Answer]").val(),action=form.attr("action");
 			if (score=="0"){
 				wenku_alert("danger","请给文档评分",3000,"");
 				return
 			}
-            if (comment.length<8 || comment.length>255){
-                wenku_alert("danger","评论内容，字符个数限8-255个字符",3000,"");
-                form.find("[name=Comment]").focus();
-                return
-            }
-            if (answer!=$(".wenku-answer-tips .text-danger").text()){
-                wenku_alert("danger","请输入正确答案",3000,"");
-                form.find("[name=Answer]").focus();
-                return
-            }
+            // if (comment.length<8 || comment.length>255){
+            //     wenku_alert("danger","评论内容，字符个数限8-255个字符",3000,"");
+            //     form.find("[name=Comment]").focus();
+            //     return
+            // }
+            // if (answer!=$(".wenku-answer-tips .text-danger").text()){
+            //     wenku_alert("danger","请输入正确答案",3000,"");
+            //     form.find("[name=Answer]").focus();
+            //     return
+            // }
 			$.post(action,form.serialize(),function (ret) {
 				if(ret.status==1){
 					wenku_alert("success",ret.msg,3000,"");
-                    form.find("[name=Comment]").val("");
-                    form.find("[name=Answer]").val("");
                     $("#score").val("0");
                     $(".wenku-score .fa-star").addClass("fa-star-o").removeClass("fa-star");
 				}else{
