@@ -10,12 +10,12 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-//文档回收站
+//文件回收站
 type DocumentRecycle struct {
-	Id   int  `orm:"column(Id)"`                  //对应的文档id
+	Id   int  `orm:"column(Id)"`                  //对应的文件id
 	Uid  int  `orm:"default(0);column(Uid)"`      //操作用户
 	Date int  `orm:"default(0);column(Date)"`     //操作时间
-	Self bool `orm:"default(false);column(Self)"` //是否是文档上传用户删除的，默认为false。如果是文档上传者删除的，设置为true
+	Self bool `orm:"default(false);column(Self)"` //是否是文件上传用户删除的，默认为false。如果是文件上传者删除的，设置为true
 }
 
 func NewDocumentRecycle() *DocumentRecycle {
@@ -26,8 +26,8 @@ func GetTableDocumentRecycle() string {
 	return getTable("document_recycle")
 }
 
-//将文档从回收站中恢复过来，文档的状态必须是-1才可以
-//@param            ids             文档id
+//将文件从回收站中恢复过来，文件的状态必须是-1才可以
+//@param            ids             文件id
 //@return           err             返回错误，nil表示恢复成功，否则恢复失败
 func (this *DocumentRecycle) RecoverFromRecycle(ids ...interface{}) (err error) {
 	var (
@@ -56,7 +56,7 @@ func (this *DocumentRecycle) RecoverFromRecycle(ids ...interface{}) (err error) 
 		return
 	}
 
-	//总文档数量增加
+	//总文件数量增加
 	sqlSys := fmt.Sprintf("update %v set `CntDoc`=`CntDoc`+? where Id = 1", GetTableSys())
 	_, err = o.Raw(sqlSys, len(docInfo)).Exec()
 	if err != nil {
@@ -78,7 +78,7 @@ func (this *DocumentRecycle) RecoverFromRecycle(ids ...interface{}) (err error) 
 
 		// 积分变更
 		log := &CoinLog{Uid: v.Uid, Coin: reward, TimeCreate: now}
-		log.Log = fmt.Sprintf("系统恢复《%v》文档，获得 %v 个金币奖励", doc.GetDocument(v.Id, "Title").Title, reward)
+		log.Log = fmt.Sprintf("系统恢复《%v》文件，获得 %v 个金币奖励", doc.GetDocument(v.Id, "Title").Title, reward)
 		_, err = o.Insert(log)
 		if err != nil {
 			return
@@ -104,7 +104,7 @@ func (this *DocumentRecycle) RecoverFromRecycle(ids ...interface{}) (err error) 
 	return
 }
 
-//回收站文档列表
+//回收站文件列表
 func (this *DocumentRecycle) RecycleList(p, listRows int) (params []orm.Params, rows int64, err error) {
 	var sql string
 	tables := []string{GetTableDocumentRecycle() + " dr", GetTableDocument() + " d", GetTableDocumentInfo() + " di", GetTableUser() + " u", GetTableDocumentStore() + " ds"}
@@ -126,20 +126,20 @@ func (this *DocumentRecycle) RecycleList(p, listRows int) (params []orm.Params, 
 	return
 }
 
-//将文档移入回收站(软删除)
-//@param            uid         操作人，即将文档移入回收站的人
+//将文件移入回收站(软删除)
+//@param            uid         操作人，即将文件移入回收站的人
 //@param            self        是否是用户自己操作
-//@param            ids         文档id，即需要删除的文档id
+//@param            ids         文件id，即需要删除的文件id
 //@return           errs        错误
 func (this *DocumentRecycle) RemoveToRecycle(uid interface{}, self bool, ids ...interface{}) (err error) {
 	//软删除
-	//1、将文档状态标记为-1
-	//2、将文档id录入到回收站
-	//3、用户文档数量减少
-	//4、整站文档数量减少
-	//5、分类下的文档减少
+	//1、将文件状态标记为-1
+	//2、将文件id录入到回收站
+	//3、用户文件数量减少
+	//4、整站文件数量减少
+	//5、分类下的文件减少
 	//不需要删除用户的收藏记录
-	//不需要删除文档的评分记录
+	//不需要删除文件的评分记录
 
 	var docInfo []DocumentInfo
 	sys, _ := NewSys().Get()
@@ -181,7 +181,7 @@ func (this *DocumentRecycle) RemoveToRecycle(uid interface{}, self bool, ids ...
 			return
 		}
 
-		_, err = o.Raw(sqlUser, 1, sys.Reward, info.Uid).Exec() //用户个人的文档数量和金币减少
+		_, err = o.Raw(sqlUser, 1, sys.Reward, info.Uid).Exec() //用户个人的文件数量和金币减少
 		if err != nil {
 			return
 		}
@@ -202,7 +202,7 @@ func (this *DocumentRecycle) RemoveToRecycle(uid interface{}, self bool, ids ...
 		}
 	}
 
-	//变更文档状态
+	//变更文件状态
 	if _, err := UpdateByIds(GetTableDocumentInfo(), "Status", -1, ids...); err != nil {
 		helper.Logger.Error(err.Error())
 	}
@@ -233,11 +233,11 @@ func (this *DocumentRecycle) RemoveToRecycle(uid interface{}, self bool, ids ...
 	return
 }
 
-// 彻底删除文档，包括删除文档记录（被收藏的记录、用户的发布记录、扣除用户获得的积分(如果此刻文档的状态不是待删除)），删除文档文件
+// 彻底删除文件，包括删除文件记录（被收藏的记录、用户的发布记录、扣除用户获得的积分(如果此刻文件的状态不是待删除)），删除文件文件
 func (this *DocumentRecycle) DeepDel(ids ...interface{}) (err error) {
-	// 文档id找到文档的dsId，再根据dsId查找到全部的文档id
-	// 根据文档id，将文档全部移入回收站
-	// 删除文档记录
+	// 文件id找到文件的dsId，再根据dsId查找到全部的文件id
+	// 根据文件id，将文件全部移入回收站
+	// 删除文件记录
 	//
 	var (
 		dsId  []interface{}
@@ -293,10 +293,10 @@ func (this *DocumentRecycle) DeepDel(ids ...interface{}) (err error) {
 	return
 }
 
-//删除文档记录
+//删除文件记录
 func (this *DocumentRecycle) DelRows(ids ...interface{}) (err error) {
 	//1、删除被收藏的收藏记录
-	//2、删除文档的评论(评分)记录
+	//2、删除文件的评论(评分)记录
 	//3、删除document表的记录
 	//4、删除document_info表的记录
 	//【这个不删除】5、删除document_store表的记录
@@ -329,8 +329,8 @@ func (this *DocumentRecycle) DelRows(ids ...interface{}) (err error) {
 	return
 }
 
-//根据md5，删除文档、封面、预览文件等
-//@param                md5             文档md5
+//根据md5，删除文件、封面、预览文件等
+//@param                md5             文件md5
 func (this *DocumentRecycle) DelFile(md5, oriExt, prevExt string, previewPagesCount int) (err error) {
 
 	var (

@@ -19,7 +19,7 @@
 				<form class="pull-right" action="/search" target="_blank" method="get" role="search">
 					<div class="input-group input-group-lg">
 						<input type="text" required="required" name="wd" placeholder="请输入搜索关键字" class="form-control">
-						<span class="input-group-btn"><button type="submit" class="btn btn-default">文库搜索</button></span>
+						<span class="input-group-btn"><button type="submit" class="btn btn-default">文件搜索</button></span>
 					</div>
 				</form>
 			</div>
@@ -54,7 +54,7 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    {{/*<li {{if .IsUpload}}class="active"{{end}}><a href="/upload"><span class="fa fa-upload"></span> 上传文档</a></li>*/}}
+                    {{/*<li {{if .IsUpload}}class="active"{{end}}><a href="/upload"><span class="fa fa-upload"></span> 上传文件</a></li>*/}}
                     <li {{if .IsUser}}class="active"{{end}}><a href="/user"><span class="fa fa-user"></span> 管理员中心</a></li>
                 </ul>
             </div>
@@ -70,7 +70,7 @@
 				{{end}}
 			</ul>
 			 <ul class="nav navbar-nav navbar-right">
-              <li {{if .IsUpload}} class="active"{{end}}><a href="/upload"><span class="fa fa-upload"></span> 上传文档</a></li>
+              <li {{if .IsUpload}} class="active"{{end}}><a href="/upload"><span class="fa fa-upload"></span> 上传文件</a></li>
 		      <li {{if .IsUser}} class="active"{{end}}><a href="/user"><span class="fa fa-user"></span> 管理员中心</a></li>
 		    </ul>
 		</div>

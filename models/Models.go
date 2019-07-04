@@ -289,7 +289,7 @@ func Search(wd, sourceType, order string, p, listRows, accuracy int) (res Result
 //@param            wd          搜索关键字
 //@param            caAlias     搜索的资源所在频道
 //@param            dept        发文部门
-//@param            span        文档时间跨度
+//@param            span        文件时间跨度
 //@param            order       排序，可选值：new(最新)、down(下载)、page(页数)、score(评分)、size(大小)、collect(收藏)、view（浏览）、default(默认)
 //@param            p           页码
 //@param            listRows    每页显示记录数
@@ -325,7 +325,7 @@ func SearchByMysql(wd, caAlias, dept, span, order string, p, listRows int) (data
 		orderBy = []string{"i.Vcnt desc"}
 	}
 	cond := " i.Status>=0 and d.Title like ? "
-	//文档类型过滤条件
+	//文件类型过滤条件
 	//ExtNum := 0 //这些也暂时写死了，后面再优化....
 	//switch strings.ToLower(sourceType) {
 	//case "doc":
@@ -347,12 +347,12 @@ func SearchByMysql(wd, caAlias, dept, span, order string, p, listRows int) (data
 
 	//cond = cond + " and ds.ExtNum=" + strconv.Itoa(ExtNum)
 
-	//文档搜索分类过滤
+	//文件搜索分类过滤
 	if caAlias != "all" {
 		cond = cond + " and ca.Alias like " + `"` + caAlias + `"`
 	}
 
-	//文档发文部门过滤
+	//文件发文部门过滤
 	if dept != "all" && dept != "" {
 		cond = cond + " and i.Department like " + `"` + dept + `"`
 	}
@@ -533,8 +533,8 @@ func Count(table string, cond *orm.Condition) (cnt int64) {
 	return
 }
 
-//是否已收藏文档
-//@param			did			文档id，即document id
+//是否已收藏文件
+//@param			did			文件id，即document id
 //@param			uid			用户id
 //@return			bool		bool值，true表示已收藏，否则未收藏
 func DoesCollect(did, uid int) bool {

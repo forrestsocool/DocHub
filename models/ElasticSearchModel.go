@@ -31,22 +31,22 @@ type ElasticSearchClient struct {
 
 //全文搜索
 type ElasticSearchData struct {
-	Id          int    `json:"Id"`          //文档id
-	Title       string `json:"Title"`       //文档标题
-	Keywords    string `json:"Keywords"`    //文档关键字
-	Description string `json:"Description"` //文档摘要
-	Vcnt        int    `json:"Vcnt"`        //文档浏览次数	view count
-	Ccnt        int    `json:"Ccnt"`        //文档收藏次数 collect count
-	Dcnt        int    `json:"Dcnt"`        //文档下载次数，download count
-	Score       int    `json:"Score"`       //文档评分
-	Size        int    `json:"Size"`        //文档大小
-	Page        int    `json:"Page"`        //文档页数
-	DocType     int    `json:"DocType"`     //文档类型，对应各格式的数字表示
+	Id          int    `json:"Id"`          //文件id
+	Title       string `json:"Title"`       //文件标题
+	Keywords    string `json:"Keywords"`    //文件关键字
+	Description string `json:"Description"` //文件摘要
+	Vcnt        int    `json:"Vcnt"`        //文件浏览次数	view count
+	Ccnt        int    `json:"Ccnt"`        //文件收藏次数 collect count
+	Dcnt        int    `json:"Dcnt"`        //文件下载次数，download count
+	Score       int    `json:"Score"`       //文件评分
+	Size        int    `json:"Size"`        //文件大小
+	Page        int    `json:"Page"`        //文件页数
+	DocType     int    `json:"DocType"`     //文件类型，对应各格式的数字表示
 	DsId        int    `json:"DsId"`        //DocumentStoreId，对应于md5
-	Price       int    `json:"Price"`       //文档售价
-	TimeCreate  int    `json:"TimeCreate"`  //文档创建时间
-	TimeStart   int    `json:"TimeStart"`   //文档生效时间
-	TimeEnd     int    `json:"TimeEnd"`     //文档失效时间
+	Price       int    `json:"Price"`       //文件售价
+	TimeCreate  int    `json:"TimeCreate"`  //文件创建时间
+	TimeStart   int    `json:"TimeStart"`   //文件生效时间
+	TimeEnd     int    `json:"TimeEnd"`     //文件失效时间
 }
 
 //统计信息结构
@@ -300,7 +300,7 @@ func (this *ElasticSearchClient) Search(wd, sourceType, order string, p, listRow
 func (this *ElasticSearchClient) RebuildAllIndex() {
 	helper.ConfigMap.Store("indexing", true)
 	defer helper.ConfigMap.Store("indexing", false)
-	//假设有10个亿的文档...
+	//假设有10个亿的文件...
 	pageSize := 1000
 	maxPage := int(1e7)
 	for page := 1; page < maxPage; page++ {
@@ -332,7 +332,7 @@ func (this *ElasticSearchClient) RebuildAllIndex() {
 	}
 }
 
-//根据id查询文档，并创建索引
+//根据id查询文件，并创建索引
 func (this *ElasticSearchClient) BuildIndexById(id int) (err error) {
 	if es, errES := NewDocument().GetDocForElasticSearch(id); errES != nil {
 		err = errES

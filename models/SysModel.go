@@ -12,16 +12,16 @@ type Sys struct {
 	Id                int    `orm:"column(Id)"`
 	Site              string `orm:"size(100);default();column(Site)"`                    //站点名称
 	Tongji            string `orm:"size(2048);default();column(Tongji)"`                 //统计代码
-	CntDoc            int    `orm:"default(0);column(CntDoc)"`                           //文档数量
+	CntDoc            int    `orm:"default(0);column(CntDoc)"`                           //文件数量
 	CntUser           int    `orm:"default(0);column(CntUser)"`                          //注册用户数量
-	Reward            int    `orm:"column(Reward);default(5)"`                           //上传一篇未被上传过的文档可以获得的金币奖励
+	Reward            int    `orm:"column(Reward);default(5)"`                           //上传一篇未被上传过的文件可以获得的金币奖励
 	MaxFile           int    `orm:"column(MaxFile);default(52428800)"`                   //允许上传的文件大小(字节)，默认50M
 	Sign              int    `orm:"column(Sign);default(1)"`                             //每日签到获得的金币奖励
 	ListRows          int    `orm:"default(10);column(ListRows)"`                        //每页记录数
 	Icp               string `orm:"default();column(Icp)"`                               //ICP备案
 	DirtyWord         string `orm:"size(2048);default();column(DirtyWord)"`              //不良信息关键字
 	TimeExpireRelate  int    `orm:"default(604800);column(TimeExpireRelate)"`            //相关资源过期更新的时间周期，0表示关闭相关资源
-	TimeExpireHotspot int    `orm:"default(604800);column(TimeExpireHotspot)"`           //热门文档的时间范围
+	TimeExpireHotspot int    `orm:"default(604800);column(TimeExpireHotspot)"`           //热门文件的时间范围
 	MobileOn          bool   `orm:"default(true);column(MobileOn)"`                      //是否开启移动端
 	TplMobile         string `orm:"default(default);column(TplMobile)"`                  //手机模板
 	TplComputer       string `orm:"default(default);column(TplComputer)"`                //电脑端模板
@@ -30,16 +30,16 @@ type Sys struct {
 	TplEmailFindPwd   string `orm:"size(2048);default();column(TplEmailFindPwd)"`        //会员找回密码邮件验证码发送模板
 	DomainPc          string `orm:"size(100);default(dochub.me);column(DomainPc)"`       //PC域名
 	DomainMobile      string `orm:"size(100);default(m.dochub.me);column(DomainMobile)"` //移动端域名
-	PreviewPage       int    `orm:"default(50);column(PreviewPage)"`                     //文档共预览的最大页数，0表示不限制
-	Trends            string `orm:"default();column(Trends)"`                            //文库动态，填写文档的id
-	FreeDay           int    `orm:"default(7);column(FreeDay)"`                          //文档免费下载时长。即上次下载扣除金币后多长时间后下载需要收费。时间单位为天
+	PreviewPage       int    `orm:"default(50);column(PreviewPage)"`                     //文件共预览的最大页数，0表示不限制
+	Trends            string `orm:"default();column(Trends)"`                            //文库动态，填写文件的id
+	FreeDay           int    `orm:"default(7);column(FreeDay)"`                          //文件免费下载时长。即上次下载扣除金币后多长时间后下载需要收费。时间单位为天
 	Question          string `orm:"default(DocHub文库的中文名是？);column(Question)"`            //评论问答问题
 	Answer            string `orm:"default(多哈);column(Answer)"`                          //评论问答的问题
 	CoinReg           int    `orm:"column(CoinReg);default(10)"`                         //用户注册奖励金币
 	Watermark         string `orm:"column(Watermark);default()"`                         //水印文案
 	ReportReasons     string `orm:"column(ReportReasons);default();size(2048)"`          //举报原因
 	IsCloseReg        bool   `orm:"default(false);column(IsCloseReg)"`                   //是否关闭注册
-	StoreType         string `orm:"default(cs-oss);column(StoreType);size(15)"`          //文档存储方式
+	StoreType         string `orm:"default(cs-oss);column(StoreType);size(15)"`          //文件存储方式
 	CheckRegEmail     bool   `orm:"default(true);column(CheckRegEmail);"`                //是否需要验证注册邮箱，如果需要验证注册邮箱，提要求发送注册验证码
 	//DownloadNum      int    `orm:"default(0);column(Dcnt)"`								 //总下载数
 }

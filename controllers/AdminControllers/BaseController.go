@@ -61,7 +61,7 @@ func (this *BaseController) Prepare() {
 	this.Data["Lang"] = "zh-CN"
 }
 
-//自定义的文档错误
+//自定义的文件错误
 func (this *BaseController) ErrorDiy(status, redirect, msg interface{}, timewait int) {
 	this.Data["status"] = status
 	this.Data["redirect"] = redirect

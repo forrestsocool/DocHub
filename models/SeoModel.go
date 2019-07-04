@@ -93,7 +93,7 @@ func (this *Seo) BuildSitemap() {
 		domain = "http://" + domain
 	}
 	domain = strings.TrimRight(domain, "/")
-	//文档总数
+	//文件总数
 	count, _ = o.QueryTable(GetTableDocumentInfo()).Filter("Status__gt", -1).Count()
 	cnt := int(count)
 	if fileNum = cnt / limit; cnt%limit > 0 {

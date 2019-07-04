@@ -10,7 +10,7 @@ import (
 
 // ============================ //
 // 废弃！
-// 相关文档的功能，以后通过 ElasticSearch 来实现
+// 相关文件的功能，以后通过 ElasticSearch 来实现
 // 废弃！
 // ============================ //
 
@@ -19,8 +19,8 @@ type Word struct {
 	Id     int    `orm:"column(Id)"`
 	Wd     string `orm:"column(Wd);size(20);unique"`       //关键字
 	Cnt    int    `orm:"column(Cnt);default(0)"`           //统计
-	Ids    string `orm:"column(Ids);default();type(text)"` //存在该关键字的文档id
-	Status bool   `orm:"column(Status);default(true)"`     //bool值，默认该关键字合法，否则存在该关键字的都是不合法文档
+	Ids    string `orm:"column(Ids);default();type(text)"` //存在该关键字的文件id
+	Status bool   `orm:"column(Status);default(true)"`     //bool值，默认该关键字合法，否则存在该关键字的都是不合法文件
 }
 
 func NewWord() *Word {

@@ -26,7 +26,7 @@ func (this *ViewController) Get() {
 
 	doc, err := models.NewDocument().GetById(id)
 
-	// 文档不存在、查询错误、被删除，报 404
+	// 文件不存在、查询错误、被删除，报 404
 	if err != nil || doc.Id <= 0 || doc.Status < models.DocStatusConverting {
 		this.Abort("404")
 	}
@@ -76,7 +76,7 @@ func (this *ViewController) Get() {
 	this.Data["Doc"] = doc
 
 	doc.Ext = strings.TrimLeft(doc.Ext, ".")
-	if doc.Page == 0 { //不能预览的文档
+	if doc.Page == 0 { //不能预览的文件
 		this.Data["OnlyCover"] = true
 		this.TplName = "disabled.html"
 	} else {
@@ -86,11 +86,11 @@ func (this *ViewController) Get() {
 
 }
 
-//文档下载
+//文件下载
 func (this *ViewController) Download() {
 	id, _ := this.GetInt(":id")
 	if id <= 0 {
-		this.ResponseJson(false, "文档id不正确")
+		this.ResponseJson(false, "文件id不正确")
 	}
 
 	link, err := models.NewUser().CanDownloadFile(id)
@@ -113,13 +113,13 @@ func (this *ViewController) DownFree() {
 	if this.IsLogin > 0 {
 		did, _ := this.GetInt("id")
 		if free := models.NewFreeDown().IsFreeDown(this.IsLogin, did); free {
-			this.ResponseJson(true, fmt.Sprintf("您上次下载过当前文档，且仍在免费下载有效期(%v天)内，本次下载免费", this.Sys.FreeDay))
+			this.ResponseJson(true, fmt.Sprintf("您上次下载过当前文件，且仍在免费下载有效期(%v天)内，本次下载免费", this.Sys.FreeDay))
 		}
 	}
 	this.ResponseJson(false, "不能免费下载，不在免费下载期限内")
 }
 
-//文档评论
+//文件评论
 //func (this *ViewController) Comment() {
 //	id, _ := this.GetInt(":id")
 //	score, _ := this.GetInt("Score")
@@ -130,7 +130,7 @@ func (this *ViewController) DownFree() {
 //	if id > 0 {
 //		if this.IsLogin > 0 {
 //			if score < 1 || score > 5 {
-//				this.ResponseJson(false, "请给文档评分")
+//				this.ResponseJson(false, "请给文件评分")
 //			} else {
 //				comment := models.DocumentComment{
 //					Uid:        this.IsLogin,
@@ -146,9 +146,9 @@ func (this *ViewController) DownFree() {
 //				} else {
 //					_, err := orm.NewOrm().Insert(&comment)
 //					if err != nil {
-//						this.ResponseJson(false, "发表评论失败：每人仅限给每个文档点评一次")
+//						this.ResponseJson(false, "发表评论失败：每人仅限给每个文件点评一次")
 //					} else {
-//						//文档评论人数增加
+//						//文件评论人数增加
 //						sql := fmt.Sprintf("UPDATE `%v` SET `Score`=(`Score`*`ScorePeople`+%v)/(`ScorePeople`+1),`ScorePeople`=`ScorePeople`+1 WHERE Id=%v", models.GetTableDocumentInfo(), comment.Score, comment.Did)
 //						_, err := orm.NewOrm().Raw(sql).Exec()
 //						if err != nil {
@@ -165,13 +165,13 @@ func (this *ViewController) DownFree() {
 //		this.ResponseJson(false, "评论失败，参数不正确")
 //	}
 //}
-//文档评论，只针对评分处理，去掉其他条件
+//文件评论，只针对评分处理，去掉其他条件
 func (this *ViewController) Comment() {
 	id, _ := this.GetInt(":id")
 	score, _ := this.GetInt("Score")
 	if id > 0{
 		if score < 1 || score > 5 {
-			this.ResponseJson(false, "请给文档评分")
+			this.ResponseJson(false, "请给文件评分")
 		} else {
 			comment :=models.DocumentComment{
 				Did:        id,

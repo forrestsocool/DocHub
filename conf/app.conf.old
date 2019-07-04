@@ -37,7 +37,7 @@ coinreg=10
 #开启GZip[建议开启]
 EnableGzip=true
 
-#文档下载连接URL有效期，单位为秒，默认60秒
+#文件下载连接URL有效期，单位为秒，默认60秒
 UrlExpire=60
 
 #libreoffice的可执行文件路径(注意，windows下要用\\代替原路径的\)

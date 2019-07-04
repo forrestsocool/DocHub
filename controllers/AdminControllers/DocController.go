@@ -34,7 +34,7 @@ func (this *DocController) Get() {
 	this.TplName = "chanel.html"
 }
 
-//文档分类管理
+//文件分类管理
 func (this *DocController) Category() {
 	cond := orm.NewCondition().And("id__gt", 0)
 	data, _, _ := models.GetList(models.GetTableCategory(), 1, 2000, cond, "pid", "sort", "-id")
@@ -45,7 +45,7 @@ func (this *DocController) Category() {
 
 }
 
-//文档列表管理
+//文件列表管理
 func (this *DocController) List() {
 	var (
 		p, listRows             = 1, this.Sys.ListRows
@@ -104,7 +104,7 @@ func (this *DocController) List() {
 	this.TplName = "list.html"
 }
 
-//文档回收站
+//文件回收站
 func (this *DocController) Recycle() {
 	p, _ := this.GetInt("p", 1)
 	//页码处理
@@ -143,7 +143,7 @@ func (this *DocController) GetCateByCid() {
 
 }
 
-//新增文档分类
+//新增文件分类
 func (this *DocController) AddCate() {
 	var (
 		cates   []models.Category
@@ -184,30 +184,30 @@ func (this *DocController) DelCate() {
 	this.ResponseJson(true, "删除成功")
 }
 
-//对文档进行操作，type类型的值包括remove（移入回收站），del(删除文档记录)，clear（清空通用户的内容)，deepdel（深度删除，在删除文档记录的同时删除文档文件），forbidden(禁止文档，把文档md5标记为禁止上传，只要文档的md5是这个，则该文档禁止被上传)
+//对文件进行操作，type类型的值包括remove（移入回收站），del(删除文件记录)，clear（清空通用户的内容)，deepdel（深度删除，在删除文件记录的同时删除文件文件），forbidden(禁止文件，把文件md5标记为禁止上传，只要文件的md5是这个，则该文件禁止被上传)
 func (this *DocController) Action() {
 	var errs []string
 	ActionType := strings.ToLower(this.GetString("type"))
 	ids := helper.StringSliceToInterfaceSlice(strings.Split(this.GetString("id"), ","))
 	recycle := models.NewDocumentRecycle()
 	switch ActionType {
-	case "deepdel": //彻底删除文档：删除文档记录的同时也删除文档
+	case "deepdel": //彻底删除文件：删除文件记录的同时也删除文件
 		if err := recycle.DeepDel(ids...); err != nil {
 			errs = append(errs, err.Error())
 		}
-	case "del-row": //只是删除该文档的文档记录
+	case "del-row": //只是删除该文件的文件记录
 		if err := recycle.DelRows(ids...); err != nil {
 			errs = append(errs, err.Error())
 		}
-	case "recover": //恢复文档，只有文档状态是-1时，才可以进行恢复【OK】
+	case "recover": //恢复文件，只有文件状态是-1时，才可以进行恢复【OK】
 		if err := recycle.RecoverFromRecycle(ids...); err != nil {
 			errs = append(errs, err.Error())
 		}
-	case "illegal": //将文档标记为非法文档【OK】
+	case "illegal": //将文件标记为非法文件【OK】
 		if err := models.NewDocument().SetIllegal(ids...); err != nil {
 			errs = append(errs, err.Error())
 		}
-	case "remove": //将文档移入回收站【OK】
+	case "remove": //将文件移入回收站【OK】
 		if err := recycle.RemoveToRecycle(this.AdminId, false, ids...); err != nil {
 			errs = append(errs, err.Error())
 		}
@@ -218,7 +218,7 @@ func (this *DocController) Action() {
 	this.ResponseJson(true, "操作成功")
 }
 
-//获取文档备注模板
+//获取文件备注模板
 func (this *DocController) RemarkTpl() {
 	if this.Ctx.Request.Method == "GET" {
 		DsId, _ := this.GetInt("dsid")

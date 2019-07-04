@@ -32,7 +32,7 @@ func (this *ReportController) Get() {
 		helper.Logger.Error("SQL执行失败：%v", err.Error())
 	}
 	if err != nil || rows == 0 {
-		this.ResponseJson(false, "举报失败：您已举报过该文档")
+		this.ResponseJson(false, "举报失败：您已举报过该文件")
 	}
 	this.ResponseJson(true, "恭喜您，举报成功，我们将在24小时内对您举报的内容进行处理。")
 }

@@ -8,9 +8,9 @@
             <div class="panel panel-default wenku-noborder">
                 <div class="panel-body">
                     <h1>
-                        <img alt="{{.Doc.Ext}}文档" src="/static/Home/default/img/{{.Doc.ExtCate}}_24.png"/> {{.Doc.Title}}
+                        <img alt="{{.Doc.Ext}}文件" src="/static/Home/default/img/{{.Doc.ExtCate}}_24.png"/> {{.Doc.Title}}
                         {{if gt $.AdminId 0}}
-                        <a href="/admin/doc/action?type=remove&id={{.Doc.Id}}" class="text-muted wenku-tooltip wenku-ajax-get" title="将文档移入回收站"><i class="fa fa-recycle"></i></a>
+                        <a href="/admin/doc/action?type=remove&id={{.Doc.Id}}" class="text-muted wenku-tooltip wenku-ajax-get" title="将文件移入回收站"><i class="fa fa-recycle"></i></a>
                         {{end}}
                     </h1>
                     <div class="help-block wenku-doc-info">
@@ -18,7 +18,7 @@
 								<a href="/list/{{.Breadcrumb.Chanel.Alias}}" title="{{.Breadcrumb.Chanel.Title}}">{{.Breadcrumb.Chanel.Title}}</a> >
 								<a href="/list/{{.Breadcrumb.Chanel.Alias}}/pid/{{.Breadcrumb.Parent.Id}}" title="{{.Breadcrumb.Parent.Title}}">{{.Breadcrumb.Parent.Title}}</a> >
 								<a href="/list/{{.Breadcrumb.Chanel.Alias}}/pid/{{.Breadcrumb.Parent.Id}}/cid/{{.Breadcrumb.Parent.Id}}" title="{{.Breadcrumb.Child.Title}}">{{.Breadcrumb.Child.Title}}</a> >
-								<span class="text-muted">文档预览</span>
+								<span class="text-muted">文件预览</span>
 							</span>
                         <div class="pull-right text-muted">
                             <span title="页数"><i class="fa fa-file-text-o"></i> {{HandlePageNum .Doc.Page}} 页</span>
@@ -40,12 +40,12 @@
                         </div>
                     </div>
 
-                    <!--<div class="help-block wenku-preview-tips">温馨提示：如果当前文档出现乱码或未能正常浏览，请先下载原文档进行浏览。</div>-->
+                    <!--<div class="help-block wenku-preview-tips">温馨提示：如果当前文件出现乱码或未能正常浏览，请先下载原文件进行浏览。</div>-->
                     {{if $.ViewAll}}
-                        <div class="help-block wenku-preview-tips">温馨提示：如果当前文档出现乱码或未能正常浏览，请先下载原文档进行浏览。</div>
+                        <div class="help-block wenku-preview-tips">温馨提示：如果当前文件出现乱码或未能正常浏览，请先下载原文件进行浏览。</div>
                     {{else}}
                         <div class="help-block wenku-preview-tips">
-                            温馨提示：当前文档最多只能预览 <span class="strong text-primary">{{.Doc.PreviewPage}}</span> 页，若文档总页数超出了 <span class="strong text-primary">{{.Doc.PreviewPage}}</span> 页，请下载原文档以浏览全部内容。
+                            温馨提示：当前文件最多只能预览 <span class="strong text-primary">{{.Doc.PreviewPage}}</span> 页，若文件总页数超出了 <span class="strong text-primary">{{.Doc.PreviewPage}}</span> 页，请下载原文件以浏览全部内容。
                         </div>
                     {{end}}
 
@@ -62,10 +62,10 @@
                         {{if gt $.Doc.Page $.PageShow}}
                         <div class="wenku-viewer-more text-center" data-next="{{CalcInt $.PageShow "+" 1}}" data-ext="{{Default $.Doc.PreviewExt "svg"}}" data-svg="{{$.PreviewDomain}}/{{$.Doc.Md5}}/">
 
-                        {{if gt .Doc.Price -1}}
-                            <div>下载文档到电脑，方便使用</div>
-                            <div><a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#ModalDownload"><i class="fa fa-cloud-download"></i> 下载文档</a></div>
-                        {{end}}
+{{/*                        {{if gt .Doc.Price -1}}*/}}
+{{/*                            <div>下载文件到电脑，方便使用</div>*/}}
+{{/*                            <div><a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#ModalDownload"><i class="fa fa-cloud-download"></i> 下载文件</a></div>*/}}
+{{/*                        {{end}}*/}}
 
                         {{if $.ViewAll}}
                             <a href="javascript:void(0);" class="wenku-viewer-more-btn">
@@ -76,7 +76,7 @@
                         {{else}}
                             <a href="javascript:void(0);" class="wenku-viewer-more-btn">
                                 <div class="help-block">
-                                    当前文档最多只能预览 {{.Doc.PreviewPage}} 页 <br>
+                                    当前文件最多只能预览 {{.Doc.PreviewPage}} 页 <br>
                                     还有 <span class="wenku-unread-pages">{{CalcInt $.Doc.PreviewPage "-" $.PageShow}}</span> 页可预览，<span class="text-primary">继续阅读</span>
                                 </div>
                             </a>
@@ -92,7 +92,7 @@
 
 
                     <div class="help-block">
-                        <span>本文档由 <a href="/user/{{.Doc.Uid}}" target="_blank"title="{{.Doc.Username}}">{{.Doc.Username}}</a> 于 <span class="text-muted">{{TimestampFormat .Doc.TimeCreate}}</span>上传分享</span>
+                        <span>本文件由 <a href="/user/{{.Doc.Uid}}" target="_blank"title="{{.Doc.Username}}">{{.Doc.Username}}</a> 于 <span class="text-muted">{{TimestampFormat .Doc.TimeCreate}}</span>上传分享</span>
                     </div>
                     <div class="help-block wenku-action">
                         <div class="pull-left">
@@ -100,12 +100,12 @@
                         </div>
                         <div class="pull-right wenku-mgl-15px">
 {{/*                            {{if gt .Doc.Price -1}}*/}}
-{{/*                            <a href="javascript:void(0);" rel="nofollow" data-toggle="modal" data-target="#ModalDownload" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-cloud-download"></i> 下载<span class="hidden-xs">原文档</span>({{FormatByte .Doc.Size}})</a>*/}}
+{{/*                            <a href="javascript:void(0);" rel="nofollow" data-toggle="modal" data-target="#ModalDownload" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-cloud-download"></i> 下载<span class="hidden-xs">原文件</span>({{FormatByte .Doc.Size}})</a>*/}}
 {{/*                                    {{else}}*/}}
-{{/*                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm disabled"><i class="fa fa-cloud-download"></i> 下载<span class="hidden-xs">原文档</span>({{FormatByte .Doc.Size}})</a>*/}}
+{{/*                            <a href="javascript:void(0);" rel="nofollow" class="btn btn-primary btn-sm disabled"><i class="fa fa-cloud-download"></i> 下载<span class="hidden-xs">原文件</span>({{FormatByte .Doc.Size}})</a>*/}}
 {{/*                                    {{end}}*/}}
                             <button type="button" class="btn btn-primary btn-submit-download" data-url="/down/{{.Doc.Id}}" data-id="{{.Doc.Id}}" style="padding-top: 9px; padding-bottom: 9px;font-size: 13px;">
-                                <i class="fa fa-cloud-download em14"></i>下载原文档({{FormatByte .Doc.Size}})</button>
+                                <i class="fa fa-cloud-download em14"></i>下载原文件({{FormatByte .Doc.Size}})</button>
                         </div>
 {{/*                        <div class="pull-right">*/}}
 {{/*                            {{if DoesCollect .Doc.Id .LoginUid}}*/}}
@@ -131,13 +131,13 @@
             {{if .Hots}}
             <div class="panel panel-default wenku-noborder wenku-maylike">
                 <div class="panel-heading">
-                    <div class="strong">热门文档</div>
+                    <div class="strong">热门文件</div>
                 </div>
                 <div class="panel-body">
 
                     <ul class="wenku-tabs-list">
                         {{range .Hots}}
-                        <li><img alt="{{.Ext}}文档" src="/static/Home/default/img/{{.ExtCate}}_24.png"/><a href="/view/{{.Id}}" target="_blank" title="{{.Title}}">{{.Title}}</a></li>
+                        <li><img alt="{{.Ext}}文件" src="/static/Home/default/img/{{.ExtCate}}_24.png"/><a href="/view/{{.Id}}" target="_blank" title="{{.Title}}">{{.Title}}</a></li>
                         {{end}}
                     </ul>
                 </div>
@@ -146,13 +146,13 @@
 
             <div class="panel panel-default wenku-noborder wenku-maylike">
                 <div class="panel-heading">
-                    <div class="strong">最新文档</div>
+                    <div class="strong">最新文件</div>
                 </div>
                 <div class="panel-body">
 
                     <ul class="wenku-tabs-list">
                         {{range .Latest}}
-                        <li><img alt="{{.Ext}}文档" src="/static/Home/default/img/{{.ExtCate}}_24.png"/><a href="/view/{{.Id}}" target="_blank" title="{{.Title}}">{{.Title}}</a></li>
+                        <li><img alt="{{.Ext}}文件" src="/static/Home/default/img/{{.ExtCate}}_24.png"/><a href="/view/{{.Id}}" target="_blank" title="{{.Title}}">{{.Title}}</a></li>
                         {{end}}
                     </ul>
 
@@ -202,18 +202,18 @@
 
 
 
-                    <li><a href="javascript:void(0);" class="wenku-goto-comment"><i class="fa fa-comments-o em14"></i> 评价文档</a></li>
+                    <li><a href="javascript:void(0);" class="wenku-goto-comment"><i class="fa fa-comments-o em14"></i> 评价文件</a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {{if gt .Doc.Price -1}}
 {{/*                    <div class="navbar-text"><i class="fa fa-database"></i>&nbsp;&nbsp;{{.Doc.Price}}&nbsp;&nbsp;个金币 </div>*/}}
                     <button type="button" class="btn btn-primary btn-submit-download" data-url="/down/{{.Doc.Id}}" data-id="{{.Doc.Id}}" style="padding-top: 14px; padding-bottom: 14px;">
-                        <i class="fa fa-cloud-download em14"></i>下载文档({{FormatByte .Doc.Size}})</button>
-{{/*                    <li class="active" data-toggle="modal" data-target="#ModalDownload"><a href="javascript:void(0);"><i class="fa fa-cloud-download em14"></i> 下载文档({{FormatByte .Doc.Size}})</a></li>*/}}
+                        <i class="fa fa-cloud-download em14"></i>下载文件({{FormatByte .Doc.Size}})</button>
+{{/*                    <li class="active" data-toggle="modal" data-target="#ModalDownload"><a href="javascript:void(0);"><i class="fa fa-cloud-download em14"></i> 下载文件({{FormatByte .Doc.Size}})</a></li>*/}}
                     {{else}}
                         <div class="navbar-text"><span class="text-danger">不允许下载&nbsp;</span>&nbsp;</div>
-                        <li class="active active-forbidden"><a href="javascript:void(0);"><i class="fa fa-cloud-download em14"></i> 下载文档({{FormatByte .Doc.Size}})</a></li>
+                        <li class="active active-forbidden"><a href="javascript:void(0);"><i class="fa fa-cloud-download em14"></i> 下载文件({{FormatByte .Doc.Size}})</a></li>
                     {{end}}
                 </ul>
             </div>

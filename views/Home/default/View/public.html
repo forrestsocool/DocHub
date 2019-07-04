@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="ModalReportLabel">文档举报</h4>
+                <h4 class="modal-title" id="ModalReportLabel">文件举报</h4>
             </div>
             <div class="modal-body clearfix">
                 <div class="help-block clearfix">举报原因：</div>
@@ -27,10 +27,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="ModalCollectLabel">收藏文档</h4>
+                <h4 class="modal-title" id="ModalCollectLabel">收藏文件</h4>
             </div>
             <div class="modal-body clearfix">
-                <div class="help-block wenku-clt-title">收藏文档</div>
+                <div class="help-block wenku-clt-title">收藏文件</div>
                 <div class="form-group">
                     <input type="text" class="disabled form-control" readonly="readonly" name="Title" value="{{.Doc.Title}}">
                 </div>
@@ -81,10 +81,10 @@
             <div class="modal-body clearfix">
 
 
-                <div class="help-block wenku-download-tips">文档下载，需要消耗您 <span class="text-danger">{{.Doc.Price}}</span> 个金币。</div>
+{{/*                <div class="help-block wenku-download-tips">文件下载，需要消耗您 <span class="text-danger">{{.Doc.Price}}</span> 个金币。</div>*/}}
 
 
-                <div class="help-block">您确定要下载 <span class="text-danger">{{.Doc.Title}}</span> 文档吗？</div>
+                <div class="help-block">您确定要下载 <span class="text-danger">{{.Doc.Title}}</span> 文件吗？</div>
 
             </div>
             <div class="modal-footer">
@@ -98,7 +98,7 @@
 {{define "Comment"}}
 <div class="panel panel-default wenku-noborder wenku-comment">
     <div class="panel-body">
-        <div title="给文档打分">给文档打分
+        <div title="给文件打分">给文件打分
             <span class="wenku-score disabled">
             <i class="fa fa-star-o" data-v="1"></i>
             <i class="fa fa-star-o" data-v="2"></i>
@@ -125,7 +125,7 @@
 {{/*                    <input type="text" name="Answer" required="required" class="form-control" placeholder="请输入答案">*/}}
 {{/*                </div>*/}}
                 <div class="col-xs-2 wenku-no-pdr clearfix text-right">
-                    <input type="submit" class="btn btn-danger btn-block" value="文档打分">
+                    <input type="submit" class="btn btn-danger btn-block" value="文件打分">
                 </div>
             </div>
         </form>

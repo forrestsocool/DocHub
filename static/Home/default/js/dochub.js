@@ -159,11 +159,11 @@ $(function(){
 			//检测文件大小是否符合要求
 			if(size>maxsize){
 				_this.val("");
-				wenku_alert("danger","您上传的文档超过了规定大小",3000,"");
+				wenku_alert("danger","您上传的文件超过了规定大小",3000,"");
 				return false;
 			}
 
-			//检验上传的文档是否符合要求
+			//检验上传的文件是否符合要求
 			$.each(accept, function(i,v) {    
 				if(ext.toLowerCase()==v){
 					flag=true;
@@ -173,10 +173,10 @@ $(function(){
 
 			if(!flag){
 				_this.val("");
-				wenku_alert("danger","您上传的文档格式不符合要求",3000,"");
+				wenku_alert("danger","您上传的文件格式不符合要求",3000,"");
 				return false;
 			}else{
-				//去掉文档扩展名的标题
+				//去掉文件扩展名的标题
 				$(".wenku-form-upload [name=Title]").val(arr.join("."));
                 $(".wenku-form-upload [name=Filename]").val(filename);
                 //获取分词
@@ -226,12 +226,12 @@ $(function(){
         // $(".wenku-form-upload .form-chanel select").onload(function(){
         //     var _this=$(this),pid=_this.val();
         //     if(pid){
-        //         $(".form-level-one select").html('<option value="">请选择一级文档分类</option>');
+        //         $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
         //         $(".form-level-one select").append(options(pid,cates));
-        //         $(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+        //         $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
         //     }else{
-        //         $(".form-level-one select").html('<option value="">请选择一级文档分类</option>');
-        //         $(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+        //         $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
+        //         $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
         //     }
         // });
 	
@@ -242,26 +242,26 @@ $(function(){
 		$(".wenku-form-upload .form-chanel select").change(function(){
 			var _this=$(this),pid=_this.val();
 			if(pid){
-                $(".form-level-one select").html('<option value="">请选择一级文档分类</option>');
+                $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
                 $(".form-level-one select").append(options(pid,cates));
-				$(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+				$(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
 			}else{
-                $(".form-level-one select").html('<option value="">请选择一级文档分类</option>');
-                $(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+                $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
+                $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
 			}
 		});
 	
 		//分类选择
 		$(".wenku-form-upload .form-level-one select").change(function(){
 			var _this=$(this),pid=_this.val();
-			$(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+			$(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
 			if(pid){
                 $(".form-level-two select").append(options(pid,cates));
 			};
 		});
 	
 
-		//执行文档上传操作
+		//执行文件上传操作
 		$(".wenku-form-upload [type=submit]").click(function(e){
 			e.preventDefault();
 			var _this=$(this),form=_this.parents("form"),url_checklogin=form.attr("data-login"),requireds=form.find("[required=required]"),req_len=requireds.length;
@@ -284,9 +284,9 @@ $(function(){
 						wenku_alert("danger","您当前未登录，请先登录",3000,"");
 						_this.removeClass("disabled");
 					}else{
-						//检测文档是否已经存在，存在了则直接提交表单
+						//检测文件是否已经存在，存在了则直接提交表单
 						$.get(form.attr("data-doccheck"),{md5:form.find("[name=Md5]").val()},function (ret) {
-							//文档已在文档库中存在
+							//文件已在文件库中存在
 							if(ret.status==1){
 								$.post(form.attr("action"),form.serialize()+"&Exist=1",function (ret) {
 									if(ret.status==1){
@@ -306,12 +306,12 @@ $(function(){
                                     '\t\t</div>\n' +
                                     '\t</div>';
                                 _this.parents("body").append(tips);
-								//文档在文档库中不存在
+								//文件在文件库中不存在
 
                                 var formData = new FormData();
                                 var inputs =form.find(".form-control");
 
-                                // 新增文档生效时间和失效时间
+                                // 新增文件生效时间和失效时间
                                 // 时间转换为unix时间戳为xxxx-xx-xx 08:00:00
                                 var doctimestart =form.find(".demo-input-start");
                                 $.each(doctimestart,function(){
@@ -394,7 +394,7 @@ $(function(){
         $(".progress span").text(val);
     }
 	
-	//文档预览页面
+	//文件预览页面
 	if(PageId=="wenku-content"){
 
 	    var pages=[];
@@ -429,7 +429,7 @@ $(function(){
 			$("#ModalShare").modal("hide");
 		});
 		
-		//收藏文档
+		//收藏文件
 		$(".wenku-collect").click(function(e){
 			e.preventDefault();
 			var _this=$(this),_url=_this.attr("href");
@@ -443,13 +443,13 @@ $(function(){
 			});
 		});
 
-		//文库文档上下页按钮功能实现
+		//文库文件上下页按钮功能实现
         //上一页
         $(".wenku-page-prev").click(function(){
             var prevPage=GetCurrentPage()-1;
             if(prevPage>0){
                 var hWindow=$(window).height(),hPage=$(".wenku-page"+prevPage).height();
-                if(hPage>hWindow){//文档页面高度与窗口高度做比较
+                if(hPage>hWindow){//文件页面高度与窗口高度做比较
                     ScrollToPage(prevPage);
                 }else{
                     //这个不能调用ScrollToPage
@@ -472,7 +472,7 @@ $(function(){
             if(nextPage<limit){
                 var hWindow=$(window).height(),//窗口高度
                     hPage=$(".wenku-page"+nextPage).height();//下一页的高度
-                if(hPage>hWindow){//文档页面高度与窗口高度做比较
+                if(hPage>hWindow){//文件页面高度与窗口高度做比较
                     ScrollToPage(nextPage);
                 }else{
                     //这个不能调用ScrollToPage
@@ -579,35 +579,35 @@ $(function(){
 			for (var i=1;i<=star;i++){
 				$("#wenku-content .wenku-score i[data-v="+i+"]").addClass("fa-star").removeClass("fa-star-o");
 			}
-			var tips="5星好评，文档很给力"
+			var tips="5星好评，文件很给力"
 			switch (star){
 				case "1":
-                    tips="1星差评，文档太差劲了";
+                    tips="1星差评，文件太差劲了";
 					break;
 				case "2":
-                    tips="2星差评，文档有点差劲";
+                    tips="2星差评，文件有点差劲";
                     break;
 				case "3":
-                    tips="3星中评，文档一般般";
+                    tips="3星中评，文件一般般";
                     break;
 				case "4":
-                    tips="4星好评，文档不错";
+                    tips="4星好评，文件不错";
                     break;
 				case "5":
-                    tips="5星好评，文档很给力";
+                    tips="5星好评，文件很给力";
                     break;
 			}
 			$(".wenku-score-tips").text(tips);
 			$("#score").val(star);
 		});
 
-		//提交文档评论
+		//提交文件评论
 		$("form.wenku-comment-form [type=submit]").click(function (e) {
 			e.preventDefault();
             var form=$("form.wenku-comment-form"),score=$("#score").val(),action=form.attr("action");
 			// var form=$("form.wenku-comment-form"),score=$("#score").val(),comment=form.find("[name=Comment]").val(),answer=form.find("[name=Answer]").val(),action=form.attr("action");
 			if (score=="0"){
-				wenku_alert("danger","请给文档评分",3000,"");
+				wenku_alert("danger","请给文件评分",3000,"");
 				return
 			}
             // if (comment.length<8 || comment.length>255){
@@ -632,7 +632,7 @@ $(function(){
         });
 
 
-		//举报文档
+		//举报文件
 		$(".btn-submit-report").click(function(){
 			var reason =$("#ModalReport [name=Reason]:checked").val();
             var did =$("#ModalReport [name=Did]").val();
@@ -645,7 +645,7 @@ $(function(){
             });
 		});
 
-		//收藏文档
+		//收藏文件
         $(".wenku-collect").click(function () {
             //获取收藏夹
             var id =$(this).attr("data-id");
@@ -661,7 +661,7 @@ $(function(){
             });
         });
 
-        //下载文档
+        //下载文件
 		$(".btn-submit-download").click(function () {
 			$.get($(this).attr("data-url"),function (ret) {
 				if(ret.status==1){
@@ -678,7 +678,7 @@ $(function(){
             $("#ModalCollect").modal("hide");
         });
 
-        //收藏文档到收藏夹
+        //收藏文件到收藏夹
         $(".btn-submit-collect").click(function () {
             var did=$("#ModalCollect [name=Did]").val(),cid=$("#ModalCollect [name=Cid] option:selected").val();
             if (cid==""){
@@ -761,19 +761,19 @@ $(function(){
             $(".wenku-form-upload .form-chanel select").change(function(){
                 var _this=$(this),pid=_this.val();
                 if(pid){
-                    $(".form-level-one select").html('<option value="">请选择一级文档分类</option>');
+                    $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
                     $(".form-level-one select").append(options(pid,cates));
-                    $(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+                    $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
                 }else{
-                    $(".form-level-one select").html('<option value="">请选择一级文档分类</option>');
-                    $(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+                    $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
+                    $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
                 }
             });
 
             //分类选择
             $(".wenku-form-upload .form-level-one select").change(function(){
                 var _this=$(this),pid=_this.val();
-                $(".form-level-two select").html('<option value="">请选择二级文档分类</option>');
+                $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
                 if(pid){
                     $(".form-level-two select").append(options(pid,cates));
                 };
@@ -979,7 +979,7 @@ $(function(){
         $('html,body').animate({scrollTop:$(".wenku-page"+page).offset().top}, 200);
     }
 
-    //调整当前页，用于文档预览放大或缩小时
+    //调整当前页，用于文件预览放大或缩小时
     function AdjustViewer() {
         ScrollToPage(GetCurrentPage());
     }
@@ -999,7 +999,7 @@ $(function(){
         return parseInt($(".wenku-viewer-more").attr("data-next"));
     }
 
-    //表单文档上传的分类选项
+    //表单文件上传的分类选项
     //@param        pid         父级id
     //@param        cates       分类
     function options(pid,cates) {

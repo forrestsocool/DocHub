@@ -12,7 +12,7 @@ type CollectController struct {
 	BaseController
 }
 
-//收藏文档
+//收藏文件
 func (this *CollectController) Get() {
 	if this.IsLogin == 0 {
 		this.ResponseJson(false, "您当前未登录，请先登录")
@@ -32,16 +32,16 @@ func (this *CollectController) Get() {
 	}
 
 	if err != nil || rows == 0 {
-		this.ResponseJson(false, "收藏失败：您已收藏过该文档")
+		this.ResponseJson(false, "收藏失败：您已收藏过该文件")
 	}
 
-	//文档被收藏的数量+1
+	//文件被收藏的数量+1
 	models.Regulate(models.GetTableDocumentInfo(), "Ccnt", 1, fmt.Sprintf("`Id`=%v", did))
 
-	//收藏夹的文档+1
+	//收藏夹的文件+1
 	models.Regulate(models.GetTableCollectFolder(), "Cnt", 1, fmt.Sprintf("`Id`=%v", cid))
 
-	this.ResponseJson(true, "恭喜您，文档收藏成功。")
+	this.ResponseJson(true, "恭喜您，文件收藏成功。")
 }
 
 //收藏夹列表
@@ -65,7 +65,7 @@ func (this *CollectController) FolderList() {
 	this.ResponseJson(false, "暂时没有收藏夹，请先在会员中心创建收藏夹")
 }
 
-//取消收藏文档
+//取消收藏文件
 func (this *CollectController) CollectCancel() {
 	if this.IsLogin == 0 {
 		this.ResponseJson(false, "您当前未登录，请先登录")
@@ -79,14 +79,14 @@ func (this *CollectController) CollectCancel() {
 
 	if err := models.NewCollect().Cancel(did, cid, this.IsLogin); err != nil {
 		helper.Logger.Error(err.Error())
-		this.ResponseJson(false, "移除收藏文档失败，可能您为收藏该文档")
+		this.ResponseJson(false, "移除收藏文件失败，可能您为收藏该文件")
 	}
 
-	//文档被收藏的数量-1
+	//文件被收藏的数量-1
 	models.Regulate(models.GetTableDocumentInfo(), "Ccnt", -1, "`Id`=?", did)
 
-	//收藏夹的文档-1
+	//收藏夹的文件-1
 	models.Regulate(models.GetTableCollectFolder(), "Cnt", -1, "`Id`=?", cid)
 
-	this.ResponseJson(true, "恭喜您，删除收藏文档成功")
+	this.ResponseJson(true, "恭喜您，删除收藏文件成功")
 }

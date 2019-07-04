@@ -143,7 +143,7 @@ func (this *UserController) Get() {
 	this.Data["Sort"] = sort
 	this.Data["Style"] = style
 	this.Data["P"] = p
-	this.Data["Seo"] = models.NewSeo().GetByPage("PC-Ucenter-Doc", "文档列表-会员中心-"+user["Username"].(string), "会员中心,文档列表,"+user["Username"].(string), "文档列表-会员中心-"+user["Username"].(string), this.Sys.Site)
+	this.Data["Seo"] = models.NewSeo().GetByPage("PC-Ucenter-Doc", "文件列表-会员中心-"+user["Username"].(string), "会员中心,文件列表,"+user["Username"].(string), "文件列表-会员中心-"+user["Username"].(string), this.Sys.Site)
 	this.Data["Ranks"], _, err = models.NewUser().UserList(1, 8, "i.Document desc", "u.Id,u.Username,u.Avatar,u.Intro,i.Document", "i.Status=1")
 	if err != nil {
 		helper.Logger.Error(err.Error())
@@ -468,7 +468,7 @@ func (this *UserController) CreateCollectFolder() {
 	cover := ""
 	timestamp := int(time.Now().Unix())
 
-	//文件在文档库中未存在，则接收文件并做处理
+	//文件在文件库中未存在，则接收文件并做处理
 	f, fh, err := this.GetFile("Cover")
 	if err == nil {
 		defer f.Close()
@@ -607,7 +607,7 @@ func (this *UserController) FindPwd() {
 	this.ResponseJson(true, "重置密码成功，请重新登录")
 }
 
-//删除文档
+//删除文件
 func (this *UserController) DocDel() {
 
 	if this.IsLogin == 0 {
@@ -616,19 +616,19 @@ func (this *UserController) DocDel() {
 
 	docid, _ := this.GetInt(":doc")
 	if docid == 0 {
-		this.ResponseJson(false, "删除失败，文档不存在")
+		this.ResponseJson(false, "删除失败，文件不存在")
 	}
 
 	err := models.NewDocumentRecycle().RemoveToRecycle(this.IsLogin, true, docid)
 	if err != nil {
 		helper.Logger.Error("删除失败：%v", err.Error())
-		this.ResponseJson(false, "删除失败，文档不存在")
+		this.ResponseJson(false, "删除失败，文件不存在")
 	}
 
 	this.ResponseJson(true, "删除成功")
 }
 
-//文档编辑
+//文件编辑
 func (this *UserController) DocEdit() {
 
 	if this.IsLogin == 0 {
@@ -647,7 +647,7 @@ func (this *UserController) DocEdit() {
 		this.Redirect("/user", 302)
 	}
 
-	if info.Uid != this.IsLogin { // 文档所属用户id与登录的用户id不一致
+	if info.Uid != this.IsLogin { // 文件所属用户id与登录的用户id不一致
 		this.Redirect("/user", 302)
 	}
 
@@ -684,7 +684,7 @@ func (this *UserController) DocEdit() {
 		models.Regulate(models.GetTableCategory(), "Cnt", -1, fmt.Sprintf("Id in(%v,%v,%v)", info.ChanelId, info.Cid, info.Pid))
 		//新分类+1
 		models.Regulate(models.GetTableCategory(), "Cnt", 1, fmt.Sprintf("Id in(%v,%v,%v)", params["Chanel"], params["Cid"], params["Pid"]))
-		this.ResponseJson(true, "文档编辑成功")
+		this.ResponseJson(true, "文件编辑成功")
 	}
 
 	// GET
@@ -722,13 +722,13 @@ func (this *UserController) CollectFolderDel() {
 	this.ResponseJson(false, "删除失败，参数错误")
 }
 
-//取消收藏(针对文档)
+//取消收藏(针对文件)
 func (this *UserController) CollectCancel() {
 	cid, _ := this.GetInt(":cid")
 	did, _ := this.GetInt(":did")
 	if err := models.NewCollect().Cancel(did, cid, this.IsLogin); err != nil {
 		helper.Logger.Error(err.Error())
-		this.ResponseJson(false, "移除收藏失败，可能您为收藏该文档")
+		this.ResponseJson(false, "移除收藏失败，可能您为收藏该文件")
 	}
 	this.ResponseJson(true, "移除收藏成功")
 }

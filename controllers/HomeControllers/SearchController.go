@@ -156,7 +156,7 @@ func (this *SearchController) Get() {
 		}
 	}
 	this.Data["ElasticSearchOn"] = client.On
-	this.Data["Seo"] = models.NewSeo().GetByPage("PC-Search", params["wd"], "文档搜索,"+params["wd"], "文档搜索,"+params["wd"], this.Sys.Site)
+	this.Data["Seo"] = models.NewSeo().GetByPage("PC-Search", params["wd"], "文件搜索,"+params["wd"], "文件搜索,"+params["wd"], this.Sys.Site)
 	this.Data["Page"] = helper.Paginations(6, int(res.Total), listRows, p, "/search/", "type", params["type"], "sort", params["sort"], "p", p, "wd", params["wd"])
 	this.Data["Params"] = params
 	this.Data["Result"] = res

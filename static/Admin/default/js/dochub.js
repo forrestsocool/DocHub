@@ -232,7 +232,7 @@ $(function(){
 
     });
 
-    //展开文档
+    //展开文件
     $(".wenku-node a>.fa").click(function(){
         var _this=$(this),id=_this.parents(".wenku-node").attr("data-id");
         var cls=".wenku-node-"+id
@@ -255,7 +255,7 @@ $(function(){
 
     });
 
-    //显示文档备注模态框
+    //显示文件备注模态框
     $(".ModalRemark").click(function () {
         $.get('/admin/doc/remark',{dsid:$(this).attr("data-dsid")},function (ret) {
             if(ret.status==0){
@@ -356,7 +356,7 @@ $(function(){
 			}
         });
 		if(ids.length==0){
-			wenku_alert("danger","请选择要发布的文档",3000,"");
+			wenku_alert("danger","请选择要发布的文件",3000,"");
 			return false
 		}
 		var data=form.serialize()+"&Ids="+ids.join(",")

@@ -16,20 +16,20 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-// 文档处理
+// 文件处理
 func DocumentProcess(uid int, form FormUpload) (err error) {
-	// 1. 计算文档 md5
-	// 2. 判断文档是否合法
+	// 1. 计算文件 md5
+	// 2. 判断文件是否合法
 	// 3. 存入 document_store
 	// 4. 存入 document
 	// 5. 存入 document_info
-	// 6. 文档分类数量增加 category 表
-	// 7. 总文档数增加
-	// 8. 用户积分和文档数量增加
+	// 6. 文件分类数量增加 category 表
+	// 7. 总文件数增加
+	// 8. 用户积分和文件数量增加
 	// 9. 积分记录
 
 	sys, _ := NewSys().Get()
-	score := 0 // 文档已被上传的话，获得的积分为0
+	score := 0 // 文件已被上传的话，获得的积分为0
 
 	var doc = &Document{
 		Title:       form.Title,
@@ -64,8 +64,8 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 	}()
 
 	var (
-		errForbidden = errors.New("您上传的文档已被管理员禁止上传")
-		errRetry     = errors.New("文档上传失败，请重新上传")
+		errForbidden = errors.New("您上传的文件已被管理员禁止上传")
+		errRetry     = errors.New("文件上传失败，请重新上传")
 	)
 
 	var file *os.File
@@ -109,7 +109,7 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 
 	o.QueryTable(GetTableDocumentStore()).Filter("Md5", form.Md5).One(store)
 	if store.Id == 0 {
-		// 文档未被上传过，设置用户获得的积分
+		// 文件未被上传过，设置用户获得的积分
 		score = sys.Reward
 
 		var fileInfo os.FileInfo
@@ -124,7 +124,7 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 			ModTime:     int(fileInfo.ModTime().Unix()),
 			PreviewPage: sys.PreviewPage,
 			PreviewExt:  "svg",
-			Page:        0, //文档正在转换中，页码数设置为 0
+			Page:        0, //文件正在转换中，页码数设置为 0
 		}
 		if form.Ext == "" {
 			form.Ext = filepath.Ext(form.TmpFile)
@@ -159,14 +159,14 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 		helper.Logger.Error(err.Error())
 		return errRetry
 	}
-	// 总文档数增加
+	// 总文件数增加
 	sqlSys := fmt.Sprintf("update `%v` set `CntDoc`=`CntDoc`+1 where `Id`=1", GetTableSys())
 	if _, err = o.Raw(sqlSys).Exec(); err != nil {
 		helper.Logger.Error(err.Error())
 		return errRetry
 	}
 
-	// 用户文档数量和积分数量增加
+	// 用户文件数量和积分数量增加
 	sqlUser := fmt.Sprintf("update `%v` set `Document`=`Document`+1,`Coin`=`Coin`+? where `Id`=?", GetTableUserInfo())
 	if _, err = o.Raw(sqlUser, score, uid).Exec(); err != nil {
 		helper.Logger.Error(err.Error())
@@ -180,9 +180,9 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 	}
 
 	// 增加积分变更记录
-	coinLog.Log = "分享了一篇已被分享过的文档《%v》，获得 %v 个积分"
+	coinLog.Log = "分享了一篇已被分享过的文件《%v》，获得 %v 个积分"
 	if score > 0 {
-		coinLog.Log = "分享了一篇未被分享过的文档《%v》，获得 %v 个积分"
+		coinLog.Log = "分享了一篇未被分享过的文件《%v》，获得 %v 个积分"
 	}
 	coinLog.Log = fmt.Sprintf(coinLog.Log, doc.Title, score)
 	if _, err = o.Insert(coinLog); err != nil {
@@ -192,21 +192,21 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 	return
 }
 
-// 文档转换
+// 文件转换
 // @param           tmpFile         临时存储的文件
 // @param           fileMD5         文件md5
 // @param           page            需要转换的页数，0表示全部转换
 func DocumentConvert(tmpFile string, fileMD5 string, page ...int) (err error) {
-	// 1. 先把原文档上传到云存储
-	// 2. 把文档转成 PDF（如果原文档不是PDF的话）
-	// 3. 提取 PDF 文档中的部分文本内容
+	// 1. 先把原文件上传到云存储
+	// 2. 把文件转成 PDF（如果原文件不是PDF的话）
+	// 3. 提取 PDF 文件中的部分文本内容
 	// 4. 把 PDF 转 svg
 	// 5. 把 SVG 转 JPG 封面（封面需要裁剪）
 	// 6. 判断云存储类型，以确定是否需要压缩 svg 成gzip（先加水印再压缩）
 	// 7. 上传 svg、jpeg 等到云存储
 	// 8. 更新 document_store 表的信息，如页数、SVG宽高
-	// 9. 更新 document_info 中的文档转换状态为正常状态
-	// 10. 更新 document_text 中的文档内容信息
+	// 9. 更新 document_info 中的文件转换状态为正常状态
+	// 10. 更新 document_text 中的文件内容信息
 
 	if _, err = os.Stat(tmpFile); err != nil {
 		helper.Logger.Error(err.Error())
@@ -214,7 +214,7 @@ func DocumentConvert(tmpFile string, fileMD5 string, page ...int) (err error) {
 	}
 
 	if helper.Debug {
-		helper.Logger.Debug("文档转换中: %v ==> %v", tmpFile, fileMD5)
+		helper.Logger.Debug("文件转换中: %v ==> %v", tmpFile, fileMD5)
 	}
 
 	ext := filepath.Ext(tmpFile)
@@ -252,7 +252,7 @@ func DocumentConvert(tmpFile string, fileMD5 string, page ...int) (err error) {
 	}
 
 	if _, ok := helper.AllowedUploadDocsExt[extLower]; !ok {
-		return errors.New("不允许上传的文档类型")
+		return errors.New("不允许上传的文件类型")
 	}
 
 	store := &DocumentStore{}
@@ -400,7 +400,7 @@ func DocumentConvert(tmpFile string, fileMD5 string, page ...int) (err error) {
 	return
 }
 
-//获取文档列表，其中status不传时，表示获取全部状态的文档，否则获取指定状态的文档，status:-1已删除，0转码中，1已转码
+//获取文件列表，其中status不传时，表示获取全部状态的文件，否则获取指定状态的文件，status:-1已删除，0转码中，1已转码
 //排序order全部按倒叙排序，默认是按id倒叙排序，可选值：Id,Dcnt(下载),Vcnt(浏览),Ccnt(收藏)
 func GetDocList(uid, chanelid, pid, cid, p, listRows int, order string, status ...int) (data []orm.Params, rows int64, err error) {
 	var (

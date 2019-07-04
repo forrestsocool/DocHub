@@ -307,10 +307,10 @@ func FormatByte(size int) string {
 	return string(num) + " " + units[i]
 }
 
-//获取文档扩展名分类以及扩展名分类对应的catenum数字
+//获取文件扩展名分类以及扩展名分类对应的catenum数字
 //@param            ext         扩展名
-//@return           extCate     文档类型(字符串)
-//@return           extNum      文档类型(整型)
+//@return           extCate     文件类型(字符串)
+//@return           extNum      文件类型(整型)
 func GetExtCate(ext string) (extCate string, extNum int) {
 	ext = strings.ToLower(strings.TrimLeft(ext, "."))
 	extNum = EXT_NUM_OTHER
@@ -336,10 +336,10 @@ func GetExtCate(ext string) (extCate string, extNum int) {
 	return
 }
 
-//获取文档扩展名分类以及扩展名分类对应的catenum数字
+//获取文件扩展名分类以及扩展名分类对应的catenum数字
 //@param            ext         扩展名
-//@return           extCate     文档类型(字符串)
-//@return           extNum      文档类型(整型)
+//@return           extCate     文件类型(字符串)
+//@return           extNum      文件类型(整型)
 func GetExtCateByExtNum(num int) (extCate string) {
 	switch num {
 	case EXT_NUM_WORD:
@@ -477,8 +477,8 @@ func CountPDFPages(file string) (pageNum int, err error) {
 	return 0, errors.New(fmt.Sprintf(`%v:"/Pages"分割时失败`, file))
 }
 
-//文档评分处理
-//score：文档评分
+//文件评分处理
+//score：文件评分
 //IsScore:是否返回处理后的评分，true：返回评分，如“4.5”，false返回css的星，如"45"
 func StarVal(score int, IsScore bool) string {
 	if IsScore {
@@ -673,11 +673,11 @@ func SubStr(str interface{}, start, length int) string {
 	return strings.Join(slice[start:length], "")
 }
 
-//文件下载，这里只是简单的文档下载，复杂点的，需要根据Content-Type去做处理
+//文件下载，这里只是简单的文件下载，复杂点的，需要根据Content-Type去做处理
 //@param            fileUrl             文件下载URL连接
 //@param            savePath            文件存放文件夹
 //@param            cookies             COOKIE
-//@return           md5str              文档的md5
+//@return           md5str              文件的md5
 //@return           localFile           本地存放文件，err为nil时才需要处理文件，否则不需要处理
 //@return           filename            文件下载时的文件名
 //@return           err                 错误
@@ -710,11 +710,11 @@ func DownFile(fileUrl, savePath string, cookies string) (md5str, localFile, file
 	if err = req.ToFile(tmpFile); err != nil {
 		return
 	}
-	//计算文档md5
+	//计算文件md5
 	if md5str, err = FileMd5(tmpFile); err != nil {
 		return
 	}
-	//重命名文档
+	//重命名文件
 	localFile = strings.TrimSuffix(savePath, "/") + "/" + md5str + ext
 	err = os.Rename(tmpFile, localFile) //重命名文件
 	return

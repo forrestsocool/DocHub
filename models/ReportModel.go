@@ -6,7 +6,7 @@ import "github.com/astaxie/beego/orm"
 type Report struct {
 	Id         int  `orm:"column(Id)"`
 	Uid        int  `orm:"column(Uid)"`                   //用户ID
-	Did        int  `orm:"column(Did)"`                   //文档ID
+	Did        int  `orm:"column(Did)"`                   //文件ID
 	Reason     int  `orm:"column(Reason);default(1)"`     //举报理由：  1、垃圾广告  2、淫秽色情  3、虚假中奖  4、敏感信息  5、人身攻击  6、骚扰他人
 	Status     bool `orm:"column(Status);default(false)"` //是否已处理
 	TimeCreate int  `orm:"column(TimeCreate)"`            //举报时间

@@ -1,6 +1,6 @@
 {{define "Tabs"}}
 <ul class="nav nav-tabs">
-    <li {{if eq .Tab "doc"}}class="active"{{end}}><a href="/user/{{.User.Id}}/doc">分享文档</a></li>
+    <li {{if eq .Tab "doc"}}class="active"{{end}}><a href="/user/{{.User.Id}}/doc">分享文件</a></li>
     <li {{if eq .Tab "collect"}}class="active"{{end}}><a href="/user/{{.User.Id}}/collect">收藏夹</a></li>
     <li {{if eq .Tab "coin"}}class="active"{{end}}><a href="/user/{{.User.Id}}/coin">财富记录</a></li>
 </ul>
@@ -45,8 +45,8 @@
                     </div>
                     <div class="help-block clearfix">
                         <div class="col-xs-4">
-                            {{/*文档: <a href="/user/{{.User.Id}}/doc" class="text-primary">{{.User.Document}} </a>*/}}
-                            <div>文档</div>
+                            {{/*文件: <a href="/user/{{.User.Id}}/doc" class="text-primary">{{.User.Document}} </a>*/}}
+                            <div>文件</div>
                             <div class="text-primary">{{.User.Document}}</div>
                         </div>
 {{/*                        <div class="col-xs-4 col-xs-middle">*/}}
@@ -85,7 +85,7 @@
                             <div>
                                 <a href="/user/{{.Id}}" class="wenku-username">{{.Username}}</a>
                             </div>
-                            <div class="help-block"><span class="text-primary">{{.Document}}</span> 篇文档</div>
+                            <div class="help-block"><span class="text-primary">{{.Document}}</span> 篇文件</div>
                         </div>
                     </li>
                 {{end}}

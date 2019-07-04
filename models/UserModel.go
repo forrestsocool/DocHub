@@ -34,12 +34,12 @@ func GetTableUser() string {
 type UserInfo struct {
 	Id         int  `orm:"auto;pk;column(Id)"`                //主键，也就是User表的Id
 	Coin       int  `orm:"default(10);index;column(Coin)"`    //金币积分
-	Document   int  `orm:"default(0);index;column(Document)"` //文档数量
-	Collect    int  `orm:"default(0);column(Collect)"`        //收藏专辑数量，每个收藏专辑下面有文档
+	Document   int  `orm:"default(0);index;column(Document)"` //文件数量
+	Collect    int  `orm:"default(0);column(Collect)"`        //收藏专辑数量，每个收藏专辑下面有文件
 	TimeCreate int  `orm:"column(TimeCreate);default(0)"`     //用户注册时间
 	Status     bool `orm:"column(Status);default(true)"`      //用户信息状态，false(即0)表示被禁用
 
-	Cid        int  `orm:"column(Cid)"`                       //用户能上传的文档分类
+	Cid        int  `orm:"column(Cid)"`                       //用户能上传的文件分类
 }
 
 func NewUserInfo() *UserInfo {
@@ -178,22 +178,22 @@ func (this *User) GetById(id interface{}) (params orm.Params, rows int64, err er
 }
 
 var (
-	errFailedToDown = errors.New("文档下载失败")
+	errFailedToDown = errors.New("文件下载失败")
 	errParams       = errors.New("参数错误")
-	errNotFound     = errors.New("文档不存在")
-	errCannotDown   = errors.New("该文档不允许下载")
+	errNotFound     = errors.New("文件不存在")
+	errCannotDown   = errors.New("该文件不允许下载")
 	errNotExistUser = errors.New("用户不存在")
 	errLessCoin     = errors.New("金币不足")
 )
 
-// 判断用户是否可以下载指定文档
+// 判断用户是否可以下载指定文件
 // err 为 nil 表示可以下载
 func (this *User) CanDownloadFile(docId int) (urlStr string, err error) {
 //func (this *User) CanDownloadFile(uid, docId int) (urlStr string, err error) {
-	// 1. 判断用户和文档是否存在
+	// 1. 判断用户和文件是否存在
 	// 2. 判断用户是否可以免费下载，如果用户不可以免费下载，则再扣费之后，允许用户免费下载
-	// 3. 文档被下载次数增加，用户(文档下载人和文档分享人)积分变更，并增加两个用户的积分记录
-	// 4. 获取文档下载URL链接
+	// 3. 文件被下载次数增加，用户(文件下载人和文件分享人)积分变更，并增加两个用户的积分记录
+	// 4. 获取文件下载URL链接
 	if docId<= 0 {
 	//uid = 2
 	//if uid <= 0 || docId <= 0 {
@@ -273,12 +273,12 @@ func (this *User) CanDownloadFile(docId int) (urlStr string, err error) {
 	}
 
 	if price > 0 {
-		// 文档下载人，扣除积分
+		// 文件下载人，扣除积分
 		//u.Coin = u.Coin - price
 		//if _, err = o.Update(u); err != nil {
 		//	return
 		//}
-		// 文档分享人，增加积分
+		// 文件分享人，增加积分
 		sqlShareUser := fmt.Sprintf("update `%v` set `Coin`=`Coin`+? where Id = ?", GetTableUserInfo())
 		if _, err = o.Raw(sqlShareUser, price, docInfo.Uid).Exec(); err != nil {
 			return
@@ -292,17 +292,17 @@ func (this *User) CanDownloadFile(docId int) (urlStr string, err error) {
 		}
 
 		logDown.Coin = -price
-		logDown.Log = fmt.Sprintf("下载文档(%v)，花费 %v 金币", doc.Title, price)
+		logDown.Log = fmt.Sprintf("下载文件(%v)，花费 %v 金币", doc.Title, price)
 
 		logShare.Coin = price
-		logShare.Log = fmt.Sprintf("您分享的文档(%v)被其他用户下载，获得 %v 金币", doc.Title, price)
+		logShare.Log = fmt.Sprintf("您分享的文件(%v)被其他用户下载，获得 %v 金币", doc.Title, price)
 		if _, err = o.Insert(&logShare); err != nil {
 			helper.Logger.Error(err.Error())
 			err = errFailedToDown
 			return
 		}
 	} else {
-		logDown.Log = fmt.Sprintf("在免费期限内，下载同一篇文档《%v》免费", doc.Title)
+		logDown.Log = fmt.Sprintf("在免费期限内，下载同一篇文件《%v》免费", doc.Title)
 	}
 
 	if _, err = o.Insert(&logDown); err != nil {

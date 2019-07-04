@@ -41,7 +41,7 @@ func ConvertPDF2SVG(pdfFile, svgFile string, pageNO int) (err error) {
 	return
 }
 
-//office文档转pdf，返回转化后的文档路径和错误
+//office文件转pdf，返回转化后的文件路径和错误
 func OfficeToPDF(file string) (err error) {
 	soffice := strings.TrimSpace(GetConfig("depend", "soffice", "soffice"))
 	file, _ = filepath.Abs(file)
@@ -61,13 +61,13 @@ func OfficeToPDF(file string) (err error) {
 		}
 	})
 	if Debug {
-		Logger.Debug("office 文档转 PDF:%v", cmd.Args)
+		Logger.Debug("office 文件转 PDF:%v", cmd.Args)
 	}
 	err = cmd.Run()
 	return
 }
 
-//非office文档(.txt,.mobi,.epub)转pdf文档
+//非office文件(.txt,.mobi,.epub)转pdf文件
 func ConvertByCalibre(file string, ext ...string) (resFile string, err error) {
 	//calibre := beego.AppConfig.DefaultString("calibre", "ebook-convert")
 	e := ExtPDF
@@ -98,7 +98,7 @@ func ConvertByCalibre(file string, ext ...string) (resFile string, err error) {
 		args = append([]string{calibre}, args...)
 		cmd = exec.Command("sudo", args...)
 	}
-	Logger.Debug("calibre文档转换：%v %v", calibre, strings.Join(args, " "))
+	Logger.Debug("calibre文件转换：%v %v", calibre, strings.Join(args, " "))
 	time.AfterFunc(60*time.Minute, func() {
 		if cmd.Process != nil {
 			cmd.Process.Kill()

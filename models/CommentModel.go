@@ -2,10 +2,10 @@ package models
 
 import "github.com/astaxie/beego/orm"
 
-//文档评分记录表
+//文件评分记录表
 type DocumentComment struct {
 	Id         int    `orm:"column(Id)"`
-	Did        int    `orm:"column(Did);index"`                   //文档ID
+	Did        int    `orm:"column(Did);index"`                   //文件ID
 	Uid        int    `orm:"column(Uid);"`                        //评分的用户Id
 	Score      int    `orm:"column(Score);default(30000)"`        //评分分数
 	Content    string `orm:"column(Content);size(256);default()"` //评论内容
@@ -21,15 +21,15 @@ func GetTableDocumentComment() string {
 	return getTable("document_comment")
 }
 
-// 文档评分记录表多字段唯一索引
+// 文件评分记录表多字段唯一索引
 func (this *DocumentComment) TableUnique() [][]string {
 	return [][]string{
 		[]string{"Did", "Uid"},
 	}
 }
 
-//获取文档评论列表
-//@param            did             文档ID
+//获取文件评论列表
+//@param            did             文件ID
 //@param            p               页码
 //@param            listRows        每页记录数
 //@return           params          返回的数据
@@ -50,8 +50,8 @@ func (this *DocumentComment) GetCommentList(did, p, listRows int) (params []orm.
 	return params, rows, err
 }
 
-//根据文档ID删除文档评论
-//@param                ids             文档id
+//根据文件ID删除文件评论
+//@param                ids             文件id
 //@return               err             错误，nil表示删除成功
 func (this *DocumentComment) DelCommentByDocId(ids ...interface{}) (err error) {
 	if len(ids) > 0 {

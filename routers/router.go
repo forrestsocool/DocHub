@@ -39,7 +39,7 @@ func front() {
 	beego.Router("/user/:uid/del/doc/:doc", &HomeControllers.UserController{}, "get:DocDel")
 	beego.Router("/user/:uid/edit/doc/:doc", &HomeControllers.UserController{}, "get,post:DocEdit")
 	beego.Router("/user/:uid/del/collect/:cid", &HomeControllers.UserController{}, "get:CollectFolderDel")
-	beego.Router("/user/:uid/cancel/collect/:cid/:did", &HomeControllers.UserController{}, "get:CollectCancel") //取消收藏文档
+	beego.Router("/user/:uid/cancel/collect/:cid/:did", &HomeControllers.UserController{}, "get:CollectCancel") //取消收藏文件
 	beego.Router("/user/:uid/doc/*", &HomeControllers.UserController{})
 	beego.Router("/user/avatar", &HomeControllers.UserController{}, "post:Avatar")
 	beego.Router("/user/edit", &HomeControllers.UserController{}, "post:Edit")

@@ -122,12 +122,12 @@ func (this *BaseController) SetCookieLogin(uid interface{}) {
 	this.Ctx.SetSecureCookie(secret+timestamp, "token", fmt.Sprintf("%v", uid), expire)
 }
 
-//校验文档是否已经存在
+//校验文件是否已经存在
 func (this *BaseController) DocExist() {
 	if models.NewDocument().IsExistByMd5(this.GetString("md5")) > 0 {
-		this.ResponseJson(true, "文档存在")
+		this.ResponseJson(true, "文件存在")
 	}
-	this.ResponseJson(false, "文档不存在")
+	this.ResponseJson(false, "文件不存在")
 }
 
 //响应json

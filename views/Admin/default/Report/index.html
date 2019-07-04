@@ -11,7 +11,7 @@
                         <thead>
                         <tr role="row">
                             <th>#</th>
-                            <th>文档</th>
+                            <th>文件</th>
                             <th>举报人</th>
                             <th>举报原因</th>
                             <th>举报时间</th>
@@ -42,7 +42,7 @@
                                 {{end}}
                                 |
                                 <a href="/admin/update?table=report&id={{.Id}}&field=Status&value=-1" class="wenku-tooltip wenku-ajax-get wenku-confirm" title="删除举报记录">删除记录</a> |
-                                <a href="/admin/doc/action?type=remove&id={{.Did}}" class="wenku-tooltip wenku-confirm wenku-ajax-get" title="删除被举报文档，将该文档移入回收站">删除文档</a>
+                                <a href="/admin/doc/action?type=remove&id={{.Did}}" class="wenku-tooltip wenku-confirm wenku-ajax-get" title="删除被举报文件，将该文件移入回收站">删除文件</a>
                             </td>
                         </tr>
                         {{end}}

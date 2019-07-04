@@ -73,7 +73,7 @@ func installSys() {
 4:敏感信息
 5:人身攻击
 6:骚扰他人`, //举报原因
-		Watermark:     "DocHub", //文档水印
+		Watermark:     "DocHub", //文件水印
 		StoreType:     string(StoreOss),
 		CheckRegEmail: true,
 	}
@@ -215,21 +215,21 @@ func installSeo() {
 			Description: "{description}",
 		},
 		Seo{
-			Name:        "文档上传页",
+			Name:        "文件上传页",
 			Page:        "PC-Upload",
 			Title:       "{title} - {sitename}",
 			Keywords:    "{keywords}",
 			Description: "{description}",
 		},
 		Seo{
-			Name:        "文档预览页",
+			Name:        "文件预览页",
 			Page:        "PC-View",
 			Title:       "{title} - {sitename}",
 			Keywords:    "{keywords}",
 			Description: "{description}",
 		},
 		Seo{
-			Name:        "用户中心文档列表页",
+			Name:        "用户中心文件列表页",
 			Page:        "PC-Ucenter-Doc",
 			Title:       "{title} - {sitename}",
 			Keywords:    "{keywords}",
@@ -312,7 +312,7 @@ func installCategory() {
 	sql := `INSERT INTO hc_category (Id, Pid, Title, Cnt, Sort, Alias, Status) VALUES
 		(1, 0, '教育频道', 0, 0, 'edu', 1),
 		(2, 0, '专业资料', 0, 1, 'pro', 1),
-		(3, 0, '实用文档', 0, 2, 'pra', 1),
+		(3, 0, '实用文件', 0, 2, 'pra', 1),
 		(4, 0, '资格考试', 0, 3, 'exam', 1),
 		(5, 0, '生活休闲', 0, 4, 'life', 1),
 		(7, 1, '幼儿教育', 0, 0, '', 1),
@@ -728,14 +728,14 @@ func installCfg() {
 		},
 		Config{
 			Title:       "Soffice",
-			Description: "libreoffice/openoffice将office文档转PDF文档的工具，默认为soffice",
+			Description: "libreoffice/openoffice将office文件转PDF文件的工具，默认为soffice",
 			Key:         "soffice",
 			Value:       "soffice",
 			Category:    cateDepend,
 		},
 		Config{
 			Title:       "Soffice转化超时时间(秒)",
-			Description: "转换office文档的超时时间，避免转化失败还占用服务器资源，默认1800秒",
+			Description: "转换office文件的超时时间，避免转化失败还占用服务器资源，默认1800秒",
 			Key:         "soffice-expire",
 			Value:       "1800",
 			InputType:   InputNumber,
@@ -743,7 +743,7 @@ func installCfg() {
 		},
 		Config{
 			Title:       "Calibre",
-			Description: "calibre文档转换命令，将mobi等转PDF，默认为ebook-convert",
+			Description: "calibre文件转换命令，将mobi等转PDF，默认为ebook-convert",
 			Key:         "calibre",
 			Value:       "ebook-convert",
 			Category:    cateDepend,
@@ -868,7 +868,7 @@ func installCfg() {
 		},
 		Config{
 			Title:       "过期时间",
-			Description: "文档下载签名链接有效时长(秒)",
+			Description: "文件下载签名链接有效时长(秒)",
 			Key:         "expire",
 			Value:       "3600",
 			InputType:   InputNumber,
@@ -938,7 +938,7 @@ func installCfg() {
 		},
 		Config{
 			Title:       "过期时间",
-			Description: "文档下载签名链接有效时长(秒)",
+			Description: "文件下载签名链接有效时长(秒)",
 			Key:         "expire",
 			Value:       "3600",
 			InputType:   InputNumber,
@@ -1016,7 +1016,7 @@ func installCfg() {
 		},
 		Config{
 			Title:       "过期时间",
-			Description: "文档下载签名链接有效时长(秒)",
+			Description: "文件下载签名链接有效时长(秒)",
 			Key:         "expire",
 			Value:       "3600",
 			InputType:   InputNumber,
@@ -1086,7 +1086,7 @@ func installCfg() {
 		},
 		Config{
 			Title:       "过期时间",
-			Description: "文档下载签名链接有效时长(秒)",
+			Description: "文件下载签名链接有效时长(秒)",
 			Key:         "expire",
 			Value:       "3600",
 			InputType:   InputNumber,
@@ -1156,7 +1156,7 @@ func installCfg() {
 		},
 		Config{
 			Title:       "过期时间",
-			Description: "文档下载签名链接有效时长(秒)",
+			Description: "文件下载签名链接有效时长(秒)",
 			Key:         "expire",
 			Value:       "3600",
 			InputType:   InputNumber,
@@ -1218,7 +1218,7 @@ func installCfg() {
 		},
 		Config{
 			Title:       "过期时间",
-			Description: "文档下载签名链接有效时长(秒)",
+			Description: "文件下载签名链接有效时长(秒)",
 			Key:         "expire",
 			Value:       "3600",
 			InputType:   InputNumber,
@@ -1288,7 +1288,7 @@ func installCfg() {
 		},
 		Config{
 			Title:       "过期时间",
-			Description: "文档下载签名链接有效时长(秒)",
+			Description: "文件下载签名链接有效时长(秒)",
 			Key:         "expire",
 			Value:       "3600",
 			InputType:   InputNumber,

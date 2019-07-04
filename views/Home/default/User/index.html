@@ -23,7 +23,7 @@
                 </div>
                 {{else}}
                 <div class="panel-heading clearfix">
-                    <div class="strong pull-left">文档列表</div>
+                    <div class="strong pull-left">文件列表</div>
                     <div class="pull-right wenku-show">
                         <a href="/user/{{.User.Id}}/doc/sort/{{.Sort}}/style/list/p/{{.P}}" title="列表展示" {{if eq .Style "list"}}class="active"{{end}}><i class="fa fa-list"></i></a>
                         <a href="/user/{{.User.Id}}/doc/sort/{{.Sort}}/style/th/p/{{.P}}" title="缩略图展示" {{if eq .Style "th"}}class="active"{{end}}><i class="fa fa-th-large"></i></a>
@@ -45,7 +45,7 @@
                             <div class="col-xs-3">
                                 <a href="/view/{{.Id}}" target="_blank" title="{{.Title}}" class="thumbnail">
                                     <img class="img-responsive" alt="{{.Title}} 封面" onerror="this.src='/static/Common/img/cover.jpg'" src="{{DefaultImage .Md5}}"/>
-                                    <img class="wenku-icon" alt="{{.ExtCate}}文档" src="/static/Home/default/img/{{.ExtCate}}_24.png"/>
+                                    <img class="wenku-icon" alt="{{.ExtCate}}文件" src="/static/Home/default/img/{{.ExtCate}}_24.png"/>
                                     <div class="wenku-title">
                                         {{.Title}}
                                         <hr>
@@ -64,7 +64,7 @@
                     {{else}}
                     <div class="wenku-list-table">
                         <div class="wenku-list-table-head clearfix">
-                            <div class="col-xs-5">文档</div>
+                            <div class="col-xs-5">文件</div>
                             <div class="col-xs-2">评分</div>
                             <div class="col-xs-1">页数</div>
                             <div class="col-xs-1">浏览</div>
@@ -76,7 +76,7 @@
                                 {{range .Lists}}
                                 <li class="clearfix">
                                     <div class="col-xs-5 wenku-text-ellipsis">
-                                        <a href="/view/{{.Id}}" title="{{.Title}}" target="_blank"><img alt="{{.ExtCate}}文档" src="/static/Home/default/img/{{.ExtCate}}_24.png"/> {{.Title}}</a>
+                                        <a href="/view/{{.Id}}" title="{{.Title}}" target="_blank"><img alt="{{.ExtCate}}文件" src="/static/Home/default/img/{{.ExtCate}}_24.png"/> {{.Title}}</a>
                                     </div>
                                     <div class="col-xs-2"><span class="wenku-star star-{{StarVal (Interface2Int .Score) false}}"></span></div>
                                     <div class="col-xs-1"> {{HandlePageNum .Page}}</div>
@@ -106,7 +106,7 @@
                     {{end}}
 
                     {{if .Lists}}{{else}}
-                        <div class="help-block text-center">暂无分享文档</div>
+                        <div class="help-block text-center">暂无分享文件</div>
                     {{end}}
                     {{if .Page}}
                     <ul class="pagination">

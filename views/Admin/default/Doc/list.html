@@ -1,5 +1,5 @@
         <div class="row">
-            <h1 class="page-header">文档管理</h1>
+            <h1 class="page-header">文件管理</h1>
             <div class="panel panel-default">
                 <div class="panel-heading wenku-no-pdl clearfix">
                     <div class="col-md-8 wenku-no-pdl">
@@ -38,7 +38,7 @@
                             <thead>
                             <tr>
                                 <th>分类</th>
-                                <th>文档</th>
+                                <th>文件</th>
                                 <th>用户</th>
                                 <th>操作</th>
                             </tr>
@@ -58,9 +58,9 @@
                                 </td>
                                 <td><a href="/user/{{.Uid}}" target="_blank">{{.Username}}</a></td>
                                 <td>
-                                    {{/*<a href="#" class="wenku-tooltip" title="对文档内容进行简单编辑">编辑</a> |*/}}
-                                    <a href="/admin/doc/action?type=remove&id={{.Id}}" class="wenku-tooltip wenku-confirm wenku-ajax-get" title="删除当前文档，将该文档移入回收站">删除</a>
-                                    {{/*<a href="/admin/doc/action?type=illegal&id={{.Id}}" class="wenku-tooltip wenku-confirm wenku-ajax-get" title="将文档标记为非法文档，文档在被移入回收站的同时，并禁止任何用户再上传该文档">非法</a> |*/}}
+                                    {{/*<a href="#" class="wenku-tooltip" title="对文件内容进行简单编辑">编辑</a> |*/}}
+                                    <a href="/admin/doc/action?type=remove&id={{.Id}}" class="wenku-tooltip wenku-confirm wenku-ajax-get" title="删除当前文件，将该文件移入回收站">删除</a>
+                                    {{/*<a href="/admin/doc/action?type=illegal&id={{.Id}}" class="wenku-tooltip wenku-confirm wenku-ajax-get" title="将文件标记为非法文件，文件在被移入回收站的同时，并禁止任何用户再上传该文件">非法</a> |*/}}
                                 </td>
                             </tr>
                             {{end}}
@@ -83,8 +83,8 @@
         <!--新增频道Modal-->
         {{template "ModalChanel" .}}
 
-        <!--新增文档分类Modal-->
+        <!--新增文件分类Modal-->
         {{template "ModalCate" .}}
 
-        <!--文档备注Modal-->
+        <!--文件备注Modal-->
         {{template "ModalRemark" .}}

@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-xs-4" style="padding-left: 0px;">
                                 <div class="form-group">
-                                    <label >文档上传金币奖励</label>
+                                    <label >文件上传金币奖励</label>
                                     <input type="number" class="form-control" name="Reward" value="{{.Reward}}" />
                                 </div>
                             </div>
@@ -68,8 +68,8 @@
 
                             <div class="col-xs-6" style="padding-left: 0px;">
                                 <div class="form-group">
-                                    <label >文档水印文本</label>
-                                    <input type="text" class="form-control" name="Watermark" placeholder="文档水印文案，留空则表示不添加水印" value="{{.Watermark}}" />
+                                    <label >文件水印文本</label>
+                                    <input type="text" class="form-control" name="Watermark" placeholder="文件水印文案，留空则表示不添加水印" value="{{.Watermark}}" />
                                 </div>
                             </div>
 
@@ -92,8 +92,8 @@
 
                             <div class="col-xs-6" style="padding-left: 0px;">
                                 <div class="form-group">
-                                    <label >热门推荐(按照顺序输入文档id)</label>
-                                    <input type="text" class="form-control" name="Trends" placeholder="请填写5个文档ID，id之间用英文逗号分隔" value="{{.Trends}}" />
+                                    <label >热门推荐(按照顺序输入文件id)</label>
+                                    <input type="text" class="form-control" name="Trends" placeholder="请填写5个文件ID，id之间用英文逗号分隔" value="{{.Trends}}" />
                                 </div>
                             </div>
 
@@ -112,13 +112,13 @@
 
                             <div class="col-xs-6" style="padding-left: 0px;">
                                 <div class="form-group">
-                                    <label >文档评论验证问题</label>
+                                    <label >文件评论验证问题</label>
                                     <input type="text" class="form-control" name="Question" value="{{.Question}}" />
                                 </div>
                             </div>
                             <div class="col-xs-6" style="padding-left: 0px;">
                                 <div class="form-group">
-                                    <label >文档评论验证问题答案</label>
+                                    <label >文件评论验证问题答案</label>
                                     <input type="text" class="form-control" name="Answer" value="{{.Answer}}" />
                                 </div>
                             </div>
@@ -163,7 +163,7 @@
 
                             <div class="col-xs-6" style="padding-left: 0px;">
                                 <div class="form-group">
-                                    <label >文档最大预览页数(此参数不要频繁变更；0表示不限制。)</label>
+                                    <label >文件最大预览页数(此参数不要频繁变更；0表示不限制。)</label>
                                     <input type="number" class="form-control" name="PreviewPage" value="{{.PreviewPage}}" />
                                 </div>
                             </div>
@@ -175,10 +175,10 @@
                             </div>
 
 
-                            {{/*相关文档功能暂时还没开发，先注释掉*/}}
+                            {{/*相关文件功能暂时还没开发，先注释掉*/}}
                             {{/*<div class="col-xs-6" style="padding-left: 0px;">*/}}
                                 {{/*<div class="form-group">*/}}
-                                    {{/*<label >相关文档时间周期</label>*/}}
+                                    {{/*<label >相关文件时间周期</label>*/}}
                                     {{/*<select name="TimeExpireRelate" class="form-control">*/}}
                                         {{/*<option  value="31536000" {{if eq .TimeExpireRelate 31536000}}selected="selected"{{end}}>一年</option>*/}}
                                         {{/*<option  value="15552000" {{if eq .TimeExpireRelate 15552000}}selected="selected"{{end}}>半年</option>*/}}
@@ -193,7 +193,7 @@
 
                             <div class="col-xs-6" style="padding-left: 0px;">
                                 <div class="form-group">
-                                    <label >热门文档时间周期</label>
+                                    <label >热门文件时间周期</label>
                                     <select name="TimeExpireHotspot" class="form-control">
                                         <option  value="31536000" {{if eq .TimeExpireHotspot 31536000}}selected="selected"{{end}}>一年</option>
                                         <option  value="15552000" {{if eq .TimeExpireHotspot 15552000}}selected="selected"{{end}}>半年</option>
@@ -221,8 +221,8 @@
                                 <textarea name="DirtyWord" rows="6" class="form-control" placeholder="请输入不良信息关键字，资源过滤需要用到，多个关键字请用空格分隔">{{.DirtyWord}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label >举报原因(<small class="text-muted">文档被举报的原因，多个，请换行输入。格式为"序号:原因"，如"1:垃圾广告"</small>)</label>
-                                <textarea name="ReportReasons" rows="6" class="form-control" placeholder="文档被举报的原因，多个，请换行输入">{{.ReportReasons}}</textarea>
+                                <label >举报原因(<small class="text-muted">文件被举报的原因，多个，请换行输入。格式为"序号:原因"，如"1:垃圾广告"</small>)</label>
+                                <textarea name="ReportReasons" rows="6" class="form-control" placeholder="文件被举报的原因，多个，请换行输入">{{.ReportReasons}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label >统计代码(支持html代码)</label>
@@ -277,7 +277,7 @@
                                 </ul>
 
                                 {{if eq $.Tab "local"}}
-                                    <div class="help-block">如果选择本地存储，则不需要进行任何配置，文档存储到程序目录下的 <strong class="text-muted">./store</strong> 文件夹，请确保该文件夹拥有读写权限</div>
+                                    <div class="help-block">如果选择本地存储，则不需要进行任何配置，文件存储到程序目录下的 <strong class="text-muted">./store</strong> 文件夹，请确保该文件夹拥有读写权限</div>
                                 {{end}}
 
                             {{end}}

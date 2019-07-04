@@ -79,9 +79,9 @@ func (this *ListController) Get() {
 		}
 	}
 
-	//TODO 相关文档
+	//TODO 相关文件
 
-	//热门文档，根据当前所属分类去获取
+	//热门文件，根据当前所属分类去获取
 	TimeStart := int(time.Now().Unix()) - this.Sys.TimeExpireHotspot
 	if cid > 0 {
 		this.Data["Hots"], _, _ = models.NewDocument().SimpleList(fmt.Sprintf("di.Cid=%v and di.TimeCreate>%v", cid, TimeStart), 10, "vcnt")
