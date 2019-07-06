@@ -92,7 +92,7 @@
 
 
                     <div class="help-block">
-                        <span>本文件由 <a href="/user/{{.Doc.Uid}}" target="_blank"title="{{.Doc.Username}}">{{.Doc.Username}}</a> 于 <span class="text-muted">{{TimestampFormat .Doc.TimeCreate}}</span>上传分享</span>
+                        <span>本文件由 <a href="/user/{{.Doc.Uid}}" target="_blank"title="{{.Doc.Username}}">{{.Doc.Username}}</a> 于 <span class="text-muted">{{TimestampFormat .Doc.TimeCreate}}</span>上传</span>
                     </div>
                     <div class="help-block wenku-action">
                         <div class="pull-left">
@@ -181,8 +181,8 @@
                     <li><a href="javascript:void(0);" class="wenku-expend"><i class="fa fa-arrows-alt em14"></i>&nbsp;</a></li>
 
 
-                    <li><a href="javascript:void(0);" data-toggle="modal" data-target="#ModalShare"><i class="fa fa-share-alt em14"></i>&nbsp;</a></li>
-                    <li><a href="javascript:void(0);" class="wenku-collect"><i class="fa fa-heart-o em14"></i>&nbsp;</a></li>
+{{/*                    <li><a href="javascript:void(0);" data-toggle="modal" data-target="#ModalShare"><i class="fa fa-share-alt em14"></i>&nbsp;</a></li>*/}}
+{{/*                    <li><a href="javascript:void(0);" class="wenku-collect"><i class="fa fa-heart-o em14"></i>&nbsp;</a></li>*/}}
                     <li class="hidden-xs"><a href="javascript:void(0);" class="wenku-scale-minus"><i class="fa fa-search-minus em14"></i>&nbsp;</a></li>
                     <li class="hidden-xs"><a href="javascript:void(0);" class="wenku-scale-plus"><i class="fa fa-search-plus em14"></i>&nbsp;</a></li>
 
@@ -202,7 +202,7 @@
 
 
 
-                    <li><a href="javascript:void(0);" class="wenku-goto-comment"><i class="fa fa-comments-o em14"></i> 评价文件</a></li>
+                    <li><a href="javascript:void(0);" class="wenku-goto-comment"><i class="fa fa-comments-o em14"></i> 文件打分</a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
