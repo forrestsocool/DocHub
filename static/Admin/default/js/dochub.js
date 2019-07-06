@@ -284,6 +284,19 @@ $(function(){
     });
 
 
+	//用户可上传频道变更
+	$(".ModalDeptBtn").click(function () {
+		var _this=$(this),uid=_this.attr("data-id"),username=_this.attr("data-username"),ucid=_this.attr("data-usercid");
+		$(".ModalDeptUser").text(username);
+		$("#ModalDept form").find("[name=uid]").val(uid);
+		var obj=eval("("+$("#wenku-cates").text()+")"),cates=obj;
+		$("#ModalDept form select[name=cid]").text("");
+		$("#ModalDept form select[name=cid]").empty();
+		$("#ModalDept form select[name=cid]").append(getOptions(0, ucid, cates));
+		$("#ModalDept").modal("show");
+	});
+
+
     $("#ModalCate .form-chanel [name=Cid]").change(function () {
         var cid=$(this).val(),url=$(this).attr("data-url");
         if (cid>0){
@@ -371,7 +384,24 @@ $(function(){
     });
 
 
-
+	//表单文件上传的分类选项
+	//@param        pid         父级id
+	//@param        cates       分类
+	//@param        selectedId       默认选中的id
+	function getOptions(pid,selectedId,cates) {
+		var chanel=[];
+		$.each(cates,function () {
+			if (this.Pid==pid){
+				if(this.Id == selectedId){
+					chanel.push('<option selected="selected" value="'+this.Id+'">'+this.Title+'</option>');
+				}
+				else{
+					chanel.push('<option value="'+this.Id+'">'+this.Title+'</option>');
+				}
+			}
+		});
+		return chanel.join(",")
+	}
 
 
 

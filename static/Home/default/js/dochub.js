@@ -934,27 +934,18 @@ $(function(){
 
     $(".wenku-ajax-form [type=submit]").click(function(e){
         e.preventDefault();
-        // var _this=$(this),form=$(this).parents("form"),method=form.attr("method"),action=form.attr("action"),data=form.serialize(),_url=form.attr("data-url");
-        // var require=form.find("[required=required]"),l=require.length;
-        // var _this=$(this),form=$(this).parents("form"),method=form.attr("method"),action=form.attr("action"),data=form.serialize(),_url=form.attr("data-url");
-        // var require=form.find("[required=required]"),l=require.length;
-
-
-        var _this=$(this);
-        var unixtimeStart = Date.parse($(".demo-input-start").val())/1000;
-        console.log(typeof (unixtimeStart));
-        var unixtimeEnd   = Date.parse($(".demo-input-end").val())/1000;
-        var form=$(this).parents("form");
-        form[0][4].value = unixtimeStart;
-        form[0][5].value = unixtimeEnd;
-        var data=form.serialize(),_url=form.attr("data-url");
-        var method=form.attr("method"),action=form.attr("action");
+        var _this=$(this),form=$(this).parents("form"),method=form.attr("method"),action=form.attr("action"),data=form.serialize(),_url=form.attr("data-url");
         var require=form.find("[required=required]"),l=require.length;
-        if (unixtimeEnd && unixtimeEnd <= unixtimeStart){
-            wenku_alert("danger","失效日期必须大于生效日期",3000,"");
-            return;
-        }
+        // var _this=$(this),form=$(this).parents("form"),method=form.attr("method"),action=form.attr("action"),data=form.serialize(),_url=form.attr("data-url");
+        // var require=form.find("[required=required]"),l=require.length;
 
+
+        var unixtimeStart = Date.parse($(".demo-input-start").val())/1000;
+        var unixtimeEnd   = Date.parse($(".demo-input-end").val())/1000;
+        if (unixtimeEnd && unixtimeEnd <= unixtimeStart){
+                wenku_alert("danger","失效日期必须大于生效日期",3000,"");
+                return;
+            }
 
         $.each(require, function() {
             if (!$(this).val()){

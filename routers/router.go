@@ -99,6 +99,7 @@ func back() {
 	//beego.Router("/admin/singledel/:alias", &AdminControllers.SingleController{}, "get:Del")
 	beego.Router("/admin/kindeditor/upload", &AdminControllers.KindEditorController{}, "post:Upload")
 	beego.Router("/admin/score", &AdminControllers.ScoreController{})
+	beego.Router("/admin/dept", &AdminControllers.DeptController{})
 	beego.Router("/admin/banner", &AdminControllers.BannerController{})
 	beego.Router("/admin/banner/add", &AdminControllers.BannerController{}, "post:Add")
 	beego.Router("/admin/banner/del", &AdminControllers.BannerController{}, "get,post:Del")

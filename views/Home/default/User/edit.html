@@ -54,12 +54,26 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">执行时间<i class="text-danger">*</i></label>
+{{/*                            <div class="col-sm-5">*/}}
+{{/*                                <input autocomplete="off" name="TimeStart" type="text" required="required" data-err="请选择文件生效日期" class="demo-input-start" placeholder="请选择文件生效日期" id="date1">*/}}
+{{/*                            </div>*/}}
+{{/*                            <div class="col-sm-5">*/}}
+{{/*                                <input autocomplete="off" name="TimeEnd" type="text" data-err="请选择文件失效日期" class="demo-input-end" placeholder="请选择文件失效日期" id="date2">*/}}
+{{/*                            </div>*/}}
+{{/*                            */}}
                             <div class="col-sm-5">
-                                <input autocomplete="off" name="TimeStart" type="text" required="required" data-err="请选择文件生效日期" class="demo-input-start" placeholder="请选择文件生效日期" id="date1">
+                                <input autocomplete="off" type="text" required="required" data-err="请选择文件生效日期" class="form-control demo-input-start" placeholder="请选择文件生效日期" id="date1">
                             </div>
                             <div class="col-sm-5">
-                                <input autocomplete="off" name="TimeEnd" type="text" data-err="请选择文件失效日期" class="demo-input-end" placeholder="请选择文件失效日期" id="date2">
+                                <input autocomplete="off" type="text" data-err="请选择文件失效日期" class="form-control demo-input-end" placeholder="请选择文件失效日期" id="date2">
                             </div>
+                            <div class="col-sm-5">
+                                <input autocomplete="off" name="TimeStart" required="required" data-err="请选择文件生效日期" class="demo-input-start" placeholder="请选择文件生效日期" type="hidden"  id="date3">
+                            </div>
+                            <div class="col-sm-5">
+                                <input autocomplete="off" name="TimeEnd" data-err="请选择文件失效日期" class="demo-input-end" placeholder="请选择文件失效日期" type="hidden" id="date4">
+                            </div>
+
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">文件标签</label>
@@ -90,6 +104,10 @@
         ,calendar: true
         ,showBottom: false
         ,position: 'fixed'
+        ,done: function(value, date, endDate) {
+            // 回调函数
+            $("#date3").val(Date.parse(value)/1000);
+        }
     });
     laydate.render({
         elem: '#date2' //指定元素
@@ -97,6 +115,10 @@
         ,calendar: true
         ,showBottom: false
         ,position: 'fixed'
+        ,done: function(value, date, endDate) {
+            // 回调函数
+            $("#date4").val(Date.parse(value)/1000);
+        }
     });
 </script>
 <script type="text/javascript" id="wenku-cates">

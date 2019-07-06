@@ -2,7 +2,7 @@ package AdminControllers
 
 import "github.com/TruthHun/DocHub/models"
 
-type ScoreController struct {
+type ScoreController struct { 
 	BaseController
 }
 
