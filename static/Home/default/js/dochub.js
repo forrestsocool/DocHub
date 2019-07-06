@@ -254,10 +254,14 @@ $(function(){
 		//分类选择
 		$(".wenku-form-upload .form-level-one select").change(function(){
 			var _this=$(this),pid=_this.val();
-			$(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
-			if(pid){
-                $(".form-level-two select").append(options(pid,cates));
-			};
+			// $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
+			// if(pid){
+            //     $(".form-level-two select").append(options(pid,cates));
+			// };
+
+            if(pid){
+                $(".form-level-two input").val(pid);
+            }
 		});
 	
 

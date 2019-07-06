@@ -58,6 +58,11 @@
 											[<a href="/list/{{$.CurChanel.Alias}}/pid/{{.Pid}}/cid/{{.Cid}}" title="{{.Category}}" class="text-danger">
 												{{.Category}}
 											</a>]
+
+{{/*                                            [<a href="/list/{{$.CurChanel.Alias}}/pid/{{.Pid}}/cid/{{.Cid}}" title="{{.Category}}" class="text-danger">*/}}
+{{/*												{{CategoryName .Pid}}*/}}
+{{/*											</a>]*/}}
+
 										</span>
                                     <span><a href="/user/{{.Uid}}" title="{{.Username}}" target="_blank" class="text-default">{{.Username}}</a></span>
                                     <span>大小:<span>{{FormatByte (Interface2Int .Size)}}</span></span>

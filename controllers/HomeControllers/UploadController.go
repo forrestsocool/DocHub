@@ -51,7 +51,7 @@ func (this *UploadController) Get() {
 
 		ModelUser := models.NewUser()
 		info := ModelUser.UserInfo(this.IsLogin)
-		fmt.Println(info.Cid)
+		//fmt.Println(info.Cid)
 		this.Data["UserCid"] = info.Cid
 
 
