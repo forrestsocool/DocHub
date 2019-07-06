@@ -29,6 +29,7 @@
                                 <th>#</th>
                                 <th>用户名</th>
                                 <th>邮箱</th>
+                                <th>法规频道</th>
                                 <th>金币</th>
                                 <th>文件</th>
                                 <th>收藏</th>
@@ -43,6 +44,7 @@
                                     <td>{{.Id}}</td>
                                     <td>{{.Username}}</td>
                                     <td>{{.Email}}</td>
+                                    <td>{{CategoryName .Cid}}</td>
                                     <td>
                                         <a href="/user/{{.Id}}/coin" target="_blank">{{.Coin}}</a>
                                     </td>
@@ -69,6 +71,8 @@
                                         {{end}}
                                         <a href="/admin/update?table=user&id={{.Id}}&field=Intro&value=" target="_blank" title="重置用户签名" class="wenku-tooltip wenku-ajax-get">重置签名</a>
                                         <a href="javascript:void(0);" data-id="{{.Id}}" data-username="{{.Username}}" class="ModalScoreBtn">积分管理</a>
+                                        <a href="javascript:void(0);" data-usercid="{{.Cid}}" data-id="{{.Id}}" data-username="{{.Username}}" class="ModalDeptBtn">权限管理</a>
+
                                     </td>
                                 </tr>
                             {{end}}
@@ -106,6 +110,37 @@
                         <div class="form-group">
                             <textarea name="log" rows="2" class="form-control" placeholder="请输入积分变更说明"></textarea>
                         </div>
+                        <input type="hidden" name="uid" value="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger" data-dismiss="modal">取消更改</button>
+                        <button type="submit" class="btn btn-success">提交更改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalDept" tabindex="-1" role="dialog" aria-labelledby="ModalDeptLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/admin/dept" method="get" class="wenku-ajax-form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="ModalDeptLabel">[ <span class="ModalDeptUser text-success"></span> ] 上传权限管理</h4>
+                    </div>
+                    <div class="modal-body">
+{{/*                        <div class="form-group">*/}}
+{{/*                            <input type="number" name="score" class="form-control" placeholder="请输入积分变更情况，正为加，负为减">*/}}
+{{/*                        </div>*/}}
+{{/*                        <div class="form-group">*/}}
+{{/*                            <textarea name="log" rows="2" class="form-control" placeholder="请输入积分变更说明"></textarea>*/}}
+{{/*                        </div>*/}}
+                            <div class="form-group">
+                                <select name="cid" required="required" data-err="请选择可上传法规频道" class="form-control">
+{{/*                                    <option value="{{.UserCid}}">{{CategoryName .UserCid}}</option>*/}}
+                                </select>
+                            </div>
                         <input type="hidden" name="uid" value="">
                     </div>
                     <div class="modal-footer">

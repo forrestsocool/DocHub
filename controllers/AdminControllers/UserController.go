@@ -2,6 +2,7 @@ package AdminControllers
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/orm"
 
 	"github.com/TruthHun/DocHub/helper"
 
@@ -74,5 +75,10 @@ func (this *UserController) List() {
 	this.Data["Users"] = data
 	this.Data["ListRows"] = listRows
 	this.Data["TotalRows"] = totalRows
+
+	cond := orm.NewCondition().And("status", 1)
+	cates, _, _ := models.GetList(models.GetTableCategory(), 1, 2000, cond, "Sort", "Title")
+	this.Data["json"] = cates
+
 	this.TplName = "list.html"
 }
