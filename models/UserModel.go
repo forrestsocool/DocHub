@@ -218,6 +218,12 @@ func (this *User) CanDownloadFile(docId int) (urlStr string, err error) {
 	//if err != nil {
 	//	return
 	//}
+	//var timeStart = DocumentInfo{Id:docId}
+	//var excuteTime = timeStart.TimeStart
+	//var abortTime = timeStart.TimeEnd
+	//if abortTime <= excuteTime{
+	//	this.ResponseJson(false, "您上传的文件格式不正确，请上传正确格式的文件")
+	//}
 
 	var docInfo = DocumentInfo{Id: docId}
 	if err = o.Read(&docInfo); err != nil {

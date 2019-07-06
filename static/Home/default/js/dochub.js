@@ -264,9 +264,17 @@ $(function(){
 		//执行文件上传操作
 		$(".wenku-form-upload [type=submit]").click(function(e){
 			e.preventDefault();
+
 			var _this=$(this),form=_this.parents("form"),url_checklogin=form.attr("data-login"),requireds=form.find("[required=required]"),req_len=requireds.length;
-			_this.addClass("disabled");
-			if (req_len>0){
+            var unixtimeStart = Date.parse($(".demo-input-start").val())/1000;
+            var unixtimeEnd   = Date.parse($(".demo-input-end").val())/1000;
+            if (unixtimeEnd && unixtimeEnd <= unixtimeStart){
+                wenku_alert("danger","失效日期必须大于生效日期",3000,"");
+                return;
+            }
+            // _this.addClass("disabled");
+
+            if (req_len>0){
 				$.each(requireds, function() {    
 					if($(this).val()==""){
 						$(this).focus();
@@ -314,27 +322,36 @@ $(function(){
                                 // 新增文件生效时间和失效时间
                                 // 时间转换为unix时间戳为xxxx-xx-xx 08:00:00
                                 var doctimestart =form.find(".demo-input-start");
+
                                 $.each(doctimestart,function(){
                                     // var time = $(this).val();
-                                    var unixtime = Date.parse($(this).val())/1000;
-                                    unixtime = unixtime.toString();
+                                    var unixtimeStart = Date.parse($(this).val())/1000;
+                                    var unixtime = unixtimeStart.toString();
                                     formData.append($(this).attr("name"), unixtime);
                                 });
                                 var doctimend =form.find(".demo-input-end");
+
                                 $.each(doctimend,function(){
                                     // var time = $(this).val();
-                                    var unixtime = Date.parse($(this).val())/1000;
-                                    unixtime = unixtime.toString();
+                                    var unixtimeEnd = Date.parse($(this).val())/1000;
+                                    var unixtime = unixtimeEnd.toString();
                                     formData.append($(this).attr("name"), unixtime);
                                 });
-
-                                //新增发文部门
-                                var depart = form.find(".form-department");
-                                $.each(depart, function () {
-                                    var department = $("#department option:selected").text();
-                                    formData.append($(this).attr("name"),department);
-
-                                });
+                                // if ( typeof (unixtimeEnd)!== undefined || unixtimeEnd <= unixtimeStart){
+                                //     wenku_alert("danger","失效日期必须大于生效日期",3000,"");
+                                //     return false;
+                                //
+                                // }
+                                // if ( typeof (unixtimeEnd)!== undefined || unixtimeEnd <= unixtimeStart){
+                                //     wenku_alert("danger","失效日期必须大于生效日期",3000,"");
+                                // }
+                                // //新增发文部门
+                                // var depart = form.find(".form-control-department");
+                                // $.each(depart, function () {
+                                //     var department = $("#department option:selected").text();
+                                //     formData.append($(this).attr("name"),department);
+                                //
+                                // });
 
 
                                 $.each(inputs,function () {
@@ -348,33 +365,66 @@ $(function(){
 
                                 var file = $("[name=File]").get(0).files[0];
                                 formData.append("File" , file);
-                                $.ajax({
-                                    type: "POST",
-                                    url: form.attr("action"),
-                                    data: formData ,　　//这里上传的数据使用了formData 对象
-                                    processData : false,
-                                    //必须false才会自动加上正确的Content-Type
-                                    contentType : false ,
-                                    //这里我们先拿到jQuery产生的 XMLHttpRequest对象，为其增加 progress 事件绑定，然后再返回交给ajax使用
-                                    xhr: function(){
-                                        var xhr = $.ajaxSettings.xhr();
-                                        if(onprogress && xhr.upload) {
-                                            xhr.upload.addEventListener("progress" , onprogress, false);
-                                            return xhr;
+                                // if ( typeof (unixtimeEnd)!== undefined || unixtimeEnd <= unixtimeStart){
+                                //     wenku_alert("danger","失效日期必须大于生效日期",3000,"");
+                                //
+                                // } else{
+                                    $.ajax({
+                                        type: "POST",
+                                        url: form.attr("action"),
+                                        data: formData ,　　//这里上传的数据使用了formData 对象
+                                        processData : false,
+                                        //必须false才会自动加上正确的Content-Type
+                                        contentType : false ,
+                                        //这里我们先拿到jQuery产生的 XMLHttpRequest对象，为其增加 progress 事件绑定，然后再返回交给ajax使用
+                                        xhr: function(){
+                                            var xhr = $.ajaxSettings.xhr();
+                                            if(onprogress && xhr.upload) {
+                                                xhr.upload.addEventListener("progress" , onprogress, false);
+                                                return xhr;
+                                            }
+                                        },
+                                        success:function (res) {
+                                            if(res.status==1){//成功
+                                                wenku_alert("success",res.msg,3000,"/user");
+                                            }else{//失败
+                                                wenku_alert("danger",res.msg,3000,"");
+                                            }
+                                        },
+                                        error:function (e) {
+                                            wenku_alert("danger","未知错误，请刷新页面重试",3000,"");
+                                            console.log(e)
                                         }
-                                    },
-                                    success:function (res) {
-                                        if(res.status==1){//成功
-                                            wenku_alert("success",res.msg,3000,"/user");
-                                        }else{//失败
-                                            wenku_alert("danger",res.msg,3000,"");
-                                        }
-                                    },
-                                    error:function (e) {
-                                        wenku_alert("danger","未知错误，请刷新页面重试",3000,"");
-                                        console.log(e)
-                                    }
-                                });
+                                    });
+
+
+                                // $.ajax({
+                                //     type: "POST",
+                                //     url: form.attr("action"),
+                                //     data: formData ,　　//这里上传的数据使用了formData 对象
+                                //     processData : false,
+                                //     //必须false才会自动加上正确的Content-Type
+                                //     contentType : false ,
+                                //     //这里我们先拿到jQuery产生的 XMLHttpRequest对象，为其增加 progress 事件绑定，然后再返回交给ajax使用
+                                //     xhr: function(){
+                                //         var xhr = $.ajaxSettings.xhr();
+                                //         if(onprogress && xhr.upload) {
+                                //             xhr.upload.addEventListener("progress" , onprogress, false);
+                                //             return xhr;
+                                //         }
+                                //     },
+                                //     success:function (res) {
+                                //         if(res.status==1){//成功
+                                //             wenku_alert("success",res.msg,3000,"/user");
+                                //         }else{//失败
+                                //             wenku_alert("danger",res.msg,3000,"");
+                                //         }
+                                //     },
+                                //     error:function (e) {
+                                //         wenku_alert("danger","未知错误，请刷新页面重试",3000,"");
+                                //         console.log(e)
+                                //     }
+                                // });
                             }
                         });
 					}
@@ -747,11 +797,12 @@ $(function(){
 		if(js){
             var cates=eval("("+js+")");
 
-            var defChanel=$(".wenku-form-upload select[name=Chanel]").attr("data-default");
+            //var defChanel=$(".wenku-form-upload select[name=Chanel]").attr("data-default");
+            var defChanel=$(".wenku-form-upload select[name=Chanel]").val();
             var defPid=$(".wenku-form-upload select[name=Pid]").attr("data-default");
             var defCid=$(".wenku-form-upload select[name=Cid]").attr("data-default");
-            $(".wenku-form-upload select[name=Chanel]").append(options(0,cates));
-            setDefault("Chanel",defChanel);
+            //$(".wenku-form-upload select[name=Chanel]").append(options(0,cates));
+            //setDefault("Chanel",defChanel);
             $(".wenku-form-upload select[name=Pid]").append(options(defChanel,cates));
             setDefault("Pid",defPid);
             $(".wenku-form-upload select[name=Cid]").append(options(defPid,cates));
@@ -879,8 +930,28 @@ $(function(){
 
     $(".wenku-ajax-form [type=submit]").click(function(e){
         e.preventDefault();
-        var _this=$(this),form=$(this).parents("form"),method=form.attr("method"),action=form.attr("action"),data=form.serialize(),_url=form.attr("data-url");
+        // var _this=$(this),form=$(this).parents("form"),method=form.attr("method"),action=form.attr("action"),data=form.serialize(),_url=form.attr("data-url");
+        // var require=form.find("[required=required]"),l=require.length;
+        // var _this=$(this),form=$(this).parents("form"),method=form.attr("method"),action=form.attr("action"),data=form.serialize(),_url=form.attr("data-url");
+        // var require=form.find("[required=required]"),l=require.length;
+
+
+        var _this=$(this);
+        var unixtimeStart = Date.parse($(".demo-input-start").val())/1000;
+        console.log(typeof (unixtimeStart));
+        var unixtimeEnd   = Date.parse($(".demo-input-end").val())/1000;
+        var form=$(this).parents("form");
+        form[0][4].value = unixtimeStart;
+        form[0][5].value = unixtimeEnd;
+        var data=form.serialize(),_url=form.attr("data-url");
+        var method=form.attr("method"),action=form.attr("action");
         var require=form.find("[required=required]"),l=require.length;
+        if (unixtimeEnd && unixtimeEnd <= unixtimeStart){
+            wenku_alert("danger","失效日期必须大于生效日期",3000,"");
+            return;
+        }
+
+
         $.each(require, function() {
             if (!$(this).val()){
                 $(this).focus();
@@ -896,6 +967,14 @@ $(function(){
         _this.addClass("disabled");
         if (method=="post") {
             if (form.attr("enctype")=="multipart/form-data"){
+                // var unixtimeStart = Date.parse($(".demo-input-start").val())/1000;
+                // var unixtimeEnd   = Date.parse($(".demo-input-end").val())/1000;
+                // if (unixtimeEnd && unixtimeEnd <= unixtimeStart){
+                //     wenku_alert("danger","失效日期必须大于生效日期",3000,"");
+                //     return;
+                // }
+                // form.attr("name",unixtimeStart);
+                // form.attr("name",unixtimeEnd);
                 form.attr("target","notarget");
                 form.submit();
             }else{

@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
 	"time"
 
 	"github.com/TruthHun/DocHub/helper"
@@ -27,8 +26,11 @@ func (this *UploadController) SegWord() {
 	this.ResponseJson(true, "分词成功", wds)
 }
 
+
+
 //文件上传页面
 func (this *UploadController) Get() {
+
 	if this.IsLogin <= 0{
 		this.Redirect("/user/login", 302)
 		//this.ResponseJson(false, "您没有权限上传文件")
@@ -46,14 +48,19 @@ func (this *UploadController) Get() {
 		this.TplName = "index.html"
 
 
+
 		ModelUser := models.NewUser()
 		info := ModelUser.UserInfo(this.IsLogin)
 		fmt.Println(info.Cid)
 		this.Data["UserCid"] = info.Cid
+
+
 		return
 	}
 
 }
+
+
 
 //文件执行操作
 //处理流程：
@@ -64,12 +71,15 @@ func (this *UploadController) Get() {
 //5、文件未存在，则将文件数据录入文件存储表(document_store)
 //6、执行文件转pdf，并获取文件页数、封面、摘要等
 //7、获取文件大小
+
+
 func (this *UploadController) Post() {
 	var (
 		ext  string //文件扩展名
 		dir  = fmt.Sprintf("./uploads/%v/%v", time.Now().Format("2006/01/02"), this.IsLogin)
 		form models.FormUpload
 		err  error
+
 	)
 
 	if this.IsLogin == 0 {
@@ -87,6 +97,8 @@ func (this *UploadController) Post() {
 		if _, ok := helper.AllowedUploadDocsExt[ext]; !ok {
 			this.ResponseJson(false, "您上传的文件格式不正确，请上传正确格式的文件")
 		}
+		//var docInfo = DocumentInfo{Id: docId}
+		//TimeStart = docInfo.TimeStart
 		file := fmt.Sprintf("%v%v", time.Now().Unix(), ext)
 		form.TmpFile = filepath.Join(dir, file)
 		form.Ext = ext

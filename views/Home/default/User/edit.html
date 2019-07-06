@@ -24,39 +24,41 @@
                             </div>
                         </div>
                         <div class="form-group form-chanel">
-                            <label class="col-sm-2 control-label">文库频道 <i class="text-danger">*</i></label>
+                            <label class="col-sm-2 control-label">法规频道 <i class="text-danger">*</i></label>
                             <div class="col-sm-10">
-                                <select name="Chanel" required="required" data-default="{{.Info.ChanelId}}" data-err="请选择文库频道" class="form-control">
-                                    <option value="">请选择文库频道</option>
+                                <select name="Chanel" required="required" data-err="请选择文库频道" class="form-control" disabled="disabled">
+                                    <option value="{{.UserCid}}">{{CategoryName .UserCid}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group form-cate">
                             <label class="col-sm-2 control-label">文件分类 <i class="text-danger">*</i></label>
-                            <div class="col-sm-5 form-level-one">
-                                <select name="Pid" required="required" data-default="{{.Info.Pid}}" data-err="请选择一级文件分类" class="form-control">
-                                    <option value="">请选择一级文件分类</option>
+                            <div class="col-sm-10 form-level-one">
+                                <select name="Pid" required="required" data-default="{{.Info.Pid}}" data-err="请选择文件分类" class="form-control">
+                                    <option value="">请选择文件分类</option>
                                 </select>
                             </div>
-                            <div class="col-sm-5 form-level-two">
-                                <select name="Cid" required="required" data-default="{{.Info.Cid}}" data-err="请选择二级文件分类" class="form-control">
-                                    <option value="">请选择二级文件分类</option>
+                        </div>
+                        <div class="form-group form-dept">
+                            <label class="col-sm-2 control-label">发文级别 <i class="text-danger">*</i></label>
+                            <div class="col-sm-10">
+                                <select id="department" name="Department" required="required" data-err="请选择发文级别" class="form-control">
+                                    <option value="">请选择发文级别</option>
+                                    <option value="J委">J委</option>
+                                    <option value="Z支">Z支</option>
+                                    <option value="JH">JH</option>
+                                    <option value="基地">基地</option>
+                                    <option value="其他">其他</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">文件售价</label>
+                            <label class="col-sm-2 control-label">执行时间<i class="text-danger">*</i></label>
                             <div class="col-sm-5">
-                                <select name="Price" class="form-control">
-                                    <option value="0" {{if eq .Info.Price 0}}selected="selected"{{end}}>免费下载</option>
-                                    <option value="1" {{if eq .Info.Price 1}}selected="selected"{{end}}>1个金币</option>
-                                    <option value="2" {{if eq .Info.Price 2}}selected="selected"{{end}}>2个金币</option>
-                                    <option value="5" {{if eq .Info.Price 5}}selected="selected"{{end}}>5个金币</option>
-                                    <option value="8" {{if eq .Info.Price 8}}selected="selected"{{end}}>8个金币</option>
-                                    <option value="10" {{if eq .Info.Price 10}}selected="selected"{{end}}>10个金币</option>
-                                    <option value="20" {{if eq .Info.Price 20}}selected="selected"{{end}}>20个金币</option>
-                                    <option value="-1" {{if eq .Info.Price -1}}selected="selected"{{end}}>禁止下载</option>
-                                </select>
+                                <input autocomplete="off" name="TimeStart" type="text" required="required" data-err="请选择文件生效日期" class="demo-input-start" placeholder="请选择文件生效日期" id="date1">
+                            </div>
+                            <div class="col-sm-5">
+                                <input autocomplete="off" name="TimeEnd" type="text" data-err="请选择文件失效日期" class="demo-input-end" placeholder="请选择文件失效日期" id="date2">
                             </div>
                         </div>
                         <div class="form-group">
@@ -80,6 +82,23 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    // lay('#version').html('-v'+ laydate.v);
+    laydate.render({
+        elem: '#date1' //指定元素
+        ,theme: 'molv'
+        ,calendar: true
+        ,showBottom: false
+        ,position: 'fixed'
+    });
+    laydate.render({
+        elem: '#date2' //指定元素
+        ,theme: 'molv'
+        ,calendar: true
+        ,showBottom: false
+        ,position: 'fixed'
+    });
+</script>
 <script type="text/javascript" id="wenku-cates">
     {{.json}}
 </script>

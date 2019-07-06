@@ -2,10 +2,10 @@ package HomeControllers
 
 import (
 	"fmt"
+	//"github.com/tdewolff/parse/strconv"
 	"path/filepath"
-
+	"strconv"
 	"strings"
-
 	"time"
 
 	"os"
@@ -148,6 +148,10 @@ func (this *UserController) Get() {
 	if err != nil {
 		helper.Logger.Error(err.Error())
 	}
+
+
+
+
 	this.TplName = "index.html"
 
 }
@@ -641,6 +645,13 @@ func (this *UserController) DocEdit() {
 	}
 
 	info := models.DocumentInfo{Id: docId}
+
+
+	ModelUser := models.NewUser()
+	uinfo := ModelUser.UserInfo(this.IsLogin)
+	fmt.Println(uinfo.Cid)
+	this.Data["UserCid"] = uinfo.Cid
+
 	err := orm.NewOrm().Read(&info)
 	if err != nil {
 		helper.Logger.Error(err.Error())
@@ -657,33 +668,47 @@ func (this *UserController) DocEdit() {
 	if this.Ctx.Request.Method == "POST" {
 		ruels := map[string][]string{
 			"Title":  {"required", "unempty"},
-			"Chanel": {"required", "gt:0", "int"},
+			//"Chanel": {"required", "gt:0", "int"},
 			"Pid":    {"required", "gt:0", "int"},
-			"Cid":    {"required", "gt:0", "int"},
+			//"Cid":    {"required", "gt:0", "int"},
 			"Tags":   {"required"},
 			"Intro":  {"required"},
-			"Price":  {"required", "int"},
+			//"Price":  {"required", "int"},
+			"TimeStart": {"required"},
+			"TimeEnd":   {},
 			"Department": {"required","string"},
 		}
+
+
 		params, errs := helper.Valid(this.Ctx.Request.Form, ruels)
+
 		if len(errs) > 0 {
 			this.ResponseJson(false, "参数错误")
 		}
+
 		doc.Title = params["Title"].(string)
 		doc.Keywords = params["Tags"].(string)
 		doc.Description = params["Intro"].(string)
 		info.Pid = params["Pid"].(int)
-		info.Cid = params["Cid"].(int)
-		info.ChanelId = params["Chanel"].(int)
-		info.Price = params["Price"].(int)
+		excuteTime := params["TimeStart"]
+		info.TimeStart,_ = strconv.Atoi(excuteTime.(string))
+		closureTime := params["TimeEnd"]
+		info.TimeEnd, _ = strconv.Atoi(closureTime.(string))
+
+		//info.TimeStart = strconv.ParseInt(params["TimeStart"])
+		//info.TimeEnd = params["TimeEnd"].(int)
+		//info.ChanelId = params["Chanel"].(int)
 		info.TimeUpdate = int(time.Now().Unix())
 		info.Department =params["Department"].(string)
 		orm.NewOrm().Update(&doc, "Title", "Keywords", "Description")
-		orm.NewOrm().Update(&info, "Pid", "Cid", "ChanelId", "Price")
+		orm.NewOrm().Update(&info, "Pid", "Cid", "Price","Department","TimeStart","TimeEnd")
+		//orm.NewOrm().Update(&info, "Pid", "Department", "ChanelId", "TimeStart","TimeEnd")
 		//原分类-1
-		models.Regulate(models.GetTableCategory(), "Cnt", -1, fmt.Sprintf("Id in(%v,%v,%v)", info.ChanelId, info.Cid, info.Pid))
+		//models.Regulate(models.GetTableCategory(), "Cnt", -1, fmt.Sprintf("Id in(%v,%v,%v,%v)", info.ChanelId, info.Cid, info.Pid, info.Department,info.TimeStart))
+		models.Regulate(models.GetTableCategory(), "Cnt", -1, fmt.Sprintf("Id in(%v,%v,%v,%v)",  info.Pid, info.TimeStart, info.TimeEnd, info.Department))
 		//新分类+1
-		models.Regulate(models.GetTableCategory(), "Cnt", 1, fmt.Sprintf("Id in(%v,%v,%v)", params["Chanel"], params["Cid"], params["Pid"]))
+		//models.Regulate(models.GetTableCategory(), "Cnt", 1, fmt.Sprintf("Id in(%v,%v,%v)", params["Chanel"], params["Cid"], params["Pid"],params["Department"],params["TimeStart"]))
+		models.Regulate(models.GetTableCategory(), "Cnt", 1, fmt.Sprintf("Id in(%v,%v,%v,%v.%v)", params["Pid"], params["TimeStart"], params["TimeEnd"], params["Department"]))
 		this.ResponseJson(true, "文件编辑成功")
 	}
 
