@@ -277,19 +277,19 @@ func (this *UserController) Login() {
 	}
 
 	this.ParseForm(&post)
-	valid := validation.Validation{}
-	res := valid.Email(post.Email, "Email")
-	if !res.Ok {
-		this.ResponseJson(false, "登录失败，邮箱格式不正确")
-	}
+	//valid := validation.Validation{}
+	//res := valid.Email(post.Email, "Email")
+	//if !res.Ok {
+	//	this.ResponseJson(false, "登录失败，邮箱格式不正确")
+	//}
 
 	ModelUser := models.NewUser()
-	users, rows, err := ModelUser.UserList(1, 1, "", "", "u.`email`=? and u.`password`=?", post.Email, helper.MD5Crypt(post.Password))
+	users, rows, err := ModelUser.UserList(1, 1, "", "", "(u.`email`=? or u.`username`=?) and u.`password`=?", post.Email, post.Email, helper.MD5Crypt(post.Password))
 	if rows == 0 || err != nil {
 		if err != nil {
 			helper.Logger.Error(err.Error())
 		}
-		this.ResponseJson(false, "登录失败，邮箱或密码不正确")
+		this.ResponseJson(false, "登录失败，邮箱/用户名或密码不正确")
 	}
 
 	user := users[0]
