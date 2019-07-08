@@ -14,7 +14,7 @@ import (
 func init() {
 
 	fmt.Println("")
-	fmt.Println("Powered By DocHub")
+	fmt.Println("Designed By 通信团")
 	fmt.Println("Version:", helper.VERSION)
 	fmt.Println("")
 

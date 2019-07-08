@@ -5,7 +5,7 @@
  * */
 'use strict';
 $(function(){
-    console.log("Powered By DocHub");
+    console.log("Designed By 通信团");
 
     
     $(".go-top").click(function(){
