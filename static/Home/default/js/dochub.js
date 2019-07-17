@@ -3,7 +3,7 @@
  * Email:	TruthHun@QQ.COM
  * Date:	2016-12-28
  * */
-'use strict';
+//'use strict';
 $(function(){
     console.log("Designed By 通信团");
 
@@ -23,9 +23,19 @@ $(function(){
         }
     }
 
+    function isIE(){
+        if(window.ActiveXObject || "ActiveXObject" in window){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
-
+    if(isIE()){
+        $(".wenku-header").before('<div style="background-color: #FFFF22;">系统检测到您正在使用IE内核浏览器，请切换至Chrome浏览器，Firefox浏览器或使用360浏览器开启极速模式才能正常使用！</div>');
+    }
+    
     $('#wenku-carousel').carousel({
         interval: 3000,
 	})
@@ -40,11 +50,11 @@ $(function(){
             hideSearchTool = _this.find(".hide-search-tool").eq(0),
             helpBlock = _this.find(".help-block").eq(0);
         showSearchTool.on("click", function() {
-            helpBlock.animate({top: "0px"}, 250)
+            helpBlock.animate({top: "0px"}, 250);
         });
 
         hideSearchTool.on("click", function() {
-            helpBlock.animate({top: "-40px"}, 250,)
+            helpBlock.animate({top: "-40px"}, 250);
         });
 
         console.log(_this.find(".hidden-input-dept").val());
@@ -52,7 +62,7 @@ $(function(){
 
         //如果搜索条件不为空，显示搜索条
         if(_this.find(".hidden-input-dept").val() !== "all" || _this.find(".hidden-input-span").val()){
-            helpBlock.animate({top: "0px"}, 0,)
+            helpBlock.animate({top: "0px"}, 0);
         }
 
         searchToolDept.on("change", function () {
@@ -138,11 +148,44 @@ $(function(){
 
 	}
 
+	//兼容IE
+    function NewDate(str)
+    {
+        str=str.split('-');
+        var date=new Date();
+        date.setUTCFullYear(str[0], str[1]-1, str[2]);
+        date.setUTCHours(0, 0, 0, 0);
+        return date;
+    }
 	
 	//文库文件上传
 	if (PageId=="wenku-upload"){
 		var obj=eval("("+$("#wenku-cates").text()+")"),cates=obj;
 		$(".wenku-form-upload select[name=Chanel]").append(options(0,cates));
+
+        //渲染date控件
+        laydate.render({
+                elem: '#date1' //指定元素
+                ,theme: 'molv'
+                ,calendar: true
+                ,showBottom: false
+                ,done: function(value, date, endDate){
+                    console.log(value); //得到日期生成的值，如：2017-08-18
+                    console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+                    console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+                }
+            });
+        laydate.render({
+            elem: '#date2' //指定元素
+            ,theme: 'molv'
+            ,calendar: true
+            ,showBottom: false
+            ,done: function(value, date, endDate){
+                console.log(value);
+                console.log(date);
+                console.log(endDate);
+            }
+        });
 
         //选择上传文件
 		$(document).on("change",".wenku-form-upload input[type=file]",function(){
@@ -222,43 +265,13 @@ $(function(){
 
 		});
 
-		//默认频道选择
-        // $(".wenku-form-upload .form-chanel select").onload(function(){
-        //     var _this=$(this),pid=_this.val();
-        //     if(pid){
-        //         $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
-        //         $(".form-level-one select").append(options(pid,cates));
-        //         $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
-        //     }else{
-        //         $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
-        //         $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
-        //     }
-        // });
-	
-		//频道选择
+		//根据频道生成文件分类选择
         var pid = $(".wenku-form-upload .form-chanel select").val();
         $(".form-level-one select").append(options(pid,cates));
 
-		$(".wenku-form-upload .form-chanel select").change(function(){
-			var _this=$(this),pid=_this.val();
-			if(pid){
-                $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
-                $(".form-level-one select").append(options(pid,cates));
-				$(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
-			}else{
-                $(".form-level-one select").html('<option value="">请选择一级文件分类</option>');
-                $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
-			}
-		});
-	
-		//分类选择
+		//根据文件分类选择事件，填写隐藏的CID
 		$(".wenku-form-upload .form-level-one select").change(function(){
 			var _this=$(this),pid=_this.val();
-			// $(".form-level-two select").html('<option value="">请选择二级文件分类</option>');
-			// if(pid){
-            //     $(".form-level-two select").append(options(pid,cates));
-			// };
-
             if(pid){
                 $(".form-level-two input").val(pid);
             }
@@ -270,13 +283,14 @@ $(function(){
 			e.preventDefault();
 
 			var _this=$(this),form=_this.parents("form"),url_checklogin=form.attr("data-login"),requireds=form.find("[required=required]"),req_len=requireds.length;
-            var unixtimeStart = Date.parse($(".demo-input-start").val())/1000;
-            var unixtimeEnd   = Date.parse($(".demo-input-end").val())/1000;
+			var unixtimeStart = NewDate($(".form-date .demo-input-start").val()).getTime()/1000;
+            var unixtimeEnd   = NewDate($(".form-date .demo-input-end").val()).getTime()/1000;
             if (unixtimeEnd && unixtimeEnd <= unixtimeStart){
                 wenku_alert("danger","失效日期必须大于生效日期",3000,"");
                 return;
             }
-            // _this.addClass("disabled");
+
+            _this.addClass("disabled");
 
             if (req_len>0){
 				$.each(requireds, function() {    
@@ -299,16 +313,17 @@ $(function(){
 						//检测文件是否已经存在，存在了则直接提交表单
 						$.get(form.attr("data-doccheck"),{md5:form.find("[name=Md5]").val()},function (ret) {
 							//文件已在文件库中存在
-							if(ret.status==1){
-								$.post(form.attr("action"),form.serialize()+"&Exist=1",function (ret) {
-									if(ret.status==1){
-                                        wenku_alert("success",ret.msg,5000,"/user");
-									}else{
-										wenku_alert("danger",ret.msg,3000,"");
-                                        _this.removeClass("disabled");
-									}
-                                });
-							}else{
+							// if(ret.status==1){
+							// 	$.post(form.attr("action"),form.serialize()+"&Exist=1",function (ret) {
+							// 		if(ret.status==1){
+                            //             wenku_alert("success",ret.msg,5000,"/user");
+							// 		}else{
+							// 			wenku_alert("danger",ret.msg,3000,"");
+                            //             _this.removeClass("disabled");
+							// 		}
+                            //     });
+							// }else
+							{
                                 _this.addClass("disabled");
                                 var tips='<div class="wenku-progress">\n' +
                                     '\t\t<div class="text-center">\n' +
@@ -322,58 +337,36 @@ $(function(){
 
                                 var formData = new FormData();
                                 var inputs =form.find(".form-control");
-
-                                // 新增文件生效时间和失效时间
-                                // 时间转换为unix时间戳为xxxx-xx-xx 08:00:00
-                                var doctimestart =form.find(".demo-input-start");
-
-                                $.each(doctimestart,function(){
-                                    // var time = $(this).val();
-                                    var unixtimeStart = Date.parse($(this).val())/1000;
-                                    var unixtime = unixtimeStart.toString();
-                                    formData.append($(this).attr("name"), unixtime);
-                                });
-                                var doctimend =form.find(".demo-input-end");
-
-                                $.each(doctimend,function(){
-                                    // var time = $(this).val();
-                                    var unixtimeEnd = Date.parse($(this).val())/1000;
-                                    var unixtime = unixtimeEnd.toString();
-                                    formData.append($(this).attr("name"), unixtime);
-                                });
-                                // if ( typeof (unixtimeEnd)!== undefined || unixtimeEnd <= unixtimeStart){
-                                //     wenku_alert("danger","失效日期必须大于生效日期",3000,"");
-                                //     return false;
-                                //
-                                // }
-                                // if ( typeof (unixtimeEnd)!== undefined || unixtimeEnd <= unixtimeStart){
-                                //     wenku_alert("danger","失效日期必须大于生效日期",3000,"");
-                                // }
-                                // //新增发文部门
-                                // var depart = form.find(".form-control-department");
-                                // $.each(depart, function () {
-                                //     var department = $("#department option:selected").text();
-                                //     formData.append($(this).attr("name"),department);
-                                //
-                                // });
-
-
                                 $.each(inputs,function () {
                                     formData.append($(this).attr("name"), $(this).val());
                                 });
+
+                                // 新增文件生效时间和失效时间
+                                formData.append("TimeStart", unixtimeStart);
+                                formData.append("TimeEnd", unixtimeEnd);
+
+                                console.log(unixtimeStart);
+
+
+
+                                console.log(formData);
+
                                 var inputs=form.find("[type=hidden]");
                                 $.each(inputs,function () {
                                     formData.append($(this).attr("name"), $(this).val());
                                 });
-                                // 获取上传文件，放到 formData对象里面
 
-                                var file = $("[name=File]").get(0).files[0];
-                                formData.append("File" , file);
-                                // if ( typeof (unixtimeEnd)!== undefined || unixtimeEnd <= unixtimeStart){
-                                //     wenku_alert("danger","失效日期必须大于生效日期",3000,"");
-                                //
-                                // } else{
-                                    $.ajax({
+                                //已存在的话，上传的时候带上存在标志，同时不附带文件，否则附带文件
+                                if(ret.status===1) {
+                                    formData.append("Exist" , "1");
+                                }
+                                else{
+                                    // 获取上传文件，放到 formData对象里面
+                                    var file = $("[name=File]").get(0).files[0];
+                                    formData.append("File" , file);
+                                }
+
+                                $.ajax({
                                         type: "POST",
                                         url: form.attr("action"),
                                         data: formData ,　　//这里上传的数据使用了formData 对象
@@ -399,36 +392,7 @@ $(function(){
                                             wenku_alert("danger","未知错误，请刷新页面重试",3000,"");
                                             console.log(e)
                                         }
-                                    });
-
-
-                                // $.ajax({
-                                //     type: "POST",
-                                //     url: form.attr("action"),
-                                //     data: formData ,　　//这里上传的数据使用了formData 对象
-                                //     processData : false,
-                                //     //必须false才会自动加上正确的Content-Type
-                                //     contentType : false ,
-                                //     //这里我们先拿到jQuery产生的 XMLHttpRequest对象，为其增加 progress 事件绑定，然后再返回交给ajax使用
-                                //     xhr: function(){
-                                //         var xhr = $.ajaxSettings.xhr();
-                                //         if(onprogress && xhr.upload) {
-                                //             xhr.upload.addEventListener("progress" , onprogress, false);
-                                //             return xhr;
-                                //         }
-                                //     },
-                                //     success:function (res) {
-                                //         if(res.status==1){//成功
-                                //             wenku_alert("success",res.msg,3000,"/user");
-                                //         }else{//失败
-                                //             wenku_alert("danger",res.msg,3000,"");
-                                //         }
-                                //     },
-                                //     error:function (e) {
-                                //         wenku_alert("danger","未知错误，请刷新页面重试",3000,"");
-                                //         console.log(e)
-                                //     }
-                                // });
+                                });
                             }
                         });
 					}
@@ -437,7 +401,6 @@ $(function(){
 				_this.removeClass("disabled");
 			}
 		});
-	
 	}
     /**
      * 侦查附件上传情况 ,这个方法大概0.05-0.1秒执行一次，返回上传进度

@@ -79,7 +79,6 @@ func (this *UploadController) Post() {
 		dir  = fmt.Sprintf("./uploads/%v/%v", time.Now().Format("2006/01/02"), this.IsLogin)
 		form models.FormUpload
 		err  error
-
 	)
 
 	if this.IsLogin == 0 {

@@ -139,56 +139,79 @@ func DocumentProcess(uid int, form FormUpload) (err error) {
 		info.Status = DocStatusNormal
 	}
 
-	if _, err = o.Insert(doc); err != nil {
-		helper.Logger.Error(err.Error())
-		return errRetry
+	//文件不存在，常规流程
+	if form.Exist != 1{
+		if _, err = o.Insert(doc); err != nil {
+			helper.Logger.Error(err.Error())
+			return errRetry
+		}
+
+		info.DsId = store.Id
+		info.Id = doc.Id
+
+		_, err = o.Insert(info)
+		if err != nil {
+			helper.Logger.Error(err.Error())
+			return errRetry
+		}
+
+		// 分类统计数增加
+		sqlCate := fmt.Sprintf("update `%v` set `Cnt`=`Cnt`+1 where `Id` in(?,?,?) limit 3", GetTableCategory())
+		if _, err = o.Raw(sqlCate, form.Cid, form.Chanel, form.Pid).Exec(); err != nil {
+			helper.Logger.Error(err.Error())
+			return errRetry
+		}
+		// 总文件数增加
+		sqlSys := fmt.Sprintf("update `%v` set `CntDoc`=`CntDoc`+1 where `Id`=1", GetTableSys())
+		if _, err = o.Raw(sqlSys).Exec(); err != nil {
+			helper.Logger.Error(err.Error())
+			return errRetry
+		}
+
+		// 用户文件数量和积分数量增加
+		sqlUser := fmt.Sprintf("update `%v` set `Document`=`Document`+1,`Coin`=`Coin`+? where `Id`=?", GetTableUserInfo())
+		if _, err = o.Raw(sqlUser, score, uid).Exec(); err != nil {
+			helper.Logger.Error(err.Error())
+			return errRetry
+		}
+
+		coinLog := &CoinLog{
+			Uid:        uid,
+			Coin:       score,
+			TimeCreate: now,
+		}
+
+		// 增加积分变更记录
+		coinLog.Log = "分享了一篇已被分享过的文件《%v》，获得 %v 个积分"
+		if score > 0 {
+			coinLog.Log = "分享了一篇未被分享过的文件《%v》，获得 %v 个积分"
+		}
+		coinLog.Log = fmt.Sprintf(coinLog.Log, doc.Title, score)
+		if _, err = o.Insert(coinLog); err != nil {
+			helper.Logger.Error(err.Error())
+			return errRetry
+		}
+	} else{
+		//文件已经存在了，更新信息
+		var oldInfo = &DocumentInfo{}
+		o.QueryTable(GetTableDocumentInfo()).Filter("DsId", store.Id).One(oldInfo)
+
+		doc.Id = oldInfo.Id
+		if _, err = o.Update(doc); err != nil {
+			helper.Logger.Error(err.Error())
+			return errRetry
+		}
+
+		info.DsId = store.Id
+		info.Id = doc.Id
+
+		_, err = o.Update(info)
+		if err != nil {
+			helper.Logger.Error(err.Error())
+			return errRetry
+		}
 	}
 
-	info.DsId = store.Id
-	info.Id = doc.Id
-
-	_, err = o.Insert(info)
-	if err != nil {
-		helper.Logger.Error(err.Error())
-		return errRetry
-	}
-
-	// 分类统计数增加
-	sqlCate := fmt.Sprintf("update `%v` set `Cnt`=`Cnt`+1 where `Id` in(?,?,?) limit 3", GetTableCategory())
-	if _, err = o.Raw(sqlCate, form.Cid, form.Chanel, form.Pid).Exec(); err != nil {
-		helper.Logger.Error(err.Error())
-		return errRetry
-	}
-	// 总文件数增加
-	sqlSys := fmt.Sprintf("update `%v` set `CntDoc`=`CntDoc`+1 where `Id`=1", GetTableSys())
-	if _, err = o.Raw(sqlSys).Exec(); err != nil {
-		helper.Logger.Error(err.Error())
-		return errRetry
-	}
-
-	// 用户文件数量和积分数量增加
-	sqlUser := fmt.Sprintf("update `%v` set `Document`=`Document`+1,`Coin`=`Coin`+? where `Id`=?", GetTableUserInfo())
-	if _, err = o.Raw(sqlUser, score, uid).Exec(); err != nil {
-		helper.Logger.Error(err.Error())
-		return errRetry
-	}
-
-	coinLog := &CoinLog{
-		Uid:        uid,
-		Coin:       score,
-		TimeCreate: now,
-	}
-
-	// 增加积分变更记录
-	coinLog.Log = "分享了一篇已被分享过的文件《%v》，获得 %v 个积分"
-	if score > 0 {
-		coinLog.Log = "分享了一篇未被分享过的文件《%v》，获得 %v 个积分"
-	}
-	coinLog.Log = fmt.Sprintf(coinLog.Log, doc.Title, score)
-	if _, err = o.Insert(coinLog); err != nil {
-		helper.Logger.Error(err.Error())
-		return errRetry
-	}
 	return
 }
 

@@ -357,6 +357,10 @@ func SearchByMysql(wd, caAlias, dept, span, order string, p, listRows int) (data
 		cond = cond + " and i.Department like " + `"` + dept + `"`
 	}
 
+	//文件状态过滤，不显示已删除的
+	cond = cond + " and i.Status > -1"
+
+
 	//发文年度过滤
 	if span != "" {
 		timeSpan := strings.Split(span, "-")
